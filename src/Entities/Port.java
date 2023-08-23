@@ -24,7 +24,6 @@ public class Port implements IPort {
         this.landingAbility = landingAbility;
     }
 
-    private String portID;
     @Override
     public double calculateDistance(Port port) {
         final double RADIUS_OF_EARTH = 6371;
