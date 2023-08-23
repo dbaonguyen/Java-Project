@@ -1,4 +1,4 @@
 package Users;
 
-public class PortManager {
+public class PortManager extends User{
 }
