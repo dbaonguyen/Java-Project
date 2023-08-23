@@ -5,6 +5,7 @@ import Interface.IPort;
 
 public class Port implements IPort {
 
+    private String portID;
     @Override
     public void addContainer(Entities.Container container) {
 
