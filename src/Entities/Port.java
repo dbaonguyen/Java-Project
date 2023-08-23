@@ -16,7 +16,7 @@ public class Port implements IPort {
     private List<Vehicle> vehicles = new ArrayList<>();
 
     public Port(String portID, String name, double latitude, double longtitude, int capacity, boolean landingAbility) {
-        this.portID = portID;
+        this.portID = String.valueOf(portID);
         this.name = name;
         this.latitude = latitude;
         this.longtitude = longtitude;
