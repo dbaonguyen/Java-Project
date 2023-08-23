@@ -1,9 +1,9 @@
 package Entities;
 
 public class Container {
-    private int containerID;
+    private String containerID;
 
-    public Container(int containerID) {
+    public Container(String containerID) {
         this.containerID = containerID;
     }
 }

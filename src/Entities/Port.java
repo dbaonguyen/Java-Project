@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Port implements IPort {
-    private int portID;
+    private String portID;
     private String name;
     private double latitude;
     private double longtitude;

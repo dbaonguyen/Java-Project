@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vehicle implements IVehicle {
-    private int vehicleID;
+    private String vehicleID;
     private String name;
     private double currentFuel;
     private int capacity;
