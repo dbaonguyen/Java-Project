@@ -1,17 +1,17 @@
 package Interface;
 
+import Entities.Container;
 import Entities.Trip;
 import Entities.Vehicle;
 
 import java.awt.*;
 
 public interface IPort {
-    public void addContainer(Container container);
-    public void removeContainer(Container container);
 
-    void addContainer(Entities.Container container);
 
-    void removeContainer(Entities.Container container);
+    void addContainer(Container container);
+
+    void removeContainer(Container container);
 
     public void addVehicle(Vehicle vehicle);
     public void removeVehicle(Vehicle vehicle);

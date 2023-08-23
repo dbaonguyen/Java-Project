@@ -2,20 +2,8 @@ package Entities;
 
 import Interface.IPort;
 
-import java.awt.Container;
 
 public class Port implements IPort {
-
-
-    @Override
-    public void addContainer(Container container) {
-
-    }
-
-    @Override
-    public void removeContainer(Container container) {
-
-    }
 
     @Override
     public void addContainer(Entities.Container container) {
