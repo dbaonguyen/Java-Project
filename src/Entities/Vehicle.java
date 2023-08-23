@@ -16,7 +16,7 @@ public class Vehicle implements IVehicle {
     private int totalContainersByType;
     private List<Container> containers = new ArrayList<>();
 
-    public Vehicle(int vehicleID, String name, double currentFuel, int capacity, double fuelCapacity, Port port, int totalContainers, int totalContainersByType) {
+    public Vehicle(String vehicleID, String name, double currentFuel, int capacity, double fuelCapacity, Port port, int totalContainers, int totalContainersByType) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = currentFuel;
@@ -68,11 +68,11 @@ public class Vehicle implements IVehicle {
                 '}';
     }
 
-    public int getVehicleID() {
+    public String getVehicleID() {
         return vehicleID;
     }
 
-    public void setVehicleID(int vehicleID) {
+    public void setVehicleID(String vehicleID) {
         this.vehicleID = vehicleID;
     }
 
