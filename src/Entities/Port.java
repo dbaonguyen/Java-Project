@@ -14,6 +14,7 @@ public class Port implements IPort {
     private boolean landingAbility;
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
+    private List<Trip> trips = new ArrayList<>();
 
     public Port(String portID, String name, double latitude, double longtitude, int capacity, boolean landingAbility) {
         this.portID = String.valueOf(portID);
@@ -116,11 +117,17 @@ public class Port implements IPort {
 
     @Override
     public void searchVehicleByName(String name) {
-
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getName().equals(name)) {
+                System.out.println(vehicle);
+            } else {
+                System.out.println("Vehicle not found");
+            }
+        }
     }
 
     @Override
     public void addTrip(Trip trip) {
-
+        trips.add(trip);
     }
 }
