@@ -4,6 +4,7 @@ import Entities.Container;
 import Entities.Port;
 import Entities.Trip;
 import Entities.Vehicle;
+import java.util.*;
 
 import java.awt.*;
 
@@ -19,8 +20,18 @@ public interface IPort {
     public void removeVehicle(Vehicle vehicle);
     public void searchVehicleById(String id);
 
-    void searchVehicle(String vehicleIdentifier);
-
     public void searchVehicleByName(String name);
     public void addTrip(Trip trip);
+
+    public double totalWeight();
+
+    public void displayTrip(Date date);
+
+    public void displayTrip(Date date1, Date date2);
+
+    public void displayShips();
+
+    public void displayContainers();
+
+    public double totalFuel();
 }
