@@ -1,4 +1,6 @@
+import Entities.Container;
 import Entities.Port;
+import Entities.ReeferTruck;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -34,6 +36,11 @@ public class Main {
                 System.out.println("Username or Password is incorrect. Please try again.");
             }
         }
-
+    //data initialization
+        Container a = new Container("1", 200.3);
+        Container b = new Container("1", 456.8);
+        Container c = new Container("1", 234.8);
+        Container d = new Container("1", 345.8);
+        Container e = new Container("1", 987.4);
     }
 }
