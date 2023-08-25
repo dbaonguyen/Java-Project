@@ -123,17 +123,6 @@ public class Port implements IPort {
     }
 
     @Override
-    public void searchVehicle(String vehicleIdentifier) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.getName().equals(vehicleIdentifier)) {
-                System.out.println(vehicle);
-            } else {
-                System.out.println("Vehicle not found");
-            }
-        }
-    }
-
-    @Override
     public void searchVehicleByName(String name) {
         for (Vehicle vehicle : vehicles) {
             if (vehicle.getName().equals(name)) {
