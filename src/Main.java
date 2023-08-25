@@ -8,9 +8,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         HashMap<String, String> userCredentials = new HashMap<>();
-        userCredentials.put("s3978690", "Lacloi@12345");
-        userCredentials.put("trungbuoito", "trungngu123");
-        userCredentials.put("user3", "password3");
+        userCredentials.put("1", "1");
+        userCredentials.put("2", "2");
+        userCredentials.put("3", "3");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -21,11 +21,17 @@ public class Main {
             System.out.print("Enter your password: ");
             String password = scanner.nextLine();
 
-            if (!userCredentials.containsKey(username) || !userCredentials.containsValue(password)) {
-                System.out.println("Username or Password is incorrect. Please try again.");
+            if (userCredentials.containsKey(username) && userCredentials.containsValue(password)) {
+                String expectedPassword = userCredentials.get(username);
+                if (username.equals("1") && password.equals(expectedPassword)) {
+                    System.out.println("Welcome Admin " + username);
+                    break;
+                } else if (password.equals(expectedPassword)) {
+                    System.out.println("Welcome Port Manager " + username);
+                    break;
+                }
             } else {
-                System.out.println("Welcome " + username);
-                break;
+                System.out.println("Username or Password is incorrect. Please try again.");
             }
         }
 
