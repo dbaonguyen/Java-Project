@@ -10,19 +10,21 @@ public class Port implements IPort {
     private String name;
     private double latitude;
     private double longtitude;
-    private int capacity;
+    private double currentWeight;
+    private double capacity;
     private boolean landingAbility;
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
 
-    public Port(String portID, String name, double latitude, double longtitude, int capacity, boolean landingAbility) {
+    public Port(String portID, String name, double latitude, double longtitude, double capacity, boolean landingAbility, double currentWeight) {
         this.portID = String.valueOf(portID);
         this.name = name;
         this.latitude = latitude;
         this.longtitude = longtitude;
         this.capacity = capacity;
         this.landingAbility = landingAbility;
+        this.currentWeight = currentWeight;
     }
 
     public String getPortID() {
@@ -57,11 +59,11 @@ public class Port implements IPort {
         this.longtitude = longtitude;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(double capacity) {
         this.capacity = capacity;
     }
 
@@ -73,6 +75,14 @@ public class Port implements IPort {
         this.landingAbility = landingAbility;
     }
 
+    public double getCurrentWeight() {
+        return currentWeight;
+    }
+
+    public void setCurrentWeight(double currentWeight) {
+        this.currentWeight = currentWeight;
+    }
+
     @Override
     public double calculateDistance(Port port) {
         double distance = Math.sqrt(Math.pow((port.longtitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
@@ -81,12 +91,20 @@ public class Port implements IPort {
 
     @Override
     public void addContainer(Container container) {
-
+        if (container.getWeight() > this.capacity){
+            System.out.println("The container is heavier than the port capacity!");
+        } else if ((this.currentWeight + container.getWeight()) > this.capacity){
+            System.out.println("The container is heavier than the port capacity!");
+        } else{
+            this.containers.add(container);
+            this.currentWeight += container.getWeight();
+        }
     }
 
     @Override
     public void removeContainer(Container container) {
-
+        this.containers.remove(container);
+        this.currentWeight -= container.getWeight();
     }
 
     @Override
