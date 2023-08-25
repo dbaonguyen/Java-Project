@@ -123,4 +123,6 @@ public class Vehicle implements IVehicle {
     public void setTotalContainers(int totalContainers) {
         this.totalContainers = totalContainers;
     }
+
+
 }
