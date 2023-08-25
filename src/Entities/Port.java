@@ -74,19 +74,7 @@ public class Port implements IPort {
 
     @Override
     public double calculateDistance(Port port) {
-        final double RADIUS_OF_EARTH = 6371;
-
-        double dlat = port.latitude - this.latitude;
-        double dlon = port.longtitude - this.longtitude;
-
-        double a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
-                Math.cos(this.latitude) * Math.cos(port.latitude) *
-                        Math.sin(dlon / 2) * Math.sin(dlon / 2);
-
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        double distance = RADIUS_OF_EARTH * c;
-
+        double distance = Math.sqrt(Math.pow((port.longtitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
         return distance;
     }
 
@@ -97,16 +85,6 @@ public class Port implements IPort {
 
     @Override
     public void removeContainer(Container container) {
-
-    }
-
-    @Override
-    public void addContainer(java.awt.Container container) {
-
-    }
-
-    @Override
-    public void removeContainer(java.awt.Container container) {
 
     }
 
