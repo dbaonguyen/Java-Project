@@ -8,15 +8,17 @@ import java.util.List;
 public class Vehicle implements IVehicle {
     private String vehicleID;
     private String name;
+    private double currentWeight;
     private double currentFuel;
     private double capacity;
     private double fuelCapacity;
     private Port port;
     private List<Container> containers = new ArrayList<>();
 
-        public Vehicle(String vehicleID, String name, double currentFuel, double capacity, double fuelCapacity, Port port) {
+        public Vehicle(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         this.vehicleID = vehicleID;
         this.name = name;
+        this.currentWeight = currentWeight;
         this.currentFuel = currentFuel;
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
@@ -25,7 +27,7 @@ public class Vehicle implements IVehicle {
 
 
     @Override
-    public CanMoveToPort canMoveToPort(Port port) {
+    public boolean canMoveToPort(Port port) {
         //boolean to check ability to move
         boolean canLand = true;
         boolean enoughWeight = true;
@@ -51,7 +53,7 @@ public class Vehicle implements IVehicle {
             violatedRequirements.add("The weight on the vehicle exceed the capacity of the destined port!");
         }
 
-        return new CanMoveToPort(canLand&&enoughWeight, violatedRequirements);
+        return true;
     }
 
     @Override
@@ -66,12 +68,28 @@ public class Vehicle implements IVehicle {
 
     @Override
     public void moveToPort(Port port) {
-        this.port = port;
+        //check value of canMoveToPort()
+        //make a new trip variable(arrivalDate = null)
+        //change port to null
+        //remove vehicle from old port
+
     }
 
     @Override
+    public void hasArrived(){
+            //update arrivalDate in trip
+        this.port = port;
+        //add this vehicle to the new port
+    }
+    @Override
     public void refuel() {
-        currentFuel = currentFuel + (fuelCapacity - currentFuel);
+        if(this.port == null){
+            System.out.println("The vehicle is travelling, can not refuel!");
+        }
+        else{
+            this.port.addUsedFuel(this.fuelCapacity - this.currentFuel);
+            this.currentFuel = this.fuelCapacity;
+        }
     }
 
     @Override
@@ -103,6 +121,11 @@ public class Vehicle implements IVehicle {
         this.name = name;
     }
 
+    public double getCurrentWeight(){ return this.currentWeight;};
+
+    public void setCurrentWeight(double newWeight){
+        this.currentWeight = newWeight;
+    }
     public double getCurrentFuel() {
         return currentFuel;
     }
