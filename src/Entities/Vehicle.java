@@ -12,25 +12,46 @@ public class Vehicle implements IVehicle {
     private double capacity;
     private double fuelCapacity;
     private Port port;
-    private int totalContainers;
-    private int totalContainersByType;
     private List<Container> containers = new ArrayList<>();
 
-    public Vehicle(String vehicleID, String name, double currentFuel, double capacity, double fuelCapacity, Port port, int totalContainers, int totalContainersByType) {
+        public Vehicle(String vehicleID, String name, double currentFuel, double capacity, double fuelCapacity, Port port) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentFuel = currentFuel;
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
         this.port = port;
-        this.totalContainers = totalContainers;
-        this.totalContainersByType = totalContainersByType;
     }
 
 
     @Override
-    public boolean canMovetoPort(Port port) {
-        return false;
+    public CanMoveToPort canMoveToPort(Port port) {
+        //boolean to check ability to move
+        boolean canLand = true;
+        boolean enoughWeight = true;
+        boolean enoughFuel = true;
+        //list to store the unmet requirements
+        ArrayList<String> violatedRequirements = new ArrayList<>();
+        //calculate current weight of vehicle
+        double vehicleCurrentWeight = 0;
+        for (Container cont: this.containers) {
+            vehicleCurrentWeight += cont.getWeight();
+        }
+        //calculate current fuel needs
+
+        //calculate fuel needs
+
+        //check conditions
+        if (!port.isLandingAbility()) {
+            canLand = false;
+            violatedRequirements.add("Invalid landing ability!");
+        }
+        if (port.getCurrentWeight() + vehicleCurrentWeight > port.getCapacity()) {
+            enoughWeight = false;
+            violatedRequirements.add("The weight on the vehicle exceed the capacity of the destined port!");
+        }
+
+        return new CanMoveToPort(canLand&&enoughWeight, violatedRequirements);
     }
 
     @Override
@@ -62,8 +83,6 @@ public class Vehicle implements IVehicle {
                 ", capacity=" + capacity +
                 ", fuelCapacity=" + fuelCapacity +
                 ", port=" + port +
-                ", totalContainers=" + totalContainers +
-                ", totalContainersByType=" + totalContainersByType +
                 ", containers=" + containers +
                 '}';
     }
@@ -115,14 +134,5 @@ public class Vehicle implements IVehicle {
     public void setPort(Port port) {
         this.port = port;
     }
-
-    public int getTotalContainers() {
-        return totalContainers;
-    }
-
-    public void setTotalContainers(int totalContainers) {
-        this.totalContainers = totalContainers;
-    }
-
 
 }

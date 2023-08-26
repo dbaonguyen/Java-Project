@@ -36,7 +36,5 @@ public class Main {
                 System.out.println("Username or Password is incorrect. Please try again.");
             }
         }
-    //data initialization
-
     }
 }
