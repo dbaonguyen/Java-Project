@@ -3,6 +3,7 @@ package Entities;
 import Interface.IPort;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Port implements IPort {
@@ -114,12 +115,19 @@ public class Port implements IPort {
 
     @Override
     public void removeVehicle(Vehicle vehicle) {
+        this.vehicles.remove(vehicle);
 
     }
 
     @Override
     public void searchVehicleById(String id) {
-
+        for (Vehicle vehicle : vehicles){
+            if (vehicle.getVehicleID().equals(id)){
+                System.out.println(vehicle);
+            } else{
+                System.out.println("Vehicle not found");
+            }
+        }
     }
 
     @Override
@@ -136,5 +144,35 @@ public class Port implements IPort {
     @Override
     public void addTrip(Trip trip) {
         trips.add(trip);
+    }
+
+    @Override
+    public double totalWeight() {
+        return 0;
+    }
+
+    @Override
+    public void displayTrip(Date date) {
+
+    }
+
+    @Override
+    public void displayTrip(Date date1, Date date2) {
+
+    }
+
+    @Override
+    public void displayShips() {
+
+    }
+
+    @Override
+    public void displayContainers() {
+
+    }
+
+    @Override
+    public double totalFuel() {
+        return 0;
     }
 }
