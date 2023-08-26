@@ -50,7 +50,6 @@ public class Vehicle implements IVehicle {
             enoughWeight = false;
             violatedRequirements.add("The weight on the vehicle exceed the capacity of the destined port!");
         }
-
         return new CanMoveToPort(canLand&&enoughWeight, violatedRequirements);
     }
 
