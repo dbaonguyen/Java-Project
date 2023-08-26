@@ -44,7 +44,7 @@ public class Vehicle implements IVehicle {
     }
 
     @Override
-    public void moveToPort(Port port) {
+    public void moveToPort(Port port)  {
         this.port = port;
     }
 
