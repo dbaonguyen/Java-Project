@@ -58,12 +58,26 @@ public class Vehicle implements IVehicle {
 
     @Override
     public void loadContainer(Container container) {
-        containers.add(container);
+        if (container.getWeight() <= this.capacity - this.currentWeight && this.port != null) {
+            containers.add(container);
+            this.port.removeContainer(container);
+            this.setCurrentWeight(this.currentWeight + container.getWeight());
+        }
+        else{
+            System.out.println("This container can not be loaded on this vehicle!");
+        }
     }
-
     @Override
     public void unloadContainer(Container container) {
-        containers.remove(container);
+        if(this.port != null && container.getWeight() <= this.port.getCapacity() - this.port.getCurrentWeight()){
+            this.port.addContainer(container);
+            this.port.setCurrentWeight(this.port.getCurrentWeight() + container.getWeight());
+            containers.remove(container);
+        }
+        else{
+            System.out.println("This vehicle can not unload this container now!");
+        }
+
     }
 
     @Override
