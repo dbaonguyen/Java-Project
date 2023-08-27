@@ -14,8 +14,20 @@ public class Vehicle implements IVehicle {
     private double fuelCapacity;
     private Port port;
     private List<Container> containers = new ArrayList<>();
+    private double fuelConsumption;
 
-        public Vehicle(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
+    public Vehicle(){
+        vehicleID = "tr-0000";
+        name = "default";
+        currentWeight = 0;
+        currentFuel = 0;
+        capacity = 0;
+        fuelCapacity = 0;
+        port = null;
+        fuelConsumption = 0;
+    }
+
+    public Vehicle(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentWeight = currentWeight;
@@ -62,6 +74,7 @@ public class Vehicle implements IVehicle {
             containers.add(container);
             this.port.removeContainer(container);
             this.setCurrentWeight(this.currentWeight + container.getWeight());
+            this.fuelConsumption += container.getShipConsumption();
         }
         else{
             System.out.println("This container can not be loaded on this vehicle!");
