@@ -36,15 +36,13 @@ public class Main {
 
             //Login
             if (option == 1) {
-                scanner.nextLine();
-
                 //Usernames and Password
                 while (true) {
                     System.out.print("Enter your username: ");
-                    String username = scanner.nextLine();
+                    String username = scanner.next();
 
                     System.out.print("Enter your password: ");
-                    String password = scanner.nextLine();
+                    String password = scanner.next();
                     System.out.println();
 
                     //Correct Username and password
@@ -57,15 +55,33 @@ public class Main {
                             System.out.print("Your option: ");
                             int option2 = scanner.nextInt();
 
-                            //Admin Option
+                            //Admin Option (Choose ports)
                             if (option2 == 1) {
 
                                 // Print the ports in the ArrayList for Options
+                                List<String> portIDs = new ArrayList<>();
                                 for (Port port : ports) {
-                                    System.out.println(port.getName());
+                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                    portIDs.add(port.getPortID());
+                                }
+
+                                //Choose Port
+                                System.out.println("Enter the ID of the port you want to modify: ");
+                                while (true) {
+                                    String portOption = scanner.next();
+                                    if (portIDs.contains(portOption)) {
+                                        System.out.println(ports.get(portIDs.indexOf(portOption)));
+                                    } else {
+                                        System.out.println("Please choose an valid option");
+                                    }
                                 }
                             }
-                                break;
+
+                            //Go Back
+                            else if (option2 == 2) {
+                                continue;
+                            }
+                            break;
                         }
 
                         //Port Manager Option
