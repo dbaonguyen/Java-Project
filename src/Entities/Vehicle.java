@@ -69,9 +69,20 @@ public class Vehicle implements IVehicle {
     @Override
     public void moveToPort(Port port) {
         //check value of canMoveToPort()
-        //make a new trip variable(arrivalDate = null)
-        //change port to null
-        //remove vehicle from old port
+        if(this.canMoveToPort(port) == false){
+            System.out.println("The vehicle can not go to this port!");
+        }
+        else{
+
+            //make a new trip variable(arrivalDate = null)
+            this.setPort(null);
+            //change port to null
+            port.removeVehicle(this);
+            //remove vehicle from old port
+        }
+
+
+
 
     }
 
