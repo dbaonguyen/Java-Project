@@ -151,7 +151,11 @@ public class Port implements IPort {
 
     @Override
     public double totalWeight() {
-        return 0;
+        double sum = 0;
+        for (Container container : containers){
+            sum += container.getWeight();
+        }
+        return sum;
     }
 
     @Override
