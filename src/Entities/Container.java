@@ -37,4 +37,13 @@ public class Container {
     public double getShipConsumption(){
         return this.containerType.getShipConsume();
     }
+
+    @Override
+    public String toString() {
+        return "Container{" +
+                "containerID='" + containerID + '\'' +
+                ", weight=" + weight +
+                ", containerType=" + containerType +
+                '}';
+    }
 }

@@ -175,7 +175,9 @@ public class Port implements IPort {
 
     @Override
     public void displayContainers() {
-
+        for (Container container : containers){
+            System.out.println(container);
+        }
     }
 
     public void addUsedFuel(double newFuel){
