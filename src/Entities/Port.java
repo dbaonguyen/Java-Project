@@ -168,7 +168,11 @@ public class Port implements IPort {
 
     @Override
     public void displayShips() {
-
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof Ship){
+                System.out.println(vehicle);
+            }
+        }
     }
 
     @Override
