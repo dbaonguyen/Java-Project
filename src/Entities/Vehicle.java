@@ -93,16 +93,13 @@ public class Vehicle implements IVehicle {
             port.removeVehicle(this);
             //remove vehicle from old port
         }
-
-
-
-
     }
 
     @Override
-    public void hasArrived(){
+    public void hasArrived(Port port){
             //update arrivalDate in trip
         this.port = port;
+        port.addVehicle(this);
         //add this vehicle to the new port
     }
     @Override

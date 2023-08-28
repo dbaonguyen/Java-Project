@@ -10,6 +10,6 @@ public interface IVehicle {
     public boolean unloadContainer(Container container);
     public void moveToPort(Port port);
 
-    public void hasArrived();
+    public void hasArrived(Port port);
     public void refuel();
 }
