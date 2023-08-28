@@ -5,13 +5,13 @@ public class Type {
     private final double truckConsume;
     private final double shipConsume;
 //create variables
-    Type(){
+    public Type(){
         typeName = "default";
         truckConsume = 0;
         shipConsume = 0;
     }
 
-    Type(String typeName, double truckConsume, double shipConsume){
+    public Type(String typeName, double truckConsume, double shipConsume){
         this.typeName = typeName;
         this.truckConsume = truckConsume;
         this.shipConsume = shipConsume;
