@@ -77,7 +77,6 @@ public class Vehicle implements IVehicle {
             System.out.println("This vehicle can not unload this container now!");
             return false;
         }
-
     }
 
     @Override

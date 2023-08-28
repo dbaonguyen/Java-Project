@@ -38,7 +38,7 @@ public class Truck extends Vehicle{
             return false;
         }
         else{
-            super.canMoveToPort(port);
+            return super.canMoveToPort(port);
         }
     }
 }
