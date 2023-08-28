@@ -1,9 +1,7 @@
 package Entities;
 
 import Interface.IVehicle;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Vehicle implements IVehicle {
     private String vehicleID;

@@ -1,6 +1,6 @@
 package Entities;
 import java.util.*;
-import Interface.IVehicle;
+
 public class Truck extends Vehicle{
 
 
