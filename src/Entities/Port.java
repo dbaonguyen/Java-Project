@@ -187,6 +187,7 @@ public class Port implements IPort {
             this.usedFuel += newFuel;
         }
         else{
+            this.currentDate = currentDate;
             this.usedFuel = newFuel;
         }
     }
