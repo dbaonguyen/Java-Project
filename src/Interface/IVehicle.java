@@ -6,8 +6,8 @@ import Entities.Port;
 
 public interface IVehicle {
     public boolean canMoveToPort(Port port);
-    public void loadContainer(Container container);
-    public void unloadContainer(Container container);
+    public boolean loadContainer(Container container);
+    public boolean unloadContainer(Container container);
     public void moveToPort(Port port);
 
     public void hasArrived();

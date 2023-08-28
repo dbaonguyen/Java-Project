@@ -13,7 +13,7 @@ public class Vehicle implements IVehicle {
     private double capacity;
     private double fuelCapacity;
     private Port port;
-    private List<Container> containers = new ArrayList<>();
+    private ArrayList<Container> containers = new ArrayList<>();
     private double fuelConsumption;
 
     public Vehicle(){
@@ -40,55 +40,42 @@ public class Vehicle implements IVehicle {
 
     @Override
     public boolean canMoveToPort(Port port) {
-        //boolean to check ability to move
-        boolean canLand = true;
-        boolean enoughWeight = true;
-        boolean enoughFuel = true;
-        //list to store the unmet requirements
-        ArrayList<String> violatedRequirements = new ArrayList<>();
-        //calculate current weight of vehicle
-        double vehicleCurrentWeight = 0;
-        for (Container cont: this.containers) {
-            vehicleCurrentWeight += cont.getWeight();
-        }
-        //calculate current fuel needs
-
         //calculate fuel needs
-
-        //check conditions
-        if (!port.isLandingAbility()) {
-            canLand = false;
-            violatedRequirements.add("Invalid landing ability!");
+        double fuelNeeded = this.fuelConsumption * this.port.calculateDistance(port);
+        if(fuelNeeded > this.fuelCapacity){
+            return false;
         }
-        if (port.getCurrentWeight() + vehicleCurrentWeight > port.getCapacity()) {
-            enoughWeight = false;
-            violatedRequirements.add("The weight on the vehicle exceed the capacity of the destined port!");
-        }
-
         return true;
     }
 
     @Override
-    public void loadContainer(Container container) {
+    public boolean loadContainer(Container container) {
         if (container.getWeight() <= this.capacity - this.currentWeight && this.port != null) {
             containers.add(container);
             this.port.removeContainer(container);
             this.setCurrentWeight(this.currentWeight + container.getWeight());
+            //change for truck
             this.fuelConsumption += container.getShipConsumption();
+            return true;
         }
         else{
             System.out.println("This container can not be loaded on this vehicle!");
+            return false;
         }
     }
     @Override
-    public void unloadContainer(Container container) {
+    public boolean unloadContainer(Container container) {
         if(this.port != null && container.getWeight() <= this.port.getCapacity() - this.port.getCurrentWeight()){
             this.port.addContainer(container);
             this.port.setCurrentWeight(this.port.getCurrentWeight() + container.getWeight());
             containers.remove(container);
+            //change for truck
+            this.fuelConsumption += container.getShipConsumption();
+            return true;
         }
         else{
             System.out.println("This vehicle can not unload this container now!");
+            return false;
         }
 
     }
@@ -144,7 +131,7 @@ public class Vehicle implements IVehicle {
     }
 
     public String getVehicleID() {
-        return vehicleID;
+        return this.vehicleID;
     }
 
     public void setVehicleID(String vehicleID) {
@@ -152,7 +139,7 @@ public class Vehicle implements IVehicle {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -165,7 +152,7 @@ public class Vehicle implements IVehicle {
         this.currentWeight = newWeight;
     }
     public double getCurrentFuel() {
-        return currentFuel;
+        return this.currentFuel;
     }
 
     public void setCurrentFuel(double currentFuel) {
@@ -194,6 +181,18 @@ public class Vehicle implements IVehicle {
 
     public void setPort(Port port) {
         this.port = port;
+    }
+
+    public ArrayList<Container> getContainers(){
+        return containers;
+    }
+
+    public double getFuelConsumption(){
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double newConsumption){
+        this.fuelConsumption = newConsumption;
     }
 
 }
