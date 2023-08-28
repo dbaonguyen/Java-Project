@@ -149,11 +149,6 @@ public class Port implements IPort {
     }
 
     @Override
-    public double totalWeight() {
-        return 0;
-    }
-
-    @Override
     public void displayTrip(Date date) {
 
     }

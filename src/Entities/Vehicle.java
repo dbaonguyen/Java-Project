@@ -97,9 +97,11 @@ public class Vehicle implements IVehicle {
 
     @Override
     public void hasArrived(Port port){
-            //update arrivalDate in trip
+
+        //update arrivalDate in trip
         this.port = port;
         port.addVehicle(this);
+        this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(port);
         //add this vehicle to the new port
     }
     @Override

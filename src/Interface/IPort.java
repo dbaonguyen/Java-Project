@@ -23,8 +23,6 @@ public interface IPort {
     public void searchVehicleByName(String name);
     public void addTrip(Trip trip);
 
-    public double totalWeight();
-
     public void displayTrip(Date date);
 
     public void displayTrip(Date date1, Date date2);

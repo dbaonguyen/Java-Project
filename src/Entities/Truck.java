@@ -34,7 +34,7 @@ public class Truck extends Vehicle{
     @Override
     public boolean canMoveToPort(Port port){
         //check port condition
-        if (!port.isLandingAbility()) {
+        if (!this.getPort().isLandingAbility()) {
             return false;
         }
         else{
