@@ -95,9 +95,7 @@ public class Port implements IPort {
 
     @Override
     public void addContainer(Container container) {
-        if (container.getWeight() > this.capacity){
-            System.out.println("The container is heavier than the port capacity!");
-        } else if ((this.currentWeight + container.getWeight()) > this.capacity){
+        if ((this.currentWeight + container.getWeight()) > this.capacity){
             System.out.println("The container is heavier than the port capacity!");
         } else{
             this.containers.add(container);
