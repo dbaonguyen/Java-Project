@@ -188,4 +188,7 @@ public class Port implements IPort {
             this.usedFuel = newFuel;
         }
     }
+
+    public void addUsedFuel(double v) {
+    }
 }
