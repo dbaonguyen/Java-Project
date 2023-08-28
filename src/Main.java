@@ -66,11 +66,44 @@ public class Main {
                                 }
 
                                 //Choose Port
-                                System.out.println("Enter the ID of the port you want to modify: ");
                                 while (true) {
+                                    System.out.println("Enter the ID of the port you want to modify: ");
                                     String portOption = scanner.next();
                                     if (portIDs.contains(portOption)) {
                                         System.out.println(ports.get(portIDs.indexOf(portOption)));
+                                        System.out.println("1. Calculate distance");
+                                        System.out.println("2. Add Container");
+                                        System.out.println("3. Remove Container");
+                                        System.out.println("4. Add Vehicle");
+                                        System.out.println("5. Remove Vehicle");
+                                        System.out.println("6. Search Vehicle");
+                                        System.out.println("7. Add Trips");
+                                        System.out.println("8. Display Trips");
+                                        System.out.println("9. Display Vehicles");
+                                        System.out.println("10. Display Containers");
+                                        System.out.println("11. Go Back");
+
+                                        int option3 = scanner.nextInt();
+                                        switch (option3) {
+                                            case 1:
+                                                List<String> portIDs2 = new ArrayList<>();
+                                                for (Port port : ports) {
+                                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                                    portIDs2.add(port.getPortID());
+                                                }
+
+                                                while (true) {
+                                                    System.out.println("Please enter the port you want to calculate the distance:");
+                                                    String portOption2 = scanner.next();
+                                                    if (portIDs2.contains(portOption2)) {
+                                                        System.out.println(ports.get(portIDs.indexOf(portOption)).calculateDistance(ports.get(portIDs2.indexOf(portOption2))));
+
+                                                        break;
+                                                    } else {
+                                                        System.out.println("Please choose an valid option");
+                                                    }
+                                                }
+                                        }
                                     } else {
                                         System.out.println("Please choose an valid option");
                                     }
