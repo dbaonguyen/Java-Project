@@ -26,9 +26,9 @@ public class Container {
         this.weight = weight;
     }
 
-    public String getContainerType(){
-        return this.containerType.getType();
-    }
+    public Type getType(){
+        return this.containerType;
+    };
 
     public double getTruckConsumption(){
         return this.containerType.getTruckConsume();
@@ -36,5 +36,15 @@ public class Container {
 
     public double getShipConsumption(){
         return this.containerType.getShipConsume();
+    }
+
+
+    @Override
+    public String toString() {
+        return "Container{" +
+                "containerID='" + containerID + '\'' +
+                ", weight=" + weight +
+                ", containerType=" + containerType +
+                '}';
     }
 }

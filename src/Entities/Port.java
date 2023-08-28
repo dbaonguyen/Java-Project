@@ -175,20 +175,4 @@ public class Port implements IPort {
     public double totalFuel() {
         return 0;
     }
-
-    @Override
-    public String toString() {
-        return "Port{" +
-                "portID='" + portID + '\'' +
-                ", name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longtitude=" + longtitude +
-                ", currentWeight=" + currentWeight +
-                ", capacity=" + capacity +
-                ", landingAbility=" + landingAbility +
-                ", containers=" + containers +
-                ", vehicles=" + vehicles +
-                ", trips=" + trips +
-                '}';
-    }
 }

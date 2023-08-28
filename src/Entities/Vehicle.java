@@ -8,15 +8,29 @@ import java.util.List;
 public class Vehicle implements IVehicle {
     private String vehicleID;
     private String name;
+    private double currentWeight;
     private double currentFuel;
     private double capacity;
     private double fuelCapacity;
     private Port port;
-    private List<Container> containers = new ArrayList<>();
+    private ArrayList<Container> containers = new ArrayList<>();
+    private double fuelConsumption;
 
-        public Vehicle(String vehicleID, String name, double currentFuel, double capacity, double fuelCapacity, Port port) {
+    public Vehicle(){
+        vehicleID = "tr-0000";
+        name = "default";
+        currentWeight = 0;
+        currentFuel = 0;
+        capacity = 0;
+        fuelCapacity = 0;
+        port = null;
+        fuelConsumption = 0;
+    }
+
+    public Vehicle(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         this.vehicleID = vehicleID;
         this.name = name;
+        this.currentWeight = currentWeight;
         this.currentFuel = currentFuel;
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
@@ -25,53 +39,81 @@ public class Vehicle implements IVehicle {
 
 
     @Override
-    public CanMoveToPort canMoveToPort(Port port) {
-        //boolean to check ability to move
-        boolean canLand = true;
-        boolean enoughWeight = true;
-        boolean enoughFuel = true;
-        //list to store the unmet requirements
-        ArrayList<String> violatedRequirements = new ArrayList<>();
-        //calculate current weight of vehicle
-        double vehicleCurrentWeight = 0;
-        for (Container cont: this.containers) {
-            vehicleCurrentWeight += cont.getWeight();
-        }
-        //calculate current fuel needs
-
+    public boolean canMoveToPort(Port port) {
         //calculate fuel needs
-
-        //check conditions
-        if (!port.isLandingAbility()) {
-            canLand = false;
-            violatedRequirements.add("Invalid landing ability!");
+        double fuelNeeded = this.fuelConsumption * this.port.calculateDistance(port);
+        if(fuelNeeded > this.fuelCapacity){
+            return false;
         }
-        if (port.getCurrentWeight() + vehicleCurrentWeight > port.getCapacity()) {
-            enoughWeight = false;
-            violatedRequirements.add("The weight on the vehicle exceed the capacity of the destined port!");
+        return true;
+    }
+
+    @Override
+    public boolean loadContainer(Container container) {
+        if (container.getWeight() <= this.capacity - this.currentWeight && this.port != null) {
+            containers.add(container);
+            this.port.removeContainer(container);
+            this.setCurrentWeight(this.currentWeight + container.getWeight());
+            //change for truck
+            this.fuelConsumption += container.getShipConsumption();
+            return true;
+        }
+        else{
+            System.out.println("This container can not be loaded on this vehicle!");
+            return false;
+        }
+    }
+    @Override
+    public boolean unloadContainer(Container container) {
+        if(this.port != null && container.getWeight() <= this.port.getCapacity() - this.port.getCurrentWeight()){
+            this.port.addContainer(container);
+            this.port.setCurrentWeight(this.port.getCurrentWeight() + container.getWeight());
+            containers.remove(container);
+            //change for truck
+            this.fuelConsumption += container.getShipConsumption();
+            return true;
+        }
+        else{
+            System.out.println("This vehicle can not unload this container now!");
+            return false;
+        }
+    }
+
+    @Override
+    public void moveToPort(Port port) {
+        //check value of canMoveToPort()
+        if(this.canMoveToPort(port) == false){
+            System.out.println("The vehicle can not go to this port!");
+        }
+        else{
+
+            //make a new trip variable(arrivalDate = null)
+            this.setPort(null);
+            //change port to null
+            port.removeVehicle(this);
+            //remove vehicle from old port
         }
 
-        return new CanMoveToPort(canLand&&enoughWeight, violatedRequirements);
+
+
+
     }
 
     @Override
-    public void loadContainer(Container container) {
-        containers.add(container);
-    }
-
-    @Override
-    public void unloadContainer(Container container) {
-        containers.remove(container);
-    }
-
-    @Override
-    public void moveToPort(Port port)  {
+    public void hasArrived(){
+            //update arrivalDate in trip
         this.port = port;
+        //add this vehicle to the new port
     }
-
     @Override
     public void refuel() {
-        currentFuel = currentFuel + (fuelCapacity - currentFuel);
+        if(this.port == null){
+            System.out.println("The vehicle is travelling, can not refuel!");
+        }
+        else{
+            this.port.addUsedFuel(this.fuelCapacity - this.currentFuel);
+            this.currentFuel = this.fuelCapacity;
+        }
     }
 
     @Override
@@ -88,7 +130,7 @@ public class Vehicle implements IVehicle {
     }
 
     public String getVehicleID() {
-        return vehicleID;
+        return this.vehicleID;
     }
 
     public void setVehicleID(String vehicleID) {
@@ -96,15 +138,20 @@ public class Vehicle implements IVehicle {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public double getCurrentWeight(){ return this.currentWeight;};
+
+    public void setCurrentWeight(double newWeight){
+        this.currentWeight = newWeight;
+    }
     public double getCurrentFuel() {
-        return currentFuel;
+        return this.currentFuel;
     }
 
     public void setCurrentFuel(double currentFuel) {
@@ -133,6 +180,18 @@ public class Vehicle implements IVehicle {
 
     public void setPort(Port port) {
         this.port = port;
+    }
+
+    public ArrayList<Container> getContainers(){
+        return containers;
+    }
+
+    public double getFuelConsumption(){
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double newConsumption){
+        this.fuelConsumption = newConsumption;
     }
 
 }
