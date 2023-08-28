@@ -53,6 +53,7 @@ public class Vehicle implements IVehicle {
         if (container.getWeight() <= this.capacity - this.currentWeight && this.port != null) {
             containers.add(container);
             this.port.removeContainer(container);
+            this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
             this.setCurrentWeight(this.currentWeight + container.getWeight());
             //change for truck
             this.fuelConsumption += container.getShipConsumption();
@@ -68,7 +69,8 @@ public class Vehicle implements IVehicle {
         if(this.port != null && container.getWeight() <= this.port.getCapacity() - this.port.getCurrentWeight()){
             this.port.addContainer(container);
             this.port.setCurrentWeight(this.port.getCurrentWeight() + container.getWeight());
-            containers.remove(container);
+            this.setCurrentWeight(this.currentWeight + container.getWeight());
+            this.containers.remove(container);
             //change for truck
             this.fuelConsumption += container.getShipConsumption();
             return true;

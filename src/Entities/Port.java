@@ -2,6 +2,7 @@ package Entities;
 
 import Interface.IPort;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,8 @@ public class Port implements IPort {
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
-
+    public SimpleDateFormat currentDate;
+    private double usedFuel;
     public Port(String portID, String name, double latitude, double longtitude, double capacity, double currentWeight,boolean landingAbility ) {
         this.portID = String.valueOf(portID);
         this.name = name;
@@ -173,6 +175,16 @@ public class Port implements IPort {
 
     @Override
     public double totalFuel() {
-        return 0;
+        return usedFuel;
+    }
+
+    public void addUsedFuel(double newFuel){
+        if(currentDate == this.currentDate){
+            this.usedFuel += newFuel;
+        }
+        else{
+            this.currentDate = currentDate;
+            this.usedFuel = newFuel;
+        }
     }
 }
