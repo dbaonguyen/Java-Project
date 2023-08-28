@@ -90,7 +90,7 @@ public class Port implements IPort {
     @Override
     public double calculateDistance(Port port) {
         double distance = Math.sqrt(Math.pow((port.longtitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
-        return distance;
+        return Math.floor(distance);
     }
 
     @Override
