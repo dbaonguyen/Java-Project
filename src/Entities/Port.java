@@ -86,6 +86,10 @@ public class Port implements IPort {
         this.currentWeight = currentWeight;
     }
 
+    public List<Container> getContainers() {
+        return containers;
+    }
+
     @Override
     public double calculateDistance(Port port) {
         double distance = Math.sqrt(Math.pow((port.longtitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
@@ -179,16 +183,19 @@ public class Port implements IPort {
         return usedFuel;
     }
 
-    public void addUsedFuel(double newFuel){
-        if(currentDate == this.currentDate){
-            this.usedFuel += newFuel;
-        }
-        else{
-            this.currentDate = currentDate;
-            this.usedFuel = newFuel;
-        }
-    }
-
     public void addUsedFuel(double v) {
     }
+
+//    public void addUsedFuel(double newFuel){
+//        if(currentDate == this.currentDate){
+//            this.usedFuel += newFuel;
+//        }
+//        else{
+//            this.currentDate = currentDate;
+//            this.usedFuel = newFuel;
+//        }
+//    }
+//
+//    public void addUsedFuel(double v) {
+//    }
 }
