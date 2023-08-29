@@ -112,6 +112,11 @@ public class Port implements IPort {
 
     @Override
     public void addVehicle(Vehicle vehicle) {
+        if (!this.isLandingAbility() && (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck)){
+            System.out.println("Can not add this vehicle!");
+        } else{
+            this.vehicles.add(vehicle);
+        }
 
     }
 
@@ -189,6 +194,4 @@ public class Port implements IPort {
         }
     }
 
-    public void addUsedFuel(double v) {
-    }
 }
