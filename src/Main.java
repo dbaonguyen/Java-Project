@@ -67,10 +67,10 @@ public class Main {
             System.out.println("Please choose your option");
             System.out.println("1. Login");
             System.out.println("2. Exit");
-            int option = scanner.nextInt();
+            String option = scanner.next();
 
             //Login
-            if (option == 1) {
+            if (option.equals("1")) {
                 //Usernames and Password
                 while (true) {
                     System.out.print("Enter your username: ");
@@ -91,10 +91,10 @@ public class Main {
                             System.out.println("3. Go Back");
                             System.out.print("Your option: ");
                             System.out.println();
-                            int option2 = scanner.nextInt();
+                            String option2 = scanner.next();
 
                             //Admin Option (Choose ports)
-                            if (option2 == 1) {
+                            if (option2.equals("1")) {
 
                                 // Print the ports in the ArrayList for Options
                                 List<String> portIDs = new ArrayList<>();
@@ -128,9 +128,9 @@ public class Main {
                                             System.out.println("10. Display Containers");
                                             System.out.println("11. Go Back");
 
-                                            int option3 = scanner.nextInt();
+                                            String option3 = scanner.next();
                                             switch (option3) {
-                                                case 1:
+                                                case "1":
                                                     List<String> portIDs2 = new ArrayList<>();
                                                     for (Port port : ports) {
                                                         System.out.println(port.getPortID() + ". " + port.getName());
@@ -151,14 +151,26 @@ public class Main {
                                                     }
                                                     break;
 
-                                                case 10:
+                                                case "2":
+                                                case "3":
+                                                case "4":
+                                                case "5":
+                                                case "6":
+                                                case "7":
+                                                case "8":
+                                                case "9":
+                                                case "10":
                                                     for (Container container : ports.get(portIDs.indexOf(portOption)).getContainers()) {
                                                         System.out.println(container);
                                                     }
                                                     break;
 
-                                                case 11:
+                                                case "11":
                                                     shouldContinue = false;
+                                                    break;
+
+                                                default:
+                                                    System.out.println("Please choose an valid option: ");
                                                     break;
                                             }
                                         }
@@ -170,7 +182,7 @@ public class Main {
                             }
 
                             //Add Port2
-                            else if (option2 == 2) {
+                            else if (option2.equals("2")) {
                                 System.out.println("Please enter port id:");
                                 String portID = scanner.next();
                                 System.out.println("Please enter port name:");
@@ -191,8 +203,10 @@ public class Main {
                             }
 
                             //Go Back
-                            else if (option2 == 3) {
+                            else if (option2.equals("3")) {
                                 break;
+                            } else {
+                                System.out.println("Please enter a valid option");
                             }
                             }
                         }
@@ -209,21 +223,14 @@ public class Main {
                         System.out.println("Username or Password is incorrect. Please try again.");
                         System.out.println();
                     }
+                    break;
                 }
-            }
-
-            //Exit
-            else if (option == 2) {
+            } else if (option.equals("2")) {
                 System.out.println("logged out");
                 break;
+            } else {
+                System.out.println("Please enter a valid option");
             }
-
-            //Invalid Option
-            else {
-                System.out.println("Please choose a valid option");
-                continue;
-            }
-            break;
         }
     }
 }
