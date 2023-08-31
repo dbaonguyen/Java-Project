@@ -21,7 +21,7 @@ public class Port implements IPort, Serializable {
     private List<Trip> trips = new ArrayList<>();
     public SimpleDateFormat currentDate;
     private double usedFuel;
-    public Port(String portID, String name, double latitude, double longtitude, double capacity, double currentWeight,boolean landingAbility ) {
+    public Port(String portID, String name, double latitude, double longtitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
         this.name = name;
         this.latitude = latitude;

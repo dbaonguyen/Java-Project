@@ -89,12 +89,13 @@ public class Main {
             System.out.println("Please choose your option");
             System.out.println("1. Login");
             System.out.println("2. Exit");
-            int option = scanner.nextInt();
+            String option = scanner.next();
 
             //Login
-            if (option == 1) {
+            if (option.equals("1")) {
                 //Usernames and Password
-                while (true) {
+                boolean login = true;
+                while (login) {
                     System.out.print("Enter your username: ");
                     String username = scanner.next();
 
@@ -107,87 +108,94 @@ public class Main {
                         String expectedPassword = userCredentials.get(username);
                         if (username.equals("1") && password.equals(expectedPassword)) {
                             System.out.println("Welcome Admin " + username);
-                        while (true) {
-                            System.out.println("1. Choose Port");
-                            System.out.println("2. Go Back");
-                            System.out.print("Your option: ");
-                            System.out.println();
-                            int option2 = scanner.nextInt();
+                            while (true) {
+                                System.out.println("1. Choose Port");
+                                System.out.println("2. Add Port");
+                                System.out.println("3. Go Back");
+                                System.out.print("Your option: ");
+                                System.out.println();
+                                String option2 = scanner.next();
 
-                            //Admin Option (Choose ports)
-                            if (option2 == 1) {
+                                //Admin Option (Choose ports)
+                                if (option2.equals("1")) {
 
-                                // Print the ports in the ArrayList for Options
-                                List<String> portIDs = new ArrayList<>();
+                                    // Print the ports in the ArrayList for Options
+                                    List<String> portIDs = new ArrayList<>();
 
 
-                                //Choose Port
-                                while (true) {
-                                    for (Port port : ports) {
-                                        System.out.println(port.getPortID() + ". " + port.getName());
-                                        portIDs.add(port.getPortID());
-                                    }
-                                    System.out.println("0. Go back");
-                                    System.out.println("Enter the ID of the port above that you want to modify: ");
-                                    String portOption = scanner.next();
+                                    //Choose Port
+                                    while (true) {
+                                        for (Port port : ports) {
+                                            System.out.println(port.getPortID() + ". " + port.getName());
+                                            portIDs.add(port.getPortID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Enter the ID of the port above that you want to modify: ");
+                                        String portOption = scanner.next();
 
-                                    if (portOption.equals("0")) {
-                                        break;
-                                    }
-
-                                    if (portIDs.contains(portOption)) {
-                                        boolean shouldContinue = true;
-                                        while (shouldContinue) {
-                                            System.out.println("1. Calculate distance");
-                                            System.out.println("2. Add Container");
-                                            System.out.println("3. Remove Container");
-                                            System.out.println("4. Add Vehicle");
-                                            System.out.println("5. Remove Vehicle");
-                                            System.out.println("6. Search Vehicle");
-                                            System.out.println("7. Add Trips");
-                                            System.out.println("8. Display Trips");
-                                            System.out.println("9. Display Vehicles");
-                                            System.out.println("10. Display Containers");
-                                            System.out.println("11. Go Back");
-
-                                            int option3 = scanner.nextInt();
-                                            switch (option3) {
-                                                case 1:
-                                                    List<String> portIDs2 = new ArrayList<>();
-                                                    for (Port port : ports) {
-                                                        System.out.println(port.getPortID() + ". " + port.getName());
-                                                        portIDs2.add(port.getPortID());
-                                                    }
-
-                                                    while (true) {
-                                                        System.out.println("Please enter the port you want to calculate the distance:");
-                                                        String portOption2 = scanner.next();
-                                                        if (portIDs2.contains(portOption2)) {
-                                                            System.out.println("The distance between 2 ports is: " + ports.get(portIDs.indexOf(portOption)).calculateDistance(ports.get(portIDs2.indexOf(portOption2))) + "km");
-                                                            System.out.println();
-                                                            break;
-                                                        } else {
-                                                            System.out.println("Please choose an valid option");
-                                                            System.out.println();
-                                                        }
-                                                    }
-                                                    break;
-
-                                                case 11:
-                                                    shouldContinue = false;
-                                                    break;
-                                            }
+                                        if (portOption.equals("0")) {
+                                            break;
                                         }
 
-                                    } else {
-                                        System.out.println("Please choose an valid option");
+                                        if (portIDs.contains(portOption)) {
+                                            boolean shouldContinue = true;
+                                            while (shouldContinue) {
+                                                System.out.println("1. Calculate distance");
+                                                System.out.println("2. Add Container");
+                                                System.out.println("3. Remove Container");
+                                                System.out.println("4. Add Vehicle");
+                                                System.out.println("5. Remove Vehicle");
+                                                System.out.println("6. Search Vehicle");
+                                                System.out.println("7. Add Trips");
+                                                System.out.println("8. Display Trips");
+                                                System.out.println("9. Display Vehicles");
+                                                System.out.println("10. Display Containers");
+                                                System.out.println("11. Go Back");
+
+                                                String option3 = scanner.next();
+                                                switch (option3) {
+                                                    case "1":
+                                                        List<String> portIDs2 = new ArrayList<>();
+                                                        for (Port port : ports) {
+                                                            System.out.println(port.getPortID() + ". " + port.getName());
+                                                            portIDs2.add(port.getPortID());
+                                                        }
+
+                                                        while (true) {
+                                                            System.out.println("Please enter the port you want to calculate the distance:");
+                                                            String portOption2 = scanner.next();
+                                                            if (portIDs2.contains(portOption2)) {
+                                                                System.out.println("The distance between 2 ports is: " + ports.get(portIDs.indexOf(portOption)).calculateDistance(ports.get(portIDs2.indexOf(portOption2))) + "km");
+                                                                System.out.println();
+                                                                break;
+                                                            } else {
+                                                                System.out.println("Please choose an valid option");
+                                                                System.out.println();
+                                                            }
+                                                        }
+                                                        break;
+
+                                                    case "11":
+                                                        shouldContinue = false;
+                                                        break;
+                                                }
+                                            }
+
+                                        }
+
+                                        else {
+                                            System.out.println("Please choose an valid option");
+                                        }
                                     }
+                                } else if (option2.equals("2")) {
+                                    System.out.println("Please ");
                                 }
-                        }
-                            //Go Back
-                            else if (option2 == 2) {
-                                break;
-                            }
+                                //Go Back
+                                else if (option2.equals("3")) {
+                                    break;
+                                } else {
+                                    System.out.println("Please choose a valid option:");
+                                }
                             }
                         }
 
@@ -203,11 +211,12 @@ public class Main {
                         System.out.println("Username or Password is incorrect. Please try again.");
                         System.out.println();
                     }
+                    break;
                 }
             }
 
             //Exit
-            else if (option == 2) {
+            else if (option.equals("2")) {
                 System.out.println("logged out");
                 break;
             }
@@ -215,9 +224,7 @@ public class Main {
             //Invalid Option
             else {
                 System.out.println("Please choose a valid option");
-                continue;
             }
-            break;
         }
     }
 }
