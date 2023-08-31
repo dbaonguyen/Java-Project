@@ -184,7 +184,8 @@ public class Main {
                                     System.out.println("Please enter your port current weight: ");
                                     double portCurrentWeight = scanner.nextDouble();
                                     System.out.println("Please enter your port landing ability (true/false): ");
-                                    String portLandingAbility = scanner.next();
+                                    boolean portLandingAbility = scanner.nextBoolean();
+                                    ports.add(new Port(portID, portName, portLatitude, portLongtitude,portCapacity, portCurrentWeight, portLandingAbility));
                                 }
                                 //Go Back
                                 else if (option2.equals("3")) {
