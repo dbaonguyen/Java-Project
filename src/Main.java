@@ -90,7 +90,7 @@ public class Main {
         if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
             return true;
         }
-        if (((PortManager)portManagers).getHashMap().containsKey(username) && ((PortManager)portManagers).getHashMap().containsValue(password)) {
+        if (((PortManager)portManagers).getUserCredentials().containsKey(username) && ((PortManager)portManagers).getUserCredentials().containsValue(password)) {
             return true;
         }
         return false;

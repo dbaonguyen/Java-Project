@@ -17,7 +17,7 @@ public class PortManager extends User{
         return userCredentials.get(username);
     }
 
-    public Map<String, String> getHashMap() {
+    public Map<String, String> getUserCredentials() {
         return userCredentials;
     }
 }
