@@ -156,6 +156,7 @@ public class Main {
                                                             }
                                                         }
                                                         break;
+                                                    case "2":
 
                                                     case "11":
                                                         shouldContinue = false;
@@ -170,7 +171,20 @@ public class Main {
                                         }
                                     }
                                 } else if (option2.equals("2")) {
-                                    System.out.println("Please ");
+                                    System.out.println("Please enter your port ID: ");
+                                    String portID = scanner.next();
+                                    System.out.println("Please enter your port name: ");
+                                    String portName = scanner.next();
+                                    System.out.println("Please enter your port latitude: ");
+                                    double portLatitude = scanner.nextDouble();
+                                    System.out.println("Please enter your port longtitude: ");
+                                    double portLongtitude = scanner.nextDouble();
+                                    System.out.println("Please enter your port capacity: ");
+                                    double portCapacity = scanner.nextDouble();
+                                    System.out.println("Please enter your port current weight: ");
+                                    double portCurrentWeight = scanner.nextDouble();
+                                    System.out.println("Please enter your port landing ability (true/false): ");
+                                    String portLandingAbility = scanner.next();
                                 }
                                 //Go Back
                                 else if (option2.equals("3")) {
