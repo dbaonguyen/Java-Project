@@ -30,13 +30,6 @@ public class Type {
     }
     //method to get fuel consumption on ships
 
-    public static void main(String[] args){
-        Type dryStorage = new Type("Dry storage",3.5, 4.6);
-        Type openTop = new Type("Open top", 2.8, 3.2);
-        Type openSide = new Type("Open side", 2.7, 3.2);
-        Type refrigerated = new Type("Refrigerated", 4.5, 5.4);
-        Type liquid = new Type("Liquid", 4.8, 5.3);
-    }
 }
 
 

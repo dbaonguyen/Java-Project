@@ -2,12 +2,13 @@ package Entities;
 
 import Interface.IPort;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Port implements IPort {
+public class Port implements IPort, Serializable {
     private String portID;
     private String name;
     private double latitude;
