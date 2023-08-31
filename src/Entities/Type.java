@@ -30,7 +30,6 @@ public class Type {
     }
     //method to get fuel consumption on ships
 
-
 }
 
 

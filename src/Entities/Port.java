@@ -2,12 +2,13 @@ package Entities;
 
 import Interface.IPort;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Port implements IPort {
+public class Port implements IPort, Serializable {
     private String portID;
     private String name;
     private double latitude;
@@ -86,10 +87,6 @@ public class Port implements IPort {
         this.currentWeight = currentWeight;
     }
 
-    public List<Container> getContainers() {
-        return containers;
-    }
-
     @Override
     public double calculateDistance(Port port) {
         double distance = Math.sqrt(Math.pow((port.longtitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
@@ -116,6 +113,11 @@ public class Port implements IPort {
 
     @Override
     public void addVehicle(Vehicle vehicle) {
+        if (!this.isLandingAbility() && (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck)){
+            System.out.println("Can not add this vehicle!");
+        } else{
+            this.vehicles.add(vehicle);
+        }
 
     }
 
@@ -183,19 +185,14 @@ public class Port implements IPort {
         return usedFuel;
     }
 
-    public void addUsedFuel(double v) {
+    public void addUsedFuel(double newFuel){
+        if(currentDate == this.currentDate){
+            this.usedFuel += newFuel;
+        }
+        else{
+            this.currentDate = currentDate;
+            this.usedFuel = newFuel;
+        }
     }
 
-//    public void addUsedFuel(double newFuel){
-//        if(currentDate == this.currentDate){
-//            this.usedFuel += newFuel;
-//        }
-//        else{
-//            this.currentDate = currentDate;
-//            this.usedFuel = newFuel;
-//        }
-//    }
-//
-//    public void addUsedFuel(double v) {
-//    }
 }
