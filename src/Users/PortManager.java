@@ -13,10 +13,6 @@ public class PortManager extends User{
         userCredentials.put("4", "4");
     }
 
-    public String getPasswordForUsername(String username) {
-        return userCredentials.get(username);
-    }
-
     public Map<String, String> getUserCredentials() {
         return userCredentials;
     }
