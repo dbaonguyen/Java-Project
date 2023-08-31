@@ -79,8 +79,20 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    System.out.println("Enter your username:");
+                    String username = scanner.next();
 
+                    System.out.println("Enter your password:");
+                    String password = scanner.next();
+
+                    if (loginValidation(username, password)) {
+                        System.out.println("Welcome!");
+                    } else {
+                        System.out.println("Incorrect username or password!");
+                    }
+                    break;
             }
+            break;
         } while (true);
     }
 
@@ -90,7 +102,7 @@ public class Main {
         if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
             return true;
         }
-        if (((PortManager)portManagers).getUserCredentials().containsKey(username) && ((PortManager)portManagers).getUserCredentials().containsValue(password)) {
+        if (((PortManager)portManagers).getUserCredentials().containsKey(username) && ((PortManager)portManagers).getUserCredentials().containsValue(password)){
             return true;
         }
         return false;
