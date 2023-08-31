@@ -8,9 +8,9 @@ public class PortManager extends User{
 
     public PortManager() {
         userCredentials = new HashMap<>();
-        userCredentials.put("admin", "adminPassword");
-        userCredentials.put("user1", "password1");
-        userCredentials.put("user2", "password2");
+        userCredentials.put("2", "2");
+        userCredentials.put("3", "3");
+        userCredentials.put("4", "4");
     }
 
     public String getPasswordForUsername(String username) {
