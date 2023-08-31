@@ -24,25 +24,7 @@ public class Main {
         ports.add(port3);
         ports.add(port4);
         ports.add(port5);
-        //store into serialization file
-        try (FileOutputStream fileOut = new FileOutputStream("port.ser");
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-            out.writeObject(ports);
-            System.out.println("Port has been serialized and saved to port.ser");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //read from serialization file
-        try (FileInputStream fileIn = new FileInputStream("port.ser");
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            List<Port> deserializedPorts = (List<Port>) in.readObject();
-            System.out.println("Objects have been deserialized from port.ser");
-            for (Port port: deserializedPorts) {
-                System.out.println(port);
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+
         Type dryStorage = new Type("Dry storage",3.5, 4.6);
         Type openTop = new Type("Open top", 2.8, 3.2);
         Type openSide = new Type("Open side", 2.7, 3.2);
