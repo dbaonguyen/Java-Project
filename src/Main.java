@@ -1,10 +1,10 @@
 import Entities.*;
+import Users.Admin;
+import Users.PortManager;
+import Users.User;
 
 import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+        User admin = new Admin("1","1");
         //Ports
         List<Port> ports = new ArrayList<>();
         Port port1 = new Port("p-1", "Harbor Bay", 34.0522, -118.2437, 500.0, 1500.0, true);
@@ -65,163 +66,33 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        //Menu
-        boolean running = true;
-        while (running) {
-            System.out.println("Please choose your option");
+        do {
+            int choice = 0;
             System.out.println("1. Login");
             System.out.println("2. Exit");
-            String option = scanner.next();
-
-            //Login
-            if (option.equals("1")) {
-                //Usernames and Password
-                boolean login = true;
-                while (login) {
-                    System.out.print("Enter your username: ");
-                    String username = scanner.next();
-
-                    System.out.print("Enter your password: ");
-                    String password = scanner.next();
-                    System.out.println();
-
-                    //Correct Username and password
-                    if (userCredentials.containsKey(username) && userCredentials.containsValue(password)) {
-                        String expectedPassword = userCredentials.get(username);
-                        if (username.equals("1") && password.equals(expectedPassword)) {
-                            System.out.println("Welcome Admin " + username);
-                            while (true) {
-                                System.out.println("1. Choose Port");
-                                System.out.println("2. Add Port");
-                                System.out.println("3. Go Back");
-                                System.out.print("Your option: ");
-                                System.out.println();
-                                String option2 = scanner.next();
-
-                                //Admin Option (Choose ports)
-                                if (option2.equals("1")) {
-
-                                    // Print the ports in the ArrayList for Options
-                                    List<String> portIDs = new ArrayList<>();
-
-
-                                    //Choose Port
-                                    while (true) {
-                                        for (Port port : ports) {
-                                            System.out.println(port.getPortID() + ". " + port.getName());
-                                            portIDs.add(port.getPortID());
-                                        }
-                                        System.out.println("0. Go back");
-                                        System.out.println("Enter the ID of the port above that you want to modify: ");
-                                        String portOption = scanner.next();
-
-                                        if (portOption.equals("0")) {
-                                            break;
-                                        }
-
-                                        if (portIDs.contains(portOption)) {
-                                            boolean shouldContinue = true;
-                                            while (shouldContinue) {
-                                                System.out.println("1. Calculate distance");
-                                                System.out.println("2. Add Container");
-                                                System.out.println("3. Remove Container");
-                                                System.out.println("4. Add Vehicle");
-                                                System.out.println("5. Remove Vehicle");
-                                                System.out.println("6. Search Vehicle");
-                                                System.out.println("7. Add Trips");
-                                                System.out.println("8. Display Trips");
-                                                System.out.println("9. Display Vehicles");
-                                                System.out.println("10. Display Containers");
-                                                System.out.println("11. Go Back");
-
-                                                String option3 = scanner.next();
-                                                switch (option3) {
-                                                    case "1":
-                                                        List<String> portIDs2 = new ArrayList<>();
-                                                        for (Port port : ports) {
-                                                            System.out.println(port.getPortID() + ". " + port.getName());
-                                                            portIDs2.add(port.getPortID());
-                                                        }
-
-                                                        while (true) {
-                                                            System.out.println("Please enter the port you want to calculate the distance:");
-                                                            String portOption2 = scanner.next();
-                                                            if (portIDs2.contains(portOption2)) {
-                                                                System.out.println("The distance between 2 ports is: " + ports.get(portIDs.indexOf(portOption)).calculateDistance(ports.get(portIDs2.indexOf(portOption2))) + "km");
-                                                                System.out.println();
-                                                                break;
-                                                            } else {
-                                                                System.out.println("Please choose an valid option");
-                                                                System.out.println();
-                                                            }
-                                                        }
-                                                        break;
-                                                    case "2":
-
-                                                    case "11":
-                                                        shouldContinue = false;
-                                                        break;
-                                                }
-                                            }
-
-                                        }
-
-                                        else {
-                                            System.out.println("Please choose an valid option");
-                                        }
-                                    }
-                                } else if (option2.equals("2")) {
-                                    System.out.println("Please enter your port ID: ");
-                                    String portID = scanner.next();
-                                    System.out.println("Please enter your port name: ");
-                                    String portName = scanner.next();
-                                    System.out.println("Please enter your port latitude: ");
-                                    double portLatitude = scanner.nextDouble();
-                                    System.out.println("Please enter your port longtitude: ");
-                                    double portLongtitude = scanner.nextDouble();
-                                    System.out.println("Please enter your port capacity: ");
-                                    double portCapacity = scanner.nextDouble();
-                                    System.out.println("Please enter your port current weight: ");
-                                    double portCurrentWeight = scanner.nextDouble();
-                                    System.out.println("Please enter your port landing ability (true/false): ");
-                                    boolean portLandingAbility = scanner.nextBoolean();
-                                    ports.add(new Port(portID, portName, portLatitude, portLongtitude,portCapacity, portCurrentWeight, portLandingAbility));
-                                }
-                                //Go Back
-                                else if (option2.equals("3")) {
-                                    break;
-                                } else {
-                                    System.out.println("Please choose a valid option:");
-                                }
-                            }
-                        }
-
-                        //Port Manager Option
-                        else if (password.equals(expectedPassword)) {
-                            System.out.println("Welcome Port Manager " + username);
-                            break;
-                        }
-                    }
-
-                    //Wrong Username or Password
-                    else {
-                        System.out.println("Username or Password is incorrect. Please try again.");
-                        System.out.println();
-                    }
-                    break;
-                }
+            try {
+                System.out.println("Your option: ");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Please choose a valid option: ");
             }
 
-            //Exit
-            else if (option.equals("2")) {
-                System.out.println("logged out");
-                break;
-            }
+            switch (choice) {
+                case 1:
 
-            //Invalid Option
-            else {
-                System.out.println("Please choose a valid option");
             }
+        } while (true);
+    }
+
+    public static boolean loginValidation (String username, String password) {
+        User admin = new Admin();
+        User portManagers = new PortManager();
+        if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
+            return true;
         }
+        if (((PortManager)portManagers).getHashMap().containsKey(username) && ((PortManager)portManagers).getHashMap().containsValue(password)) {
+            return true;
+        }
+        return false;
     }
 }
