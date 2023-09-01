@@ -45,6 +45,7 @@ public class Main {
         //data initialization
         userList.add(new Admin("1","1"));
         userList.add(new User("2", "2"));
+        userList.add(new PortManager("3", "3"));
 
         typeList.add(new Type("Dry storage", 3.5, 4.6));
         typeList.add(new Type("Open top", 2.8, 3.2));
@@ -95,34 +96,34 @@ public class Main {
         writeListToFile(tankerTruckList, "tankerTruckList.ser");
         writeListToFile(typeList, "typeList.ser");
         Scanner scanner = new Scanner(System.in);
-//        do {
-//            int choice = 0;
-//            System.out.println("1. Login");
-//            System.out.println("2. Exit");
-//            try {
-//                System.out.println("Your option: ");
-//                choice = Integer.parseInt(scanner.nextLine());
-//            } catch (Exception e) {
-//                System.out.println("Please choose a valid option: ");
-//            }
-//
-//            switch (choice) {
-//                case 1:
-//                    System.out.println("Enter your username:");
-//                    String username = scanner.next();
-//
-//                    System.out.println("Enter your password:");
-//                    String password = scanner.next();
-//                    String indicator = loginValidation2(username, password);
-//                    if (!indicator.equals("invalid")) {
-//                        System.out.println("Welcome!" + indicator);
-//                    } else {
-//                        System.out.println("Incorrect username or password!");
-//                    }
-//                    break;
-//            }
-//            break;
-//        } while (true);
+        do {
+            int choice = 0;
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            try {
+                System.out.println("Your option: ");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Please choose a valid option: ");
+            }
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter your username:");
+                    String username = scanner.next();
+
+                    System.out.println("Enter your password:");
+                    String password = scanner.next();
+                    String indicator = loginValidation2(username, password);
+                    if (!indicator.equals("invalid")) {
+                        System.out.println("Welcome!" + indicator);
+                    } else {
+                        System.out.println("Incorrect username or password!");
+                    }
+                    break;
+            }
+            break;
+        } while (true);
     }
 
     public static String loginValidation2 (String enteredUsername, String enteredPassword) {
