@@ -22,7 +22,6 @@ public class Main {
         try (FileOutputStream fileOut = new FileOutputStream(filePath);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(list);
-            System.out.println("List has been serialized and saved to " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -34,7 +33,6 @@ public class Main {
         try (FileInputStream fileIn = new FileInputStream(filePath);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
             deserializedList = (List<T>) in.readObject();
-            System.out.println("List has been deserialized from " + filePath);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -96,6 +94,9 @@ public class Main {
         writeListToFile(tankerTruckList, "tankerTruckList.ser");
         writeListToFile(typeList, "typeList.ser");
         Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+        List<String> portIDs = new ArrayList<>();
+        //Login
         do {
             int choice = 0;
             System.out.println("1. Login");
@@ -110,20 +111,155 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("Enter your username:");
-                    String username = scanner.next();
+                    String username = scanner.nextLine();
 
                     System.out.println("Enter your password:");
-                    String password = scanner.next();
+                    String password = scanner.nextLine();
                     String indicator = loginValidation2(username, password);
                     if (!indicator.equals("invalid")) {
                         System.out.println("Welcome!" + indicator);
+                        boolean running2 = true;
+                        choice = 0;
+                        do {
+                            try {
+                                System.out.println("1. Choose port");
+                                System.out.println("2. Add port");
+                                System.out.println("3. Go back");
+                                System.out.println("Your option: ");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Please choose a valid option: ");
+                            }
+
+                            for (Port port : portList) {
+                                portIDs.add(port.getPortID());
+
+                            }
+
+                            switch (choice) {
+                                case 1:
+                                    do {
+                                        for (Port port : portList) {
+                                            System.out.println(port.getPortID() + ". " + port.getName());
+                                            portIDs.add(port.getPortID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Enter the ID of the port above that you want to modify: ");
+                                        String portOption = scanner.nextLine();
+
+                                        if (portOption.equals("0")) {
+                                            break;
+                                        }
+                                    } while (true);
+                                    break;
+
+                                case 2:
+                                    String portID;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port latitude:");
+                                            portID = scanner.nextLine();
+                                            if (!portID.matches("p-.+")) {
+                                                System.out.println("Please enter a valid ID");
+                                            } else {
+                                                if (!portIDs.contains(portID)) {
+                                                    portIDs.add(portID);
+                                                    break;
+                                                } else {
+                                                    System.out.println("The ID is already existed!");
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                        System.out.println("Please enter the port ID by the format (p-portID)");
+
+
+                                    } while (true);
+
+                                    System.out.println("Please enter your port name:");
+                                    String portName = scanner.nextLine();
+
+                                    double portLatitude = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port latitude:");
+                                            portLatitude = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    double portLongtitude = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port longtitude:");
+                                            portLongtitude = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    double portCapacity = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port capacity:");
+                                            portCapacity = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    double portCurrentWeight = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port current weight:");
+                                            portCurrentWeight = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    boolean portLandingAbility;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port landing ability (true/false):");
+                                            portLandingAbility = scanner.nextBoolean();
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+                                    portList.add(new Port(portID,portName,portLatitude,portLongtitude,portCapacity,portCurrentWeight,portLandingAbility));
+                                    break;
+
+                                case 3:
+                                        running2 = false;
+                                        break;
+
+                                default:
+                                    break;
+                            }
+                        } while (running2);
+
                     } else {
                         System.out.println("Incorrect username or password!");
                     }
                     break;
+
+                case 2:
+                    System.out.println("Logged out");
+                    running = false;
+                    break;
+
+                default:
+                    break;
             }
-            break;
-        } while (true);
+        } while (running);
     }
 
     public static String loginValidation2 (String enteredUsername, String enteredPassword) {
