@@ -157,10 +157,10 @@ public class Main {
                                     String portID;
                                     do {
                                         try {
-                                            System.out.println("Please enter your port latitude:");
+                                            System.out.println("Please enter the port ID by the format (p-portID)");
                                             portID = scanner.nextLine();
                                             if (!portID.matches("p-.+")) {
-                                                System.out.println("Please enter a valid ID");
+                                                System.out.println("Invalid ID");
                                             } else {
                                                 if (!portIDs.contains(portID)) {
                                                     portIDs.add(portID);
@@ -172,9 +172,6 @@ public class Main {
                                         } catch (Exception e) {
                                             System.out.println("Please enter a valid value");
                                         }
-                                        System.out.println("Please enter the port ID by the format (p-portID)");
-
-
                                     } while (true);
 
                                     System.out.println("Please enter your port name:");
