@@ -1,6 +1,8 @@
 package Entities;
 
-public class Container {
+import java.io.Serializable;
+
+public class Container implements Serializable {
     private String containerID;
     private double weight;
     private Type containerType;

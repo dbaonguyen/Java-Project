@@ -1,9 +1,11 @@
 package Entities;
 
 import Interface.IVehicle;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Vehicle implements IVehicle {
+public class Vehicle implements IVehicle, Serializable {
     private String vehicleID;
     private String name;
     private double currentWeight;

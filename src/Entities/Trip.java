@@ -1,9 +1,10 @@
 package Entities;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
-public class Trip {
+public class Trip implements Serializable {
     private Vehicle vehicle;
     private SimpleDateFormat departDate;
     private SimpleDateFormat arrivalDate;

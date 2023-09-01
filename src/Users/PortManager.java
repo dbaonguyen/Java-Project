@@ -1,9 +1,10 @@
 package Users;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.HashMap;
 
-public class PortManager extends User{
+public class PortManager extends User implements Serializable {
     private Map<String, String> userCredentials;
 
     public PortManager() {
