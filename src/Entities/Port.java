@@ -169,7 +169,9 @@ public class Port implements IPort, Serializable {
     @Override
     public void displayShips() {
         for (Vehicle vehicle : vehicles){
-            System.out.println(vehicle);
+            if (vehicle instanceof Ship){
+                System.out.println(vehicle);
+            }
         }
     }
 
