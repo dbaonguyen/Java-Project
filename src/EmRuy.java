@@ -2,14 +2,11 @@ import Entities.*;
 import Users.Admin;
 import Users.PortManager;
 import Users.User;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class EmRuy {
+    //data load
     private static List<User> userList = new ArrayList<>();
     private static List<Port> portList = new ArrayList<>();
     private static List<Container> containerList = new ArrayList<>();
@@ -54,33 +51,26 @@ public class EmRuy {
         typeList.add(new Type("Refrigerated", 4.5, 5.4));
         typeList.add(new Type("Liquid", 4.8, 5.3));
 
-        containerList.add(new Container("C1", 5.0, typeList.get(0)));  // Dry storage
-        containerList.add(new Container("C2", 7.2, typeList.get(1)));  // Open top
-        containerList.add(new Container("C3", 4.3, typeList.get(2)));  // Open side
-        containerList.add(new Container("C4", 6.1, typeList.get(3)));  // Refrigerated
-        containerList.add(new Container("C5", 3.9, typeList.get(4)));  // Liquid
-        containerList.add(new Container("C6", 8.6, typeList.get(0)));  // Dry storage
-        containerList.add(new Container("C7", 2.5, typeList.get(1)));  // Open top
-        containerList.add(new Container("C8", 4.8, typeList.get(2)));  // Open side
-        containerList.add(new Container("C9", 5.7, typeList.get(3)));  // Refrigerated
-        containerList.add(new Container("C10", 6.9, typeList.get(4))); // Liquid
-        //Ports
 
+        containerList.add(new Container("c-1", 5.0, typeList.get(0)));  // Dry storage
+        containerList.add(new Container("c-2", 7.2, typeList.get(1)));  // Open top
+        containerList.add(new Container("c-3", 4.3, typeList.get(2)));  // Open side
+        containerList.add(new Container("c-4", 6.1, typeList.get(3)));  // Refrigerated
+        containerList.add(new Container("c-5", 3.9, typeList.get(4)));  // Liquid
+
+        //Ports
         portList.add(new Port("p-1", "Harbor Bay", 34.0522, -118.2437, 1500.0,500.0 , true));
         portList.add(new Port("p-2", "Marine City", 40.7128, -74.0060, 1800.0,700.0 , false));
         portList.add(new Port("p-3", "Ocean View", -33.8688, 151.2093, 2000.0,800.0 , true));
         portList.add(new Port("p-4", "Seaside Haven", 37.7749, -122.4194, 1200.0,400.0 , true));
         portList.add(new Port("p-5", "Island Port", 21.3069, -157.8583, 1600.0,600.0 , false));
-        for (Port port : portList) {
-            port.addContainer(new Container("C1", 5.0, typeList.get(0)));
-            port.addContainer(new Container("C2", 7.2, typeList.get(1)));
-            port.addContainer(new Container("C3", 4.3, typeList.get(2)));
-            port.addContainer(new Container("C4", 6.1, typeList.get(3)));
-            port.addContainer(new Container("C5", 3.9, typeList.get(4)));
-            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-        }
+
+
+        portList.get(0).addContainer(new Container("c-1", 5.0, typeList.get(0)));
+        portList.get(1).addContainer(new Container("c-2", 7.2, typeList.get(1)));
+        portList.get(2).addContainer(new Container("c-3", 4.3, typeList.get(2)));
+        portList.get(3).addContainer(new Container("c-4", 6.1, typeList.get(3)));
+        portList.get(4).addContainer(new Container("c-5", 3.9, typeList.get(4)));
 
         shipList.add(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
         shipList.add(new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, portList.get(1)));
@@ -106,12 +96,14 @@ public class EmRuy {
         writeListToFile(reeferTruckList, "reeferTruckList.ser");
         writeListToFile(tankerTruckList, "tankerTruckList.ser");
         writeListToFile(typeList, "typeList.ser");
+
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
         List<String> portIDs = new ArrayList<>();
+        List<String> containerIDs = new ArrayList<>();
         //Login
         do {
-            int choice = 0;
+            int choice = -1;
             System.out.println("1. Login");
             System.out.println("2. Exit");
             try {
@@ -131,10 +123,9 @@ public class EmRuy {
                     String password = scanner.nextLine();
                     String indicator = loginValidation(username, password);
                     if (!indicator.equals("invalid")) {
-                        System.out.println("Welcome!" + indicator);
+                        System.out.println("Welcome " + indicator);
                         //Admin
                         boolean running2 = true;
-                        choice = 0;
                         do {
                             System.out.println("1. Choose port");
                             System.out.println("2. Add port");
@@ -149,12 +140,17 @@ public class EmRuy {
 
                             for (Port port : portList) {
                                 portIDs.add(port.getPortID());
-
                             }
 
                             switch (choice) {
                                 //Choose port
                                 case 1:
+                                    for (Port port : portList) {
+                                        portIDs.add(port.getPortID());
+                                        for (Container container : port.getContainers()) {
+                                            containerIDs.add(container.getContainerID());
+                                        }
+                                    }
                                     do {
                                         for (Port port : portList) {
                                             System.out.println(port.getPortID() + ". " + port.getName());
@@ -171,7 +167,6 @@ public class EmRuy {
                                             for (Port port : portList) {
                                                 if (portOption.equals(port.getPortID())) {
                                                     boolean running3 = true;
-                                                    choice = 0;
                                                     do {
                                                         System.out.println("1. Calculate distance");
                                                         System.out.println("2. Add Container");
@@ -217,19 +212,74 @@ public class EmRuy {
                                                                 } while (true);
                                                                 break;
 
-
+                                                            //Add container
                                                             case 2:
+                                                                String containerID;
+                                                                do {
+                                                                    try {
+                                                                        System.out.println("Please enter the container ID by the format 'c-containerID': ");
+                                                                        containerID = scanner.nextLine();
+
+                                                                        if (!containerID.matches("c-\\d+")) {
+                                                                            System.out.println("Invalid ID. The ID must be in the format 'c-<integer>'.");
+                                                                        } else {
+                                                                            if (!containerIDs.contains(containerID)) {
+                                                                                containerIDs.add(containerID);
+                                                                                break;
+                                                                            } else {
+                                                                                System.out.println("The ID is already existed!");
+                                                                            }
+                                                                        }
+                                                                    } catch (Exception e) {
+                                                                        System.out.println("Please enter a valid value");
+                                                                    }
+                                                                } while (true);
+
+                                                                double containerWeight = 0;
+                                                                do {
+                                                                    try {
+                                                                        System.out.println("Please enter your port current weight:");
+                                                                        containerWeight = Double.parseDouble(scanner.nextLine());
+                                                                        break;
+                                                                    } catch (Exception e) {
+                                                                        System.out.println("Please enter a valid value");
+                                                                    }
+                                                                } while (true);
+
+                                                                int typeID = -1;
+                                                                do {
+                                                                    for (int i = 0; i < typeList.size(); i++) {
+                                                                        System.out.println(i + ". " + typeList.get(i).getType());
+                                                                    }
+                                                                    try {
+                                                                        System.out.println("Please choose the container type number 0-4");
+                                                                        typeID = Integer.parseInt(scanner.nextLine());
+
+                                                                        if (typeID >= 0 && typeID < typeList.size()) {
+                                                                            break; // Valid index, exit the loop
+                                                                        } else {
+                                                                            System.out.println("Please enter a valid value (0-4)");
+                                                                        }
+                                                                    } catch (Exception e) {
+                                                                        System.out.println("Please enter a valid value");
+                                                                    }
+                                                                } while (true);
+
+                                                                port.addContainer(new Container(containerID, containerWeight, typeList.get(typeID)));
+                                                                break;
+
                                                             case 3:
                                                             case 4:
                                                             case 5:
                                                             case 6:
                                                             case 7:
                                                             case 8:
+                                                                port.displayTrip(new Date());
                                                             case 9:
                                                                 port.displayShips();
                                                                 break;
                                                             case 10:
-                                                                port.displayContainers();
+                                                                System.out.println(port.getContainers());
                                                                 break;
                                                             //Go back
                                                             case 11:
@@ -254,10 +304,11 @@ public class EmRuy {
                                     String portID;
                                     do {
                                         try {
-                                            System.out.println("Please enter the port ID by the format (p-portID): ");
+                                            System.out.println("Please enter the port ID by the format 'p-portID': ");
                                             portID = scanner.nextLine();
-                                            if (!portID.matches("p-.+")) {
-                                                System.out.println("Invalid ID");
+
+                                            if (!portID.matches("p-\\d+")) {
+                                                System.out.println("Invalid ID. The ID must be in the format 'p-<integer>'.");
                                             } else {
                                                 if (!portIDs.contains(portID)) {
                                                     portIDs.add(portID);

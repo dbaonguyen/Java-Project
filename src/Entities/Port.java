@@ -72,6 +72,10 @@ public class Port implements IPort, Serializable {
         this.capacity = capacity;
     }
 
+    public List<Container> getContainers() {
+        return containers;
+    }
+
     public boolean isLandingAbility() {
         return landingAbility;
     }

@@ -39,7 +39,7 @@ public class Main {
         return deserializedList;
     }
     public static void main(String[] args) {
-
+        System.out.println(portList.get(0));
     }
 
     public static String loginValidation (String enteredUsername, String enteredPassword) {
