@@ -19,7 +19,7 @@ public class Port implements IPort, Serializable {
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
-    public SimpleDateFormat currentDate;
+    public Date currentDate;
     private double usedFuel;
     public Port(String portID, String name, double latitude, double longtitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
@@ -156,7 +156,9 @@ public class Port implements IPort, Serializable {
 
     @Override
     public void displayTrip(Date date) {
+        for (Trip trip : trips){
 
+        }
     }
 
     @Override

@@ -2,16 +2,17 @@ package Entities;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Trip {
     private Vehicle vehicle;
-    private SimpleDateFormat departDate;
-    private SimpleDateFormat arrivalDate;
+    private Date departDate;
+    private Date arrivalDate;
     private Port departFrom;
     private Port arriveTo;
     private boolean status;
 
-    public Trip(Vehicle vehicle, SimpleDateFormat departDate, SimpleDateFormat arrivalDate, Port departFrom, Port arriveTo, boolean status) {
+    public Trip(Vehicle vehicle, Date departDate, Date arrivalDate, Port departFrom, Port arriveTo, boolean status) {
         this.vehicle = vehicle;
         this.departDate = departDate;
         this.arrivalDate = arrivalDate;
@@ -36,11 +37,11 @@ public class Trip {
         this.departDate = departDate;
     }
 
-    public SimpleDateFormat getArrivalDate() {
+    public Date getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(SimpleDateFormat arrivalDate) {
+    public void setArrivalDate(Date arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
