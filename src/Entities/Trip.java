@@ -1,10 +1,11 @@
 package Entities;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Trip {
+public class Trip implements Serializable {
     private Vehicle vehicle;
     private Date departDate;
     private Date arrivalDate;
@@ -29,11 +30,11 @@ public class Trip {
         this.vehicle = vehicle;
     }
 
-    public SimpleDateFormat getDepartDate() {
+    public Date getDepartDate() {
         return departDate;
     }
 
-    public void setDepartDate(SimpleDateFormat departDate) {
+    public void setDepartDate(Date departDate) {
         this.departDate = departDate;
     }
 

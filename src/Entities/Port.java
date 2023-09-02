@@ -169,9 +169,7 @@ public class Port implements IPort, Serializable {
     @Override
     public void displayShips() {
         for (Vehicle vehicle : vehicles){
-            if (vehicle instanceof Ship){
-                System.out.println(vehicle);
-            }
+            System.out.println(vehicle);
         }
     }
 
@@ -197,4 +195,21 @@ public class Port implements IPort, Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Port{" +
+                "portID='" + portID + '\'' +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longtitude=" + longtitude +
+                ", currentWeight=" + currentWeight +
+                ", capacity=" + capacity +
+                ", landingAbility=" + landingAbility +
+                ", containers=" + containers +
+                ", vehicles=" + vehicles +
+                ", trips=" + trips +
+                ", currentDate=" + currentDate +
+                ", usedFuel=" + usedFuel +
+                '}';
+    }
 }

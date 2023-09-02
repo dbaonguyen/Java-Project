@@ -1,227 +1,417 @@
 import Entities.*;
-
-import java.io.FileInputStream;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.IOException;
+import Users.Admin;
+import Users.PortManager;
+import Users.User;
+import java.io.*;
+import java.util.*;
 
 public class Main {
+    //data load
+    private static List<User> userList = new ArrayList<>();
+    private static List<Port> portList = new ArrayList<>();
+    private static List<Container> containerList = new ArrayList<>();
+    private static List<Ship> shipList = new ArrayList<>();
+    private static List<Truck> truckList = new ArrayList<>();
+    private static List<ReeferTruck> reeferTruckList = new ArrayList<>();
+    private static List<TankerTruck> tankerTruckList = new ArrayList<>();
+    private static List<Type> typeList = new ArrayList<>();
+    private static final String DEFAULT_DIRECTORY = "Data"; // Change this to your default directory path
+
+    public static <T> void writeListToFile(List<T> list, String fileName) {
+        String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
+        try (FileOutputStream fileOut = new FileOutputStream(filePath);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> List<T> readListFromFile(String fileName) {
+        String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
+        List<T> deserializedList = null;
+        try (FileInputStream fileIn = new FileInputStream(filePath);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            deserializedList = (List<T>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return deserializedList;
+    }
     public static void main(String[] args) {
+
+        //data initialization
+        userList.add(new Admin("1","1"));
+        userList.add(new User("2", "2"));
+        userList.add(new PortManager("3", "3"));
+
+        typeList.add(new Type("Dry storage", 3.5, 4.6));
+        typeList.add(new Type("Open top", 2.8, 3.2));
+        typeList.add(new Type("Open side", 2.7, 3.2));
+        typeList.add(new Type("Refrigerated", 4.5, 5.4));
+        typeList.add(new Type("Liquid", 4.8, 5.3));
+
+        containerList.add(new Container("C1", 5.0, typeList.get(0)));  // Dry storage
+        containerList.add(new Container("C2", 7.2, typeList.get(1)));  // Open top
+        containerList.add(new Container("C3", 4.3, typeList.get(2)));  // Open side
+        containerList.add(new Container("C4", 6.1, typeList.get(3)));  // Refrigerated
+        containerList.add(new Container("C5", 3.9, typeList.get(4)));  // Liquid
+        containerList.add(new Container("C6", 8.6, typeList.get(0)));  // Dry storage
+        containerList.add(new Container("C7", 2.5, typeList.get(1)));  // Open top
+        containerList.add(new Container("C8", 4.8, typeList.get(2)));  // Open side
+        containerList.add(new Container("C9", 5.7, typeList.get(3)));  // Refrigerated
+        containerList.add(new Container("C10", 6.9, typeList.get(4))); // Liquid
         //Ports
-        List<Port> ports = new ArrayList<>();
-        Port port1 = new Port("p-1", "Harbor Bay", 34.0522, -118.2437, 500.0, 1500.0, true);
-        Port port2 = new Port("p-2", "Marine City", 40.7128, -74.0060, 700.0, 1800.0, false);
-        Port port3 = new Port("p-3", "Ocean View", -33.8688, 151.2093, 800.0, 2000.0, true);
-        Port port4 = new Port("p-4", "Seaside Haven", 37.7749, -122.4194, 400.0, 1200.0, true);
-        Port port5 = new Port("p-5", "Island Port", 21.3069, -157.8583, 600.0, 1600.0, false);
-        ports.add(port1);
-        ports.add(port2);
-        ports.add(port3);
-        ports.add(port4);
-        ports.add(port5);
 
-        Type dryStorage = new Type("Dry storage",3.5, 4.6);
-        Type openTop = new Type("Open top", 2.8, 3.2);
-        Type openSide = new Type("Open side", 2.7, 3.2);
-        Type refrigerated = new Type("Refrigerated", 4.5, 5.4);
-        Type liquid = new Type("Liquid", 4.8, 5.3);
-        List<Container> containerList = new ArrayList<>();
+        portList.add(new Port("p-1", "Harbor Bay", 34.0522, -118.2437, 1500.0,500.0 , true));
+        portList.add(new Port("p-2", "Marine City", 40.7128, -74.0060, 1800.0,700.0 , false));
+        portList.add(new Port("p-3", "Ocean View", -33.8688, 151.2093, 2000.0,800.0 , true));
+        portList.add(new Port("p-4", "Seaside Haven", 37.7749, -122.4194, 1200.0,400.0 , true));
+        portList.add(new Port("p-5", "Island Port", 21.3069, -157.8583, 1600.0,600.0 , false));
+        for (Port port : portList) {
+            port.addContainer(new Container("C1", 5.0, typeList.get(0)));
+            port.addContainer(new Container("C2", 7.2, typeList.get(1)));
+            port.addContainer(new Container("C3", 4.3, typeList.get(2)));
+            port.addContainer(new Container("C4", 6.1, typeList.get(3)));
+            port.addContainer(new Container("C5", 3.9, typeList.get(4)));
+            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+            port.addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+        }
 
-        containerList.add(new Container("C1", 5.0, dryStorage));
-        containerList.add(new Container("C2", 7.2, openTop));
-        containerList.add(new Container("C3", 4.3, openSide));
-        containerList.add(new Container("C4", 6.1, refrigerated));
-        containerList.add(new Container("C5", 3.9, liquid));
-        containerList.add(new Container("C6", 8.6, dryStorage));
-        containerList.add(new Container("C7", 2.5, openTop));
-        containerList.add(new Container("C8", 4.8, openSide));
-        containerList.add(new Container("C9", 5.7, refrigerated));
-        containerList.add(new Container("C10", 6.9, liquid));
+        shipList.add(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+        shipList.add(new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, portList.get(1)));
+        shipList.add(new Ship("S3", "Ship 3", 12000.0, 2500.0, 22000.0, 4500.0, portList.get(2)));
 
-        Ship ship1 = new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, port1);
-        Ship ship2 = new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, port2);
-        Ship ship3 = new Ship("S3", "Ship 3", 12000.0, 2500.0, 22000.0, 4500.0, port3);
+        truckList.add(new Truck("T1", "Truck 1", 5000.0, 500.0, 10000.0, 1000.0, portList.get(0)));
+        truckList.add(new Truck("T2", "Truck 2", 6000.0, 600.0, 11000.0, 1100.0, portList.get(1)));
+        truckList.add(new Truck("T3", "Truck 3", 7000.0, 700.0, 12000.0, 1200.0, portList.get(2)));
 
-        Truck truck1 = new Truck("T1", "Truck 1", 5000.0, 500.0, 10000.0, 1000.0, port1);
-        Truck truck2 = new Truck("T2", "Truck 2", 6000.0, 600.0, 11000.0, 1100.0, port2);
-        Truck truck3 = new Truck("T3", "Truck 3", 7000.0, 700.0, 12000.0, 1200.0, port3);
+        reeferTruckList.add(new ReeferTruck("RT1", "Reefer Truck 1", 6000.0, 600.0, 12000.0, 1200.0, portList.get(0)));
+        reeferTruckList.add(new ReeferTruck("RT2", "Reefer Truck 2", 7000.0, 700.0, 13000.0, 1300.0, portList.get(1)));
+        reeferTruckList.add(new ReeferTruck("RT3", "Reefer Truck 3", 8000.0, 800.0, 14000.0, 1400.0, portList.get(2)));
 
-        ReeferTruck reeferTruck1 = new ReeferTruck("RT1", "Reefer Truck 1", 6000.0, 600.0, 12000.0, 1200.0, port1);
-        ReeferTruck reeferTruck2 = new ReeferTruck("RT2", "Reefer Truck 2", 7000.0, 700.0, 13000.0, 1300.0, port2);
-        ReeferTruck reeferTruck3 = new ReeferTruck("RT3", "Reefer Truck 3", 8000.0, 800.0, 14000.0, 1400.0, port3);
+        tankerTruckList.add(new TankerTruck("TT1", "Tanker Truck 1", 7000.0, 700.0, 14000.0, 1400.0, portList.get(0)));
+        tankerTruckList.add(new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, portList.get(1)));
+        tankerTruckList.add(new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, portList.get(2)));
 
-        TankerTruck tankerTruck1 = new TankerTruck("TT1", "Tanker Truck 1", 7000.0, 700.0, 14000.0, 1400.0, port1);
-        TankerTruck tankerTruck2 = new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, port2);
-        TankerTruck tankerTruck3 = new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, port3);
-        HashMap<String, String> userCredentials = new HashMap<>();
-        userCredentials.put("1", "1");
-        userCredentials.put("2", "2");
-        userCredentials.put("3", "3");
-
+        writeListToFile(portList, "portList.ser");
+        writeListToFile(userList, "userList.ser");
+        writeListToFile(containerList, "containerList.ser");
+        writeListToFile(shipList, "shipList.ser");
+        writeListToFile(truckList, "truckList.ser");
+        writeListToFile(reeferTruckList, "reeferTruckList.ser");
+        writeListToFile(tankerTruckList, "tankerTruckList.ser");
+        writeListToFile(typeList, "typeList.ser");
         Scanner scanner = new Scanner(System.in);
-
-        //Menu
         boolean running = true;
-        while (running) {
-            System.out.println("Please choose your option");
+        List<String> portIDs = new ArrayList<>();
+        //Login
+        do {
+            int choice = 0;
             System.out.println("1. Login");
             System.out.println("2. Exit");
-            String option = scanner.next();
+            try {
+                System.out.println("Your option: ");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Please choose a valid option: ");
+            }
 
-            //Login
-            if (option.equals("1")) {
-                //Usernames and Password
-                boolean login = true;
-                while (login) {
-                    System.out.print("Enter your username: ");
-                    String username = scanner.next();
+            switch (choice) {
+                //Username and Password
+                case 1:
+                    System.out.println("Enter your username:");
+                    String username = scanner.nextLine();
 
-                    System.out.print("Enter your password: ");
-                    String password = scanner.next();
-                    System.out.println();
+                    System.out.println("Enter your password:");
+                    String password = scanner.nextLine();
+                    String indicator = loginValidation(username, password);
+                    if (!indicator.equals("invalid")) {
+                        System.out.println("Welcome!" + indicator);
+                        //Admin
+                        boolean running2 = true;
+                        choice = 0;
+                        do {
+                            System.out.println("1. Choose port");
+                            System.out.println("2. Add port");
+                            System.out.println("3. Remove port");
+                            System.out.println("4. Go back");
+                            try {
+                                System.out.println("Your option: ");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Please choose a valid option: ");
+                            }
 
-                    //Correct Username and password
-                    if (userCredentials.containsKey(username) && userCredentials.containsValue(password)) {
-                        String expectedPassword = userCredentials.get(username);
-                        if (username.equals("1") && password.equals(expectedPassword)) {
-                            System.out.println("Welcome Admin " + username);
-                            while (true) {
-                                System.out.println("1. Choose Port");
-                                System.out.println("2. Add Port");
-                                System.out.println("3. Go Back");
-                                System.out.print("Your option: ");
-                                System.out.println();
-                                String option2 = scanner.next();
+                            for (Port port : portList) {
+                                portIDs.add(port.getPortID());
 
-                                //Admin Option (Choose ports)
-                                if (option2.equals("1")) {
+                            }
 
-                                    // Print the ports in the ArrayList for Options
-                                    List<String> portIDs = new ArrayList<>();
-
-
-                                    //Choose Port
-                                    while (true) {
-                                        for (Port port : ports) {
+                            switch (choice) {
+                                //Choose port
+                                case 1:
+                                    do {
+                                        for (Port port : portList) {
                                             System.out.println(port.getPortID() + ". " + port.getName());
                                             portIDs.add(port.getPortID());
                                         }
+
                                         System.out.println("0. Go back");
                                         System.out.println("Enter the ID of the port above that you want to modify: ");
-                                        String portOption = scanner.next();
+                                        String portOption = scanner.nextLine();
+
+                                        if (!portIDs.contains(portOption)) {
+                                            System.out.println("Port does not exist");
+                                        } else {
+                                            for (Port port : portList) {
+                                                if (portOption.equals(port.getPortID())) {
+                                                    boolean running3 = true;
+                                                    choice = 0;
+                                                    do {
+                                                        System.out.println("1. Calculate distance");
+                                                        System.out.println("2. Add Container");
+                                                        System.out.println("3. Remove Container");
+                                                        System.out.println("4. Add Vehicle");
+                                                        System.out.println("5. Remove Vehicle");
+                                                        System.out.println("6. Search Vehicle");
+                                                        System.out.println("7. Add Trips");
+                                                        System.out.println("8. Display Trips");
+                                                        System.out.println("9. Display Vehicles");
+                                                        System.out.println("10. Display Containers");
+                                                        System.out.println("11. Go Back");
+                                                        try {
+                                                            System.out.println("Your option: ");
+                                                            choice = Integer.parseInt(scanner.nextLine());
+                                                        } catch (Exception e) {
+                                                            System.out.println("Please choose a valid option: ");
+                                                        }
+
+                                                        switch (choice) {
+                                                            //Caculate distance
+                                                            case 1:
+                                                                List<String> portIDs2 = new ArrayList<>();
+                                                                do {
+                                                                    for (Port portFrom : portList) {
+                                                                        System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
+                                                                        portIDs2.add(portFrom.getPortID());
+                                                                    }
+                                                                    System.out.println("0. Go back");
+                                                                    System.out.println("Enter the ID of the port above that you want to modify: ");
+                                                                    String portOption2 = scanner.nextLine();
+
+                                                                    if (portIDs2.contains(portOption2)) {
+                                                                        System.out.println("The distance between 2 ports is: " + portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))) + "km");
+                                                                        break;
+                                                                    } else {
+                                                                        System.out.println("Please choose a valid option");
+                                                                    }
+
+                                                                    if (portOption2.equals("0")) {
+                                                                        break;
+                                                                    }
+                                                                } while (true);
+                                                               break;
+
+
+                                                            case 2:
+                                                            case 3:
+                                                            case 4:
+                                                            case 5:
+                                                            case 6:
+                                                            case 7:
+                                                            case 8:
+                                                            case 9:
+                                                                port.displayShips();
+                                                                break;
+                                                            case 10:
+                                                                port.displayContainers();
+                                                                break;
+                                                            //Go back
+                                                            case 11:
+                                                                running3 = false;
+                                                                break;
+                                                        }
+                                                    } while (running3);
+                                                }
+                                            }
+                                        }
+
 
                                         if (portOption.equals("0")) {
                                             break;
                                         }
 
-                                        if (portIDs.contains(portOption)) {
-                                            boolean shouldContinue = true;
-                                            while (shouldContinue) {
-                                                System.out.println("1. Calculate distance");
-                                                System.out.println("2. Add Container");
-                                                System.out.println("3. Remove Container");
-                                                System.out.println("4. Add Vehicle");
-                                                System.out.println("5. Remove Vehicle");
-                                                System.out.println("6. Search Vehicle");
-                                                System.out.println("7. Add Trips");
-                                                System.out.println("8. Display Trips");
-                                                System.out.println("9. Display Vehicles");
-                                                System.out.println("10. Display Containers");
-                                                System.out.println("11. Go Back");
+                                    } while (true);
+                                    break;
 
-                                                String option3 = scanner.next();
-                                                switch (option3) {
-                                                    case "1":
-                                                        List<String> portIDs2 = new ArrayList<>();
-                                                        for (Port port : ports) {
-                                                            System.out.println(port.getPortID() + ". " + port.getName());
-                                                            portIDs2.add(port.getPortID());
-                                                        }
-
-                                                        while (true) {
-                                                            System.out.println("Please enter the port you want to calculate the distance:");
-                                                            String portOption2 = scanner.next();
-                                                            if (portIDs2.contains(portOption2)) {
-                                                                System.out.println("The distance between 2 ports is: " + ports.get(portIDs.indexOf(portOption)).calculateDistance(ports.get(portIDs2.indexOf(portOption2))) + "km");
-                                                                System.out.println();
-                                                                break;
-                                                            } else {
-                                                                System.out.println("Please choose an valid option");
-                                                                System.out.println();
-                                                            }
-                                                        }
-                                                        break;
-                                                    case "2":
-
-                                                    case "11":
-                                                        shouldContinue = false;
-                                                        break;
+                                //Add port
+                                case 2:
+                                    String portID;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter the port ID by the format (p-portID): ");
+                                            portID = scanner.nextLine();
+                                            if (!portID.matches("p-.+")) {
+                                                System.out.println("Invalid ID");
+                                            } else {
+                                                if (!portIDs.contains(portID)) {
+                                                    portIDs.add(portID);
+                                                    break;
+                                                } else {
+                                                    System.out.println("The ID is already existed!");
                                                 }
                                             }
-
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
                                         }
+                                    } while (true);
 
-                                        else {
-                                            System.out.println("Please choose an valid option");
+                                    System.out.println("Please enter your port name:");
+                                    String portName = scanner.nextLine();
+
+                                    double portLatitude = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port latitude:");
+                                            portLatitude = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
                                         }
-                                    }
-                                } else if (option2.equals("2")) {
-                                    System.out.println("Please enter your port ID: ");
-                                    String portID = scanner.next();
-                                    System.out.println("Please enter your port name: ");
-                                    String portName = scanner.next();
-                                    System.out.println("Please enter your port latitude: ");
-                                    double portLatitude = scanner.nextDouble();
-                                    System.out.println("Please enter your port longtitude: ");
-                                    double portLongtitude = scanner.nextDouble();
-                                    System.out.println("Please enter your port capacity: ");
-                                    double portCapacity = scanner.nextDouble();
-                                    System.out.println("Please enter your port current weight: ");
-                                    double portCurrentWeight = scanner.nextDouble();
-                                    System.out.println("Please enter your port landing ability (true/false): ");
-                                    boolean portLandingAbility = scanner.nextBoolean();
-                                    ports.add(new Port(portID, portName, portLatitude, portLongtitude,portCapacity, portCurrentWeight, portLandingAbility));
-                                }
-                                //Go Back
-                                else if (option2.equals("3")) {
+                                    } while (true);
+
+                                    double portLongtitude = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port longtitude:");
+                                            portLongtitude = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    double portCapacity = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port capacity:");
+                                            portCapacity = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    double portCurrentWeight = 0;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port current weight:");
+                                            portCurrentWeight = Double.parseDouble(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+
+                                    boolean portLandingAbility;
+                                    do {
+                                        try {
+                                            System.out.println("Please enter your port landing ability (true/false):");
+                                            portLandingAbility = Boolean.parseBoolean(scanner.nextLine());
+                                            break;
+                                        } catch (Exception e) {
+                                            System.out.println("Please enter a valid value");
+                                        }
+                                    } while (true);
+                                    portList.add(new Port(portID,portName,portLatitude,portLongtitude,portCapacity,portCurrentWeight,portLandingAbility));
+                                    System.out.println("New port has been added");
                                     break;
-                                } else {
-                                    System.out.println("Please choose a valid option:");
-                                }
+
+                                //Remove port
+                                case 3:
+                                    boolean running4 = true;
+                                    do {
+                                        Iterator<Port> iterator = portList.iterator();
+                                        for (Port port : portList) {
+                                            System.out.println(port.getPortID() + ". " + port.getName());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Enter the port ID that you want to remove:");
+                                        String portRemoved = scanner.nextLine();
+                                        if (portRemoved.equals("0")) {
+                                            running4 = false;
+                                        }
+                                        boolean found = false;
+                                        while (iterator.hasNext()) {
+                                            Port port = iterator.next();
+                                            if (port.getPortID().equals(portRemoved)) {
+                                                iterator.remove();
+                                                portIDs.remove(portRemoved);
+                                                System.out.println("Port is removed");
+                                                found = true;
+                                                running4 = false;
+                                                break;
+                                            }
+                                        }
+                                        if (!found) {
+                                            System.out.println("Port does not exist");
+                                        }
+                                    } while (running4);
+                                    break;
+
+                                //Go back
+                                case 4:
+                                        running2 = false;
+                                        break;
+
+                                default:
+                                    break;
                             }
-                        }
+                        } while (running2);
 
-                        //Port Manager Option
-                        else if (password.equals(expectedPassword)) {
-                            System.out.println("Welcome Port Manager " + username);
-                            break;
-                        }
-                    }
-
-                    //Wrong Username or Password
-                    else {
-                        System.out.println("Username or Password is incorrect. Please try again.");
-                        System.out.println();
+                    } else {
+                        System.out.println("Incorrect username or password!");
                     }
                     break;
-                }
-            }
 
-            //Exit
-            else if (option.equals("2")) {
-                System.out.println("logged out");
-                break;
-            }
+                //Exit
+                case 2:
+                    System.out.println("Logged out");
+                    running = false;
+                    break;
 
-            //Invalid Option
-            else {
-                System.out.println("Please choose a valid option");
+                default:
+                    break;
+            }
+        } while (running);
+    }
+
+    public static String loginValidation (String enteredUsername, String enteredPassword) {
+        // Search for a user with the provided username in the list of registered users.
+        User currentLoginUser = null;
+        for (User user : userList) {
+            if (user.getUsername().equals(enteredUsername)) {
+                currentLoginUser = user;
+                break; // Exit the loop once a matching username is found.
             }
         }
+        if (currentLoginUser != null) {
+            // If a matching username is found, validate the password.
+            if (currentLoginUser.getPassword().equals(enteredPassword)) {
+                // Check the user's type (role).
+                if (currentLoginUser instanceof Admin) {
+                    return "admin";
+                } else if (currentLoginUser instanceof PortManager) {
+                    return "manager";
+                } else {
+                    return "user";
+                }
+            }
+        }
+
+        // If no matching username or invalid password, return "invalid" as a flag.
+        return "invalid";
     }
 }

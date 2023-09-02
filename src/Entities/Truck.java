@@ -1,7 +1,8 @@
 package Entities;
+import java.io.Serializable;
 import java.util.*;
 
-public class Truck extends Vehicle{
+public class Truck extends Vehicle implements Serializable {
 
 
     public Truck(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {

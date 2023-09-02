@@ -1,6 +1,8 @@
 package Entities;
 
-public class ReeferTruck extends Vehicle{
+import java.io.Serializable;
+
+public class ReeferTruck extends Vehicle implements Serializable {
 
     public ReeferTruck(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         super(vehicleID, name,currentWeight, currentFuel, capacity, fuelCapacity, port);
