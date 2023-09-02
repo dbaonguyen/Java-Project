@@ -184,7 +184,9 @@ public class Port implements IPort, Serializable {
     public double totalFuel() {
         return usedFuel;
     }
-
+    public void displayPortInfo(Port port){
+        System.out.println(port);
+    }
     public void addUsedFuel(double newFuel){
         if(currentDate == this.currentDate){
             this.usedFuel += newFuel;
@@ -197,19 +199,19 @@ public class Port implements IPort, Serializable {
 
     @Override
     public String toString() {
-        return "Port{" +
-                "portID='" + portID + '\'' +
-                ", name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longtitude=" + longtitude +
-                ", currentWeight=" + currentWeight +
-                ", capacity=" + capacity +
-                ", landingAbility=" + landingAbility +
-                ", containers=" + containers +
-                ", vehicles=" + vehicles +
-                ", trips=" + trips +
-                ", currentDate=" + currentDate +
-                ", usedFuel=" + usedFuel +
-                '}';
+        return "Port Information:" +
+                "\nPort ID: " + portID +
+                "\nName: " + name +
+                "\nLatitude: " + latitude +
+                "\nLongtitude: " + longtitude +
+                "\nCurrent Weight: " + currentWeight +
+                "\nCapacity: " + capacity +
+                "\nLanding Ability: " + landingAbility +
+                "\nContainers: " + containers +
+                "\nVehicles: " + vehicles +
+                "\nTrips: " + trips +
+                "\nCurrent Date: " + currentDate +
+                "\nUsed Fuel: " + usedFuel;
     }
+
 }
