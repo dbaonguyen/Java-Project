@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Port implements IPort, Serializable {
+    private static final long serialVersionUID = 1030224541977093439L;
     private String portID;
     private String name;
     private double latitude;
@@ -69,6 +70,10 @@ public class Port implements IPort, Serializable {
 
     public void setCapacity(double capacity) {
         this.capacity = capacity;
+    }
+
+    public List<Container> getContainers() {
+        return containers;
     }
 
     public boolean isLandingAbility() {
