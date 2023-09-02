@@ -124,7 +124,8 @@ public class Main {
                             try {
                                 System.out.println("1. Choose port");
                                 System.out.println("2. Add port");
-                                System.out.println("3. Go back");
+                                System.out.println("3. Remove port");
+                                System.out.println("4. Go back");
                                 System.out.println("Your option: ");
                                 choice = Integer.parseInt(scanner.nextLine());
                             } catch (Exception e) {
@@ -143,13 +144,21 @@ public class Main {
                                             System.out.println(port.getPortID() + ". " + port.getName());
                                             portIDs.add(port.getPortID());
                                         }
+
                                         System.out.println("0. Go back");
                                         System.out.println("Enter the ID of the port above that you want to modify: ");
                                         String portOption = scanner.nextLine();
 
+                                        for (Port port : portList) {
+                                            if (portOption.equals(port.getPortID())) {
+                                                System.out.println(port);
+                                            }
+                                        }
+
                                         if (portOption.equals("0")) {
                                             break;
                                         }
+
                                     } while (true);
                                     break;
 
@@ -157,7 +166,7 @@ public class Main {
                                     String portID;
                                     do {
                                         try {
-                                            System.out.println("Please enter the port ID by the format (p-portID)");
+                                            System.out.println("Please enter the port ID by the format (p-portID): ");
                                             portID = scanner.nextLine();
                                             if (!portID.matches("p-.+")) {
                                                 System.out.println("Invalid ID");
@@ -225,7 +234,7 @@ public class Main {
                                     do {
                                         try {
                                             System.out.println("Please enter your port landing ability (true/false):");
-                                            portLandingAbility = scanner.nextBoolean();
+                                            portLandingAbility = Boolean.parseBoolean(scanner.nextLine());
                                             break;
                                         } catch (Exception e) {
                                             System.out.println("Please enter a valid value");
@@ -235,6 +244,34 @@ public class Main {
                                     break;
 
                                 case 3:
+                                    boolean running3 = true;
+                                    do {
+                                        Iterator<Port> iterator = portList.iterator();
+                                        for (Port port : portList) {
+                                            System.out.println(port.getPortID() + ". " + port.getName());
+                                        }
+                                        System.out.println("Enter the port ID that you want to remove:");
+                                        String portRemoved = scanner.nextLine();
+                                        boolean found = false;
+
+                                        while (iterator.hasNext()) {
+                                            Port port = iterator.next();
+                                            if (port.getPortID().equals(portRemoved)) {
+                                                iterator.remove();
+                                                portIDs.remove(portRemoved);
+                                                System.out.println("Port is removed");
+                                                found = true;
+                                                running3 = false;
+                                                break;
+                                            }
+                                        }
+                                        if (!found) {
+                                            System.out.println("Port does not exist");
+                                        }
+                                    } while (running3);
+                                    break;
+
+                                case 4:
                                         running2 = false;
                                         break;
 
