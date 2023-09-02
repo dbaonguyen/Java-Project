@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Port implements IPort, Serializable {
+    private static final long serialVersionUID = 1030224541977093439L;
     private String portID;
     private String name;
     private double latitude;

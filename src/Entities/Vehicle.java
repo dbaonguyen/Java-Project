@@ -125,7 +125,7 @@ public class Vehicle implements IVehicle, Serializable {
                 ", currentFuel=" + currentFuel +
                 ", capacity=" + capacity +
                 ", fuelCapacity=" + fuelCapacity +
-                ", port=" + port +
+                ", port=" + port.getName() +
                 ", containers=" + containers +
                 '}';
     }
