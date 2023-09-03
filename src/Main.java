@@ -3,6 +3,7 @@ import Users.Admin;
 import Users.PortManager;
 import Users.User;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -38,8 +39,11 @@ public class Main {
         }
         return deserializedList;
     }
+
     public static void main(String[] args) {
-        System.out.println(portList.get(0));
+        portList.get(0).displayShips();
+        portList.get(0).addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+        portList.get(0).searchVehicleById("S1");
     }
 
     public static String loginValidation (String enteredUsername, String enteredPassword) {

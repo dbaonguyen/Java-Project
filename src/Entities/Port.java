@@ -134,23 +134,37 @@ public class Port implements IPort, Serializable {
 
     @Override
     public void searchVehicleById(String id) {
+        List<String> vehicleID = new ArrayList<>();
         for (Vehicle vehicle : vehicles){
-            if (vehicle.getVehicleID().equals(id)){
-                System.out.println(vehicle);
-            } else{
-                System.out.println("Vehicle not found");
+            vehicleID.add(vehicle.getVehicleID());
+        }
+
+        if (vehicleID.contains(id)) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle.getVehicleID().equals(id)){
+                    System.out.println(vehicle);
+                }
             }
+        } else{
+            System.out.println("Vehicle not found");
         }
     }
 
     @Override
     public void searchVehicleByName(String name) {
-        for (Vehicle vehicle : vehicles) {
-            if (vehicle.getName().equals(name)) {
-                System.out.println(vehicle);
-            } else {
-                System.out.println("Vehicle not found");
+        List<String> vehicleName = new ArrayList<>();
+        for (Vehicle vehicle : vehicles){
+            vehicleName.add(vehicle.getName());
+        }
+
+        if (vehicleName.contains(name)) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle.getName().equals(name)){
+                    System.out.println(vehicle);
+                }
             }
+        } else{
+            System.out.println("Vehicle not found");
         }
     }
 
@@ -175,6 +189,14 @@ public class Port implements IPort, Serializable {
     public void displayShips() {
         for (Vehicle vehicle : vehicles){
             if (vehicle instanceof Ship){
+                System.out.println(vehicle);
+            }
+        }
+    }
+
+    public void displayTrucks() {
+        for (Vehicle vehicle : vehicles){
+            if (vehicle instanceof ReeferTruck || vehicle instanceof Truck || vehicle instanceof TankerTruck){
                 System.out.println(vehicle);
             }
         }

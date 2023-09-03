@@ -65,28 +65,29 @@ public class EmRuy {
         portList.add(new Port("p-4", "Seaside Haven", 37.7749, -122.4194, 1200.0,400.0 , true));
         portList.add(new Port("p-5", "Island Port", 21.3069, -157.8583, 1600.0,600.0 , false));
 
-
         portList.get(0).addContainer(new Container("c-1", 5.0, typeList.get(0)));
         portList.get(1).addContainer(new Container("c-2", 7.2, typeList.get(1)));
         portList.get(2).addContainer(new Container("c-3", 4.3, typeList.get(2)));
         portList.get(3).addContainer(new Container("c-4", 6.1, typeList.get(3)));
         portList.get(4).addContainer(new Container("c-5", 3.9, typeList.get(4)));
 
-        shipList.add(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-        shipList.add(new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, portList.get(1)));
-        shipList.add(new Ship("S3", "Ship 3", 12000.0, 2500.0, 22000.0, 4500.0, portList.get(2)));
+        portList.get(0).addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
+        portList.get(1).addVehicle(new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, portList.get(1)));
+        portList.get(2).addVehicle(new Ship("S3", "Ship 3", 12000.0, 2500.0, 22000.0, 4500.0, portList.get(2)));
 
-        truckList.add(new Truck("T1", "Truck 1", 5000.0, 500.0, 10000.0, 1000.0, portList.get(0)));
-        truckList.add(new Truck("T2", "Truck 2", 6000.0, 600.0, 11000.0, 1100.0, portList.get(1)));
-        truckList.add(new Truck("T3", "Truck 3", 7000.0, 700.0, 12000.0, 1200.0, portList.get(2)));
+        portList.get(0).addVehicle(new Truck("T1", "Truck 1", 5000.0, 500.0, 10000.0, 1000.0, portList.get(0)));
+        portList.get(1).addVehicle(new Truck("T2", "Truck 2", 6000.0, 600.0, 11000.0, 1100.0, portList.get(1)));
+        portList.get(2).addVehicle(new Truck("T3", "Truck 3", 7000.0, 700.0, 12000.0, 1200.0, portList.get(2)));
 
-        reeferTruckList.add(new ReeferTruck("RT1", "Reefer Truck 1", 6000.0, 600.0, 12000.0, 1200.0, portList.get(0)));
-        reeferTruckList.add(new ReeferTruck("RT2", "Reefer Truck 2", 7000.0, 700.0, 13000.0, 1300.0, portList.get(1)));
-        reeferTruckList.add(new ReeferTruck("RT3", "Reefer Truck 3", 8000.0, 800.0, 14000.0, 1400.0, portList.get(2)));
+        portList.get(0).addVehicle(new ReeferTruck("RT1", "Reefer Truck 1", 6000.0, 600.0, 12000.0, 1200.0, portList.get(0)));
+        portList.get(1).addVehicle(new ReeferTruck("RT2", "Reefer Truck 2", 7000.0, 700.0, 13000.0, 1300.0, portList.get(1)));
+        portList.get(2).addVehicle(new ReeferTruck("RT3", "Reefer Truck 3", 8000.0, 800.0, 14000.0, 1400.0, portList.get(2)));
 
-        tankerTruckList.add(new TankerTruck("TT1", "Tanker Truck 1", 7000.0, 700.0, 14000.0, 1400.0, portList.get(0)));
-        tankerTruckList.add(new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, portList.get(1)));
-        tankerTruckList.add(new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, portList.get(2)));
+        portList.get(0).addVehicle(new TankerTruck("TT1", "Tanker Truck 1", 7000.0, 700.0, 14000.0, 1400.0, portList.get(0)));
+        portList.get(1).addVehicle(new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, portList.get(1)));
+        portList.get(2).addVehicle(new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, portList.get(2)));
+
+        portList.get(0).searchVehicleById("dsa");
 
         writeListToFile(portList, "portList.ser");
         writeListToFile(userList, "userList.ser");
@@ -107,20 +108,21 @@ public class EmRuy {
             System.out.println("1. Login");
             System.out.println("2. Exit");
             try {
-                System.out.println("Your option: ");
+                System.out.print("Your option: ");
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
-                System.out.println("Please choose a valid option: ");
+                System.out.println("Please choose a valid option");
             }
 
             switch (choice) {
                 //Username and Password
                 case 1:
-                    System.out.println("Enter your username:");
+                    System.out.print("Enter your username: ");
                     String username = scanner.nextLine();
 
-                    System.out.println("Enter your password:");
+                    System.out.print("Enter your password: ");
                     String password = scanner.nextLine();
+
                     String indicator = loginValidation(username, password);
                     if (!indicator.equals("invalid")) {
                         System.out.println("Welcome " + indicator);
@@ -132,7 +134,7 @@ public class EmRuy {
                             System.out.println("3. Remove port");
                             System.out.println("4. Go back");
                             try {
-                                System.out.println("Your option: ");
+                                System.out.print("Your option: ");
                                 choice = Integer.parseInt(scanner.nextLine());
                             } catch (Exception e) {
                                 System.out.println("Please choose a valid option: ");
@@ -146,7 +148,6 @@ public class EmRuy {
                                 //Choose port
                                 case 1:
                                     for (Port port : portList) {
-                                        portIDs.add(port.getPortID());
                                         for (Container container : port.getContainers()) {
                                             containerIDs.add(container.getContainerID());
                                         }
@@ -158,7 +159,7 @@ public class EmRuy {
                                         }
 
                                         System.out.println("0. Go back");
-                                        System.out.println("Enter the ID of the port above that you want to modify: ");
+                                        System.out.print("Enter the ID of the port above that you want to modify: ");
                                         String portOption = scanner.nextLine();
 
                                         if (!portIDs.contains(portOption)) {
@@ -167,6 +168,7 @@ public class EmRuy {
                                             for (Port port : portList) {
                                                 if (portOption.equals(port.getPortID())) {
                                                     boolean running3 = true;
+                                                    choice = 0;
                                                     do {
                                                         System.out.println("1. Calculate distance");
                                                         System.out.println("2. Add Container");
@@ -175,15 +177,16 @@ public class EmRuy {
                                                         System.out.println("5. Remove Vehicle");
                                                         System.out.println("6. Search Vehicle");
                                                         System.out.println("7. Add Trips");
-                                                        System.out.println("8. Display Trips");
-                                                        System.out.println("9. Display Vehicles");
-                                                        System.out.println("10. Display Containers");
-                                                        System.out.println("11. Go Back");
+                                                        System.out.println("8. Remove Trips");
+                                                        System.out.println("9. Display Trips");
+                                                        System.out.println("10. Display Vehicles");
+                                                        System.out.println("11. Display Containers");
+                                                        System.out.println("12. Go Back");
                                                         try {
-                                                            System.out.println("Your option: ");
+                                                            System.out.print("Your option: ");
                                                             choice = Integer.parseInt(scanner.nextLine());
                                                         } catch (Exception e) {
-                                                            System.out.println("Please choose a valid option: ");
+                                                            System.out.print("Please choose a valid option: ");
                                                         }
 
                                                         switch (choice) {
@@ -196,7 +199,7 @@ public class EmRuy {
                                                                         portIDs2.add(portFrom.getPortID());
                                                                     }
                                                                     System.out.println("0. Go back");
-                                                                    System.out.println("Enter the ID of the port above that you want to modify: ");
+                                                                    System.out.print("Enter the ID of the port above that you want to calculate distance between: ");
                                                                     String portOption2 = scanner.nextLine();
 
                                                                     if (portIDs2.contains(portOption2)) {
@@ -240,6 +243,9 @@ public class EmRuy {
                                                                     try {
                                                                         System.out.println("Please enter your port current weight:");
                                                                         containerWeight = Double.parseDouble(scanner.nextLine());
+                                                                        if (containerIDs.contains(containerID) && containerWeight > port.getCurrentWeight()) {
+                                                                            containerIDs.remove(containerID);
+                                                                        }
                                                                         break;
                                                                     } catch (Exception e) {
                                                                         System.out.println("Please enter a valid value");
@@ -256,7 +262,7 @@ public class EmRuy {
                                                                         typeID = Integer.parseInt(scanner.nextLine());
 
                                                                         if (typeID >= 0 && typeID < typeList.size()) {
-                                                                            break; // Valid index, exit the loop
+                                                                            break;
                                                                         } else {
                                                                             System.out.println("Please enter a valid value (0-4)");
                                                                         }
@@ -266,23 +272,90 @@ public class EmRuy {
                                                                 } while (true);
 
                                                                 port.addContainer(new Container(containerID, containerWeight, typeList.get(typeID)));
+                                                                System.out.println(containerIDs);
                                                                 break;
 
+                                                            //Remove container
                                                             case 3:
+                                                                boolean running4 = true;
+                                                                Iterator<Container> containerIterator = port.getContainers().iterator();
+                                                                do {
+                                                                    for (Container container : port.getContainers()) {
+                                                                        System.out.println(container.getContainerID() + ". " + container.getType());
+                                                                    }
+                                                                    System.out.println("0. Go back");
+                                                                    System.out.println("Enter the container ID that you want to remove");
+                                                                    String containerRemoved = scanner.nextLine();
+
+                                                                    if (containerRemoved.equals("0")) {
+                                                                        break;
+                                                                    }
+
+                                                                    boolean containerFound = false;
+                                                                    while (containerIterator.hasNext()) {
+                                                                        Container container = containerIterator.next();
+                                                                        if (containerRemoved.equals(container.getContainerID())) {
+                                                                            containerIterator.remove();
+                                                                            containerFound = true;
+                                                                            running4 = false;
+                                                                            System.out.println("Container is removed");
+                                                                            break;
+                                                                        }
+                                                                    }
+
+                                                                    if (!containerFound) {
+                                                                        System.out.println("The container does not exist");
+                                                                    }
+                                                                } while (running4);
+                                                                break;
+
                                                             case 4:
+
+                                                                break;
                                                             case 5:
+
+                                                            //Search vehicle
                                                             case 6:
+                                                                choice = -1;
+                                                                do {
+                                                                    try {
+                                                                        System.out.println("1. By ID");
+                                                                        System.out.println("2. By Name");
+                                                                        System.out.println("3. Go back");
+                                                                        choice = Integer.parseInt(scanner.nextLine());
+                                                                    } catch (Exception e) {
+                                                                        System.out.println("Please choose a valid option");
+                                                                    }
+                                                                    if (choice == 1) {
+                                                                        System.out.println("Please enter the ID of the vehicle that you want to find");
+                                                                        String vehicleID = scanner.nextLine();
+                                                                        port.searchVehicleById(vehicleID);
+                                                                        break;
+                                                                    } else if (choice == 2) {
+                                                                        System.out.println("Please enter the name of the vehicle that you want to find");
+                                                                        String vehicleName = scanner.nextLine();
+                                                                        port.searchVehicleByName(vehicleName);
+                                                                        break;
+                                                                    } else if (choice == 3) {
+                                                                        break;
+                                                                    } else {
+                                                                        System.out.println("Please enter from 1-3");
+                                                                    }
+                                                                } while (true);
+                                                                break;
                                                             case 7:
                                                             case 8:
-                                                                port.displayTrip(new Date());
                                                             case 9:
-                                                                port.displayShips();
-                                                                break;
+                                                                port.displayTrip(new Date());
                                                             case 10:
+                                                                port.displayShips();
+                                                                port.displayTrucks();
+                                                                break;
+                                                            case 11:
                                                                 System.out.println(port.getContainers());
                                                                 break;
                                                             //Go back
-                                                            case 11:
+                                                            case 12:
                                                                 running3 = false;
                                                                 break;
                                                         }
@@ -290,7 +363,6 @@ public class EmRuy {
                                                 }
                                             }
                                         }
-
 
                                         if (portOption.equals("0")) {
                                             break;
@@ -359,15 +431,6 @@ public class EmRuy {
                                     } while (true);
 
                                     double portCurrentWeight = 0;
-                                    do {
-                                        try {
-                                            System.out.println("Please enter your port current weight:");
-                                            portCurrentWeight = Double.parseDouble(scanner.nextLine());
-                                            break;
-                                        } catch (Exception e) {
-                                            System.out.println("Please enter a valid value");
-                                        }
-                                    } while (true);
 
                                     boolean portLandingAbility;
                                     do {
@@ -385,7 +448,7 @@ public class EmRuy {
 
                                 //Remove port
                                 case 3:
-                                    boolean running4 = true;
+                                    boolean running5 = true;
                                     do {
                                         Iterator<Port> iterator = portList.iterator();
                                         for (Port port : portList) {
@@ -395,7 +458,7 @@ public class EmRuy {
                                         System.out.println("Enter the port ID that you want to remove:");
                                         String portRemoved = scanner.nextLine();
                                         if (portRemoved.equals("0")) {
-                                            running4 = false;
+                                            running5 = false;
                                         }
                                         boolean found = false;
                                         while (iterator.hasNext()) {
@@ -405,14 +468,14 @@ public class EmRuy {
                                                 portIDs.remove(portRemoved);
                                                 System.out.println("Port is removed");
                                                 found = true;
-                                                running4 = false;
+                                                running5 = false;
                                                 break;
                                             }
                                         }
                                         if (!found) {
                                             System.out.println("Port does not exist");
                                         }
-                                    } while (running4);
+                                    } while (running5);
                                     break;
 
                                 //Go back
@@ -437,6 +500,7 @@ public class EmRuy {
                     break;
 
                 default:
+                    System.out.println("Invalid option");
                     break;
             }
         } while (running);
