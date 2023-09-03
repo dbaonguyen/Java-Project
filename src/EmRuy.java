@@ -326,6 +326,7 @@ public class EmRuy {
                                                                         System.out.println("3. Reefer Truck");
                                                                         System.out.println("4. Tanker Truck");
                                                                         System.out.println("5. Go back");
+                                                                        System.out.print("Your option: ");
                                                                         choice = Integer.parseInt(scanner.nextLine());
                                                                     } catch (Exception e) {
                                                                         System.out.println("Please choose a valid option");
@@ -646,6 +647,7 @@ public class EmRuy {
                                                                         System.out.println("1. By ID");
                                                                         System.out.println("2. By Name");
                                                                         System.out.println("3. Go back");
+                                                                        System.out.print("Your option");
                                                                         choice = Integer.parseInt(scanner.nextLine());
                                                                     } catch (Exception e) {
                                                                         System.out.println("Please choose a valid option");
