@@ -76,6 +76,10 @@ public class Port implements IPort, Serializable {
         return containers;
     }
 
+    public List<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -123,13 +127,11 @@ public class Port implements IPort, Serializable {
         } else{
             this.vehicles.add(vehicle);
         }
-
     }
 
     @Override
     public void removeVehicle(Vehicle vehicle) {
         this.vehicles.remove(vehicle);
-
     }
 
     @Override

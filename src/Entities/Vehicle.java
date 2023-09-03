@@ -102,11 +102,11 @@ public class Vehicle implements IVehicle, Serializable {
         //for loop to find trip of same vehicle and null arrivalDate
         Trip thistrip;
         //update arrivalDate and status in trip
-        thistrip.setArrivalDate(currentDate);
-        thistrip.setStatus(true);
-        //add trip to both ports
-        thistrip.departFrom.addTrip(thistrip);
-        this.port.addTrip(thistrip);
+//        thistrip.setArrivalDate(currentDate);
+//        thistrip.setStatus(true);
+//        //add trip to both ports
+//        thistrip.departFrom.addTrip(thistrip);
+//        this.port.addTrip(thistrip);
 
         //add this vehicle to the new port
         this.port = port;

@@ -41,9 +41,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        portList.get(0).displayShips();
-        portList.get(0).addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-        portList.get(0).searchVehicleById("S1");
+        EmRuy.emruy();
     }
 
     public static String loginValidation (String enteredUsername, String enteredPassword) {

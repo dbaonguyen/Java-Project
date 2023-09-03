@@ -38,7 +38,7 @@ public class EmRuy {
         }
         return deserializedList;
     }
-    public static void main(String[] args) {
+    public static void emruy() {
 
         //data initialization
         userList.add(new Admin("1","1"));
@@ -87,8 +87,6 @@ public class EmRuy {
         portList.get(1).addVehicle(new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, portList.get(1)));
         portList.get(2).addVehicle(new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, portList.get(2)));
 
-        portList.get(0).searchVehicleById("dsa");
-
         writeListToFile(portList, "portList.ser");
         writeListToFile(userList, "userList.ser");
         writeListToFile(containerList, "containerList.ser");
@@ -100,8 +98,7 @@ public class EmRuy {
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-        List<String> portIDs = new ArrayList<>();
-        List<String> containerIDs = new ArrayList<>();
+
         //Login
         do {
             int choice = -1;
@@ -129,6 +126,7 @@ public class EmRuy {
                         //Admin
                         boolean running2 = true;
                         do {
+                            //Menu
                             System.out.println("1. Choose port");
                             System.out.println("2. Add port");
                             System.out.println("3. Remove port");
@@ -140,6 +138,7 @@ public class EmRuy {
                                 System.out.println("Please choose a valid option: ");
                             }
 
+                            List<String> portIDs = new ArrayList<>();
                             for (Port port : portList) {
                                 portIDs.add(port.getPortID());
                             }
@@ -147,12 +146,18 @@ public class EmRuy {
                             switch (choice) {
                                 //Choose port
                                 case 1:
+                                    List<String> containerIDs = new ArrayList<>();
+                                    List<String> vehicleIDs = new ArrayList<>();
                                     for (Port port : portList) {
                                         for (Container container : port.getContainers()) {
                                             containerIDs.add(container.getContainerID());
                                         }
+                                        for (Vehicle vehicle : port.getVehicles()) {
+                                            vehicleIDs.add(vehicle.getVehicleID());
+                                        }
                                     }
                                     do {
+                                        //Port IDs
                                         for (Port port : portList) {
                                             System.out.println(port.getPortID() + ". " + port.getName());
                                             portIDs.add(port.getPortID());
@@ -170,6 +175,7 @@ public class EmRuy {
                                                     boolean running3 = true;
                                                     choice = 0;
                                                     do {
+                                                        //Menu
                                                         System.out.println("1. Calculate distance");
                                                         System.out.println("2. Add Container");
                                                         System.out.println("3. Remove Container");
@@ -202,6 +208,7 @@ public class EmRuy {
                                                                     System.out.print("Enter the ID of the port above that you want to calculate distance between: ");
                                                                     String portOption2 = scanner.nextLine();
 
+                                                                    //Method
                                                                     if (portIDs2.contains(portOption2)) {
                                                                         System.out.println("The distance between 2 ports is: " + portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))) + "km");
                                                                         break;
@@ -309,10 +316,297 @@ public class EmRuy {
                                                                 } while (running4);
                                                                 break;
 
+                                                            //Add vehicles
                                                             case 4:
+                                                                do {
+                                                                    try {
+                                                                        System.out.println("Choose the vehicle you want to add");
+                                                                        System.out.println("1. Ship");
+                                                                        System.out.println("2. Truck");
+                                                                        System.out.println("3. Reefer Truck");
+                                                                        System.out.println("4. Tanker Truck");
+                                                                        System.out.println("5. Go back");
+                                                                        choice = Integer.parseInt(scanner.nextLine());
+                                                                    } catch (Exception e) {
+                                                                        System.out.println("Please choose a valid option");
+                                                                    }
 
+                                                                    //Ship
+                                                                    if (choice == 1) {
+                                                                        String vehicleID;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter the vehicle ID by the format 's-vehicleID': ");
+                                                                                vehicleID = scanner.nextLine();
+
+                                                                                if (!vehicleID.matches("s-\\d+")) {
+                                                                                    System.out.println("Invalid ID. The ID must be in the format 's-<integer>'.");
+                                                                                } else {
+                                                                                    if (!vehicleIDs.contains(vehicleID)) {
+                                                                                        vehicleIDs.add(vehicleID);
+                                                                                        break;
+                                                                                    } else {
+                                                                                        System.out.println("The ID is already existed!");
+                                                                                    }
+                                                                                }
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        System.out.println("Please enter your vehicle name:");
+                                                                        String vehicleName = scanner.nextLine();
+
+                                                                        double vehicleCurrentWeight = 0;
+
+                                                                        double curruntFuel = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle current fuel:");
+                                                                                curruntFuel = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double capacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle capacity:");
+                                                                                capacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+
+                                                                        double fuelCapacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle fuel capacity:");
+                                                                                fuelCapacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+                                                                        port.addVehicle(new Ship(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                                                                        System.out.println("New vehicle has been added");
+                                                                        System.out.println(vehicleIDs);
+                                                                        break;
+                                                                    }
+
+                                                                    //Truck
+                                                                    else if (choice == 2) {
+                                                                        String vehicleID;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter the vehicle ID by the format 't-vehicleID': ");
+                                                                                vehicleID = scanner.nextLine();
+
+                                                                                if (!vehicleID.matches("t-\\d+")) {
+                                                                                    System.out.println("Invalid ID. The ID must be in the format 't-<integer>'.");
+                                                                                } else {
+                                                                                    if (!vehicleIDs.contains(vehicleID)) {
+                                                                                        vehicleIDs.add(vehicleID);
+                                                                                        break;
+                                                                                    } else {
+                                                                                        System.out.println("The ID is already existed!");
+                                                                                    }
+                                                                                }
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        System.out.println("Please enter your vehicle name:");
+                                                                        String vehicleName = scanner.nextLine();
+
+                                                                        double vehicleCurrentWeight = 0;
+
+                                                                        double curruntFuel = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle current fuel:");
+                                                                                curruntFuel = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double capacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle capacity:");
+                                                                                capacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+
+                                                                        double fuelCapacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle fuel capacity:");
+                                                                                fuelCapacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+                                                                        port.addVehicle(new Truck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                                                                        System.out.println("New vehicle has been added");
+                                                                        System.out.println(vehicleIDs);
+                                                                        break;
+                                                                    }
+
+                                                                    //Reefer Truck
+                                                                    else if (choice == 3) {
+                                                                        String vehicleID;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter the vehicle ID by the format 'rt-vehicleID': ");
+                                                                                vehicleID = scanner.nextLine();
+
+                                                                                if (!vehicleID.matches("rt-\\d+")) {
+                                                                                    System.out.println("Invalid ID. The ID must be in the format 'rt-<integer>'.");
+                                                                                } else {
+                                                                                    if (!vehicleIDs.contains(vehicleID)) {
+                                                                                        vehicleIDs.add(vehicleID);
+                                                                                        break;
+                                                                                    } else {
+                                                                                        System.out.println("The ID is already existed!");
+                                                                                    }
+                                                                                }
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        System.out.println("Please enter your vehicle name:");
+                                                                        String vehicleName = scanner.nextLine();
+
+                                                                        double vehicleCurrentWeight = 0;
+
+                                                                        double curruntFuel = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle current fuel:");
+                                                                                curruntFuel = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double capacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle capacity:");
+                                                                                capacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double fuelCapacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle fuel capacity:");
+                                                                                fuelCapacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+                                                                        port.addVehicle(new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                                                                        System.out.println("New vehicle has been added");
+                                                                        System.out.println(vehicleIDs);
+                                                                        break;
+                                                                    }
+
+                                                                    //Tanker Truck
+                                                                    else if (choice == 4) {
+                                                                        String vehicleID;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter the vehicle ID by the format 'tt-vehicleID': ");
+                                                                                vehicleID = scanner.nextLine();
+
+                                                                                if (!vehicleID.matches("tt-\\d+")) {
+                                                                                    System.out.println("Invalid ID. The ID must be in the format 'tt-<integer>'.");
+                                                                                } else {
+                                                                                    if (!vehicleIDs.contains(vehicleID)) {
+                                                                                        vehicleIDs.add(vehicleID);
+                                                                                        break;
+                                                                                    } else {
+                                                                                        System.out.println("The ID is already existed!");
+                                                                                    }
+                                                                                }
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        System.out.println("Please enter your vehicle name:");
+                                                                        String vehicleName = scanner.nextLine();
+
+                                                                        double vehicleCurrentWeight = 0;
+
+                                                                        double curruntFuel = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle current fuel:");
+                                                                                curruntFuel = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double capacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle capacity:");
+                                                                                capacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+
+                                                                        double fuelCapacity = 0;
+                                                                        do {
+                                                                            try {
+                                                                                System.out.println("Please enter your vehicle fuel capacity:");
+                                                                                fuelCapacity = Double.parseDouble(scanner.nextLine());
+                                                                                break;
+                                                                            } catch (Exception e) {
+                                                                                System.out.println("Please enter a valid value");
+                                                                            }
+                                                                        } while (true);
+                                                                        port.addVehicle(new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                                                                        System.out.println("New vehicle has been added");
+                                                                        System.out.println(vehicleIDs);
+                                                                        break;
+                                                                    } else if (choice == 5) {
+                                                                        System.out.println(vehicleIDs);
+                                                                        break;
+                                                                    } else {
+                                                                        System.out.println("Please enter from 1-5");
+                                                                    }
+                                                                } while (true);
                                                                 break;
+
+                                                            //Remove Vehicle
                                                             case 5:
+                                                                break;
 
                                                             //Search vehicle
                                                             case 6:
@@ -343,14 +637,25 @@ public class EmRuy {
                                                                     }
                                                                 } while (true);
                                                                 break;
+
+                                                            //Add Trip
                                                             case 7:
+                                                                break;
+
+                                                            //Remove Trip
                                                             case 8:
+
+                                                            //Display trips
                                                             case 9:
                                                                 port.displayTrip(new Date());
+
+                                                            //Display vehicles
                                                             case 10:
                                                                 port.displayShips();
                                                                 port.displayTrucks();
                                                                 break;
+
+                                                            //Display containers
                                                             case 11:
                                                                 System.out.println(port.getContainers());
                                                                 break;
