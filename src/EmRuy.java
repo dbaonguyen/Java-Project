@@ -606,6 +606,36 @@ public class EmRuy {
 
                                                             //Remove Vehicle
                                                             case 5:
+                                                                boolean running6 = true;
+                                                                Iterator<Vehicle> vehicleIterator = port.getVehicles().iterator();
+                                                                do {
+                                                                    for (Vehicle vehicle : port.getVehicles()) {
+                                                                        System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                                                                    }
+                                                                    System.out.println("0. Go back");
+                                                                    System.out.println("Enter the vehicle ID that you want to remove");
+                                                                    String vehicleRemoved = scanner.nextLine();
+
+                                                                    if (vehicleRemoved.equals("0")) {
+                                                                        break;
+                                                                    }
+
+                                                                    boolean vehicleFound = false;
+                                                                    while (vehicleIterator.hasNext()) {
+                                                                        Vehicle vehicle = vehicleIterator.next();
+                                                                        if (vehicleRemoved.equals(vehicle.getVehicleID())) {
+                                                                            vehicleIterator.remove();
+                                                                            vehicleFound = true;
+                                                                            running6 = false;
+                                                                            System.out.println("Vehicle is removed");
+                                                                            break;
+                                                                        }
+                                                                    }
+
+                                                                    if (!vehicleFound) {
+                                                                        System.out.println("The vehicle does not exist");
+                                                                    }
+                                                                } while (running6);
                                                                 break;
 
                                                             //Search vehicle
