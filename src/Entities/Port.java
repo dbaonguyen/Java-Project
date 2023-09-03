@@ -111,6 +111,7 @@ public class Port implements IPort, Serializable {
         } else{
             this.containers.add(container);
             this.currentWeight += container.getWeight();
+            System.out.println("Container is added");
         }
     }
 

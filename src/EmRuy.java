@@ -125,6 +125,7 @@ public class EmRuy {
                         System.out.println("Welcome " + indicator);
                         //Admin
                         boolean running2 = true;
+                        choice = -1;
                         do {
                             //Menu
                             System.out.println("1. Choose port");
@@ -142,6 +143,7 @@ public class EmRuy {
                             for (Port port : portList) {
                                 portIDs.add(port.getPortID());
                             }
+
 
                             switch (choice) {
                                 //Choose port
@@ -241,7 +243,7 @@ public class EmRuy {
                                                                             }
                                                                         }
                                                                     } catch (Exception e) {
-                                                                        System.out.println("Please enter a valid value");
+                                                                        System.out.println("Invalid value");
                                                                     }
                                                                 } while (true);
 
@@ -255,7 +257,7 @@ public class EmRuy {
                                                                         }
                                                                         break;
                                                                     } catch (Exception e) {
-                                                                        System.out.println("Please enter a valid value");
+                                                                        System.out.println("Invalid value");
                                                                     }
                                                                 } while (true);
 
@@ -271,13 +273,12 @@ public class EmRuy {
                                                                         if (typeID >= 0 && typeID < typeList.size()) {
                                                                             break;
                                                                         } else {
-                                                                            System.out.println("Please enter a valid value (0-4)");
+                                                                            System.out.println("Please enter a valid option (0-4)");
                                                                         }
                                                                     } catch (Exception e) {
-                                                                        System.out.println("Please enter a valid value");
+                                                                        System.out.println("Invalid value");
                                                                     }
                                                                 } while (true);
-
                                                                 port.addContainer(new Container(containerID, containerWeight, typeList.get(typeID)));
                                                                 System.out.println(containerIDs);
                                                                 break;
@@ -318,6 +319,7 @@ public class EmRuy {
 
                                                             //Add vehicles
                                                             case 4:
+                                                                choice = -1;
                                                                 do {
                                                                     try {
                                                                         System.out.println("Choose the vehicle you want to add");
@@ -351,7 +353,7 @@ public class EmRuy {
                                                                                     }
                                                                                 }
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -367,7 +369,7 @@ public class EmRuy {
                                                                                 curruntFuel = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -378,7 +380,7 @@ public class EmRuy {
                                                                                 capacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -390,7 +392,7 @@ public class EmRuy {
                                                                                 fuelCapacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
                                                                         port.addVehicle(new Ship(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
@@ -418,7 +420,7 @@ public class EmRuy {
                                                                                     }
                                                                                 }
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -434,7 +436,7 @@ public class EmRuy {
                                                                                 curruntFuel = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -445,7 +447,7 @@ public class EmRuy {
                                                                                 capacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -457,7 +459,7 @@ public class EmRuy {
                                                                                 fuelCapacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
                                                                         port.addVehicle(new Truck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
@@ -485,7 +487,7 @@ public class EmRuy {
                                                                                     }
                                                                                 }
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -501,7 +503,7 @@ public class EmRuy {
                                                                                 curruntFuel = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -512,7 +514,7 @@ public class EmRuy {
                                                                                 capacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -523,7 +525,7 @@ public class EmRuy {
                                                                                 fuelCapacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
                                                                         port.addVehicle(new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
@@ -551,7 +553,7 @@ public class EmRuy {
                                                                                     }
                                                                                 }
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -567,7 +569,7 @@ public class EmRuy {
                                                                                 curruntFuel = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
 
@@ -589,7 +591,7 @@ public class EmRuy {
                                                                                 fuelCapacity = Double.parseDouble(scanner.nextLine());
                                                                                 break;
                                                                             } catch (Exception e) {
-                                                                                System.out.println("Please enter a valid value");
+                                                                                System.out.println("Invalid value");
                                                                             }
                                                                         } while (true);
                                                                         port.addVehicle(new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
@@ -650,7 +652,7 @@ public class EmRuy {
                                                                         System.out.print("Your option");
                                                                         choice = Integer.parseInt(scanner.nextLine());
                                                                     } catch (Exception e) {
-                                                                        System.out.println("Please choose a valid option");
+                                                                        System.out.println("Invalid value");
                                                                     }
                                                                     if (choice == 1) {
                                                                         System.out.println("Please enter the ID of the vehicle that you want to find");
@@ -676,7 +678,7 @@ public class EmRuy {
 
                                                             //Remove Trip
                                                             case 8:
-
+                                                                break;
                                                             //Display trips
                                                             case 9:
                                                                 port.displayTrip(new Date());
@@ -727,7 +729,7 @@ public class EmRuy {
                                                 }
                                             }
                                         } catch (Exception e) {
-                                            System.out.println("Please enter a valid value");
+                                            System.out.println("Invalid value");
                                         }
                                     } while (true);
 
@@ -821,6 +823,7 @@ public class EmRuy {
                                     break;
 
                                 default:
+                                    System.out.println("Please choose from 1-4");
                                     break;
                             }
                         } while (running2);
