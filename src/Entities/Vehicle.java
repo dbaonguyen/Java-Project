@@ -126,15 +126,14 @@ public class Vehicle implements IVehicle, Serializable {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "vehicleID=" + vehicleID +
-                ", name='" + name + '\'' +
-                ", currentFuel=" + currentFuel +
-                ", capacity=" + capacity +
-                ", fuelCapacity=" + fuelCapacity +
-                ", port=" + port.getName() +
-                ", containers=" + containers +
-                '}';
+        return "Vehicle Information:" +
+                "\nVehicle ID: " + vehicleID +
+                "\nName: " + name +
+                "\nCurrent Fuel: " + currentFuel +
+                "\nCapacity: " + capacity +
+                "\nFuel Capacity: " + fuelCapacity +
+                "\nPort: " + port.getName() +
+                "\nContainers: " + containers;
     }
 
     public String getVehicleID() {
