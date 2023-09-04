@@ -7,16 +7,18 @@ import java.util.*;
 
 public class EmRuy {
     //data load
-    private static List<User> userList = new ArrayList<>();
-    private static List<Port> portList = new ArrayList<>();
-    private static List<Container> containerList = new ArrayList<>();
-    private static List<Ship> shipList = new ArrayList<>();
-    private static List<Truck> truckList = new ArrayList<>();
-    private static List<ReeferTruck> reeferTruckList = new ArrayList<>();
-    private static List<TankerTruck> tankerTruckList = new ArrayList<>();
-    private static List<Type> typeList = new ArrayList<>();
+    private static List<User> userList = readListFromFile("userList.ser");
+    private static List<Port> portList = readListFromFile("portList.ser");
+    private static List<Container> containerList = readListFromFile("containerList.ser");
+    private static List<Ship> shipList = readListFromFile("shipList.ser");
+    private static List<Truck> truckList = readListFromFile("truckList.ser");
+    private static List<ReeferTruck> reeferTruckList = readListFromFile("reeferTruckList.ser");
+    private static List<TankerTruck> tankerTruckList = readListFromFile("tankerTruckList.ser");
+    private static List<Type> typeList = readListFromFile("typeList.ser");
     private static final String DEFAULT_DIRECTORY = "Data"; // Change this to your default directory path
-
+    private static int choice = -1;
+    private static Scanner scanner = new Scanner(System.in);
+    private static boolean running = true;
     public static <T> void writeListToFile(List<T> list, String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
         try (FileOutputStream fileOut = new FileOutputStream(filePath);
@@ -38,93 +40,34 @@ public class EmRuy {
         }
         return deserializedList;
     }
+
+    public static void decorativeLine() {
+        for (int i = 0;i < 50;i++){
+            System.out.print("*");
+        }
+    }
+    public static void login() {
+        decorativeLine();
+        System.out.println();
+        System.out.println("1. Login");
+        System.out.println("2. Exit");
+        try {
+            System.out.print("Your option: ");
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Please choose a valid option");
+        }
+    }
     public static void emruy() {
-
-        //data initialization
-        userList.add(new Admin("1","1"));
-        userList.add(new User("2", "2"));
-        userList.add(new PortManager("3", "3"));
-
-        typeList.add(new Type("Dry storage", 3.5, 4.6));
-        typeList.add(new Type("Open top", 2.8, 3.2));
-        typeList.add(new Type("Open side", 2.7, 3.2));
-        typeList.add(new Type("Refrigerated", 4.5, 5.4));
-        typeList.add(new Type("Liquid", 4.8, 5.3));
-
-
-        containerList.add(new Container("c-1", 5.0, typeList.get(0)));  // Dry storage
-        containerList.add(new Container("c-2", 7.2, typeList.get(1)));  // Open top
-        containerList.add(new Container("c-3", 4.3, typeList.get(2)));  // Open side
-        containerList.add(new Container("c-4", 6.1, typeList.get(3)));  // Refrigerated
-        containerList.add(new Container("c-5", 3.9, typeList.get(4)));  // Liquid
-
-        //Ports
-        portList.add(new Port("p-1", "Harbor Bay", 34.0522, -118.2437, 1500.0,500.0 , true));
-        portList.add(new Port("p-2", "Marine City", 40.7128, -74.0060, 1800.0,700.0 , false));
-        portList.add(new Port("p-3", "Ocean View", -33.8688, 151.2093, 2000.0,800.0 , true));
-        portList.add(new Port("p-4", "Seaside Haven", 37.7749, -122.4194, 1200.0,400.0 , true));
-        portList.add(new Port("p-5", "Island Port", 21.3069, -157.8583, 1600.0,600.0 , false));
-
-        portList.get(0).addContainer(new Container("c-1", 5.0, typeList.get(0)));
-        portList.get(1).addContainer(new Container("c-2", 7.2, typeList.get(1)));
-        portList.get(2).addContainer(new Container("c-3", 4.3, typeList.get(2)));
-        portList.get(3).addContainer(new Container("c-4", 6.1, typeList.get(3)));
-        portList.get(4).addContainer(new Container("c-5", 3.9, typeList.get(4)));
-
-        portList.get(0).addVehicle(new Ship("S1", "Ship 1", 10000.0, 2000.0, 20000.0, 4000.0, portList.get(0)));
-        portList.get(1).addVehicle(new Ship("S2", "Ship 2", 15000.0, 3000.0, 25000.0, 5000.0, portList.get(1)));
-        portList.get(2).addVehicle(new Ship("S3", "Ship 3", 12000.0, 2500.0, 22000.0, 4500.0, portList.get(2)));
-
-        portList.get(0).addVehicle(new Truck("T1", "Truck 1", 5000.0, 500.0, 10000.0, 1000.0, portList.get(0)));
-        portList.get(1).addVehicle(new Truck("T2", "Truck 2", 6000.0, 600.0, 11000.0, 1100.0, portList.get(1)));
-        portList.get(2).addVehicle(new Truck("T3", "Truck 3", 7000.0, 700.0, 12000.0, 1200.0, portList.get(2)));
-
-        portList.get(0).addVehicle(new ReeferTruck("RT1", "Reefer Truck 1", 6000.0, 600.0, 12000.0, 1200.0, portList.get(0)));
-        portList.get(1).addVehicle(new ReeferTruck("RT2", "Reefer Truck 2", 7000.0, 700.0, 13000.0, 1300.0, portList.get(1)));
-        portList.get(2).addVehicle(new ReeferTruck("RT3", "Reefer Truck 3", 8000.0, 800.0, 14000.0, 1400.0, portList.get(2)));
-
-        portList.get(0).addVehicle(new TankerTruck("TT1", "Tanker Truck 1", 7000.0, 700.0, 14000.0, 1400.0, portList.get(0)));
-        portList.get(1).addVehicle(new TankerTruck("TT2", "Tanker Truck 2", 8000.0, 800.0, 15000.0, 1500.0, portList.get(1)));
-        portList.get(2).addVehicle(new TankerTruck("TT3", "Tanker Truck 3", 9000.0, 900.0, 16000.0, 1600.0, portList.get(2)));
-
-        writeListToFile(portList, "portList.ser");
-        writeListToFile(userList, "userList.ser");
-        writeListToFile(containerList, "containerList.ser");
-        writeListToFile(shipList, "shipList.ser");
-        writeListToFile(truckList, "truckList.ser");
-        writeListToFile(reeferTruckList, "reeferTruckList.ser");
-        writeListToFile(tankerTruckList, "tankerTruckList.ser");
-        writeListToFile(typeList, "typeList.ser");
-
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
         //Login
         do {
-            int choice = -1;
-            for (int i = 0;i < 50;i++){
-                System.out.print("*");
-            }
-            System.out.println();
-            System.out.println("1. Login");
-            System.out.println("2. Exit");
-            try {
-                System.out.print("Your option: ");
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception e) {
-                System.out.println("Please choose a valid option");
-            }
-
+            login();
             switch (choice) {
                 //Username and Password
                 case 1:
-                    System.out.print("Enter your username: ");
-                    String username = scanner.nextLine();
-
-                    System.out.print("Enter your password: ");
-                    String password = scanner.nextLine();
-
-                    String indicator = loginValidation(username, password);
+                    //validate login
+                    String indicator = loginValidation();
                     if (!indicator.equals("invalid")) {
                         System.out.println("Welcome " + indicator);
                         //Admin
@@ -132,9 +75,7 @@ public class EmRuy {
                         choice = -1;
                         do {
                             //Menu
-                            for (int i = 0;i < 50;i++){
-                                System.out.print("*");
-                            }
+                            decorativeLine();
                             System.out.println();
                             System.out.println("1. Choose port");
                             System.out.println("2. Add port");
@@ -146,9 +87,7 @@ public class EmRuy {
                             } catch (Exception e) {
                                 System.out.println("Please choose a valid option: ");
                             }
-                            for (int i = 0;i < 50;i++){
-                                System.out.print("*");
-                            }
+                            decorativeLine();
                             System.out.println();
                             List<String> portIDs = new ArrayList<>();
                             for (Port port : portList) {
@@ -189,9 +128,7 @@ public class EmRuy {
                                                     choice = 0;
                                                     do {
                                                         //Menu
-                                                        for (int i = 0;i < 50;i++){
-                                                            System.out.print("*");
-                                                        }
+                                                        decorativeLine();
                                                         System.out.println();
                                                         System.out.println("1. Calculate distance");
                                                         System.out.println("2. Add Container");
@@ -217,9 +154,7 @@ public class EmRuy {
                                                             case 1:
                                                                 List<String> portIDs2 = new ArrayList<>();
                                                                 do {
-                                                                    for (int i = 0;i < 50;i++){
-                                                                        System.out.print("*");
-                                                                    }
+                                                                    decorativeLine();
                                                                     System.out.println();
                                                                     for (Port portFrom : portList) {
                                                                         if (portFrom != port){
@@ -232,12 +167,10 @@ public class EmRuy {
                                                                     String portOption2 = scanner.nextLine();
 
                                                                     //Method
-                                                                    for (int i = 0;i < 50;i++){
-                                                                        System.out.print("*");
-                                                                    }
+                                                                    decorativeLine();
                                                                     System.out.println();
                                                                     if (portIDs2.contains(portOption2)) {
-                                                                        System.out.println("The distance between 2 ports is: " + portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))) + "km");
+                                                                        System.out.printf("The distance between 2 ports is: %.2f km\n", portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))));
                                                                         break;
                                                                     } else {
                                                                         System.out.println("Please choose a valid option");
@@ -253,9 +186,7 @@ public class EmRuy {
                                                             case 2:
                                                                 String containerID;
                                                                 do {
-                                                                    for (int i = 0;i < 50;i++){
-                                                                        System.out.print("*");
-                                                                    }
+                                                                    decorativeLine();
                                                                     System.out.println();
                                                                     try {
                                                                         System.out.println("Please enter the container ID by the format 'c-containerID': ");
@@ -314,9 +245,7 @@ public class EmRuy {
 
                                                             //Remove container
                                                             case 3:
-                                                                for (int i = 0;i < 50;i++){
-                                                                    System.out.print("*");
-                                                                }
+                                                                decorativeLine();
                                                                 System.out.println();
                                                                 boolean running4 = true;
                                                                 Iterator<Container> containerIterator = port.getContainers().iterator();
@@ -352,9 +281,7 @@ public class EmRuy {
 
                                                             //Add vehicles
                                                             case 4:
-                                                                for (int i = 0;i < 50;i++){
-                                                                    System.out.print("*");
-                                                                }
+                                                                decorativeLine();
                                                                 System.out.println();
                                                                 choice = -1;
                                                                 do {
@@ -684,9 +611,7 @@ public class EmRuy {
                                                                 choice = -1;
                                                                 do {
                                                                     try {
-                                                                        for (int i = 0;i < 50;i++){
-                                                                            System.out.print("*");
-                                                                        }
+                                                                        decorativeLine();
                                                                         System.out.println();
                                                                         System.out.println("1. By ID");
                                                                         System.out.println("2. By Name");
@@ -700,18 +625,14 @@ public class EmRuy {
                                                                     if (choice == 1) {
                                                                         System.out.println("Please enter the ID of the vehicle that you want to find");
                                                                         String vehicleID = scanner.nextLine();
-                                                                        for (int i = 0;i < 50;i++){
-                                                                            System.out.print("*");
-                                                                        }
+                                                                        decorativeLine();
                                                                         System.out.println();
                                                                         port.searchVehicleById(vehicleID);
                                                                         break;
                                                                     } else if (choice == 2) {
                                                                         System.out.println("Please enter the name of the vehicle that you want to find");
                                                                         String vehicleName = scanner.nextLine();
-                                                                        for (int i = 0;i < 50;i++){
-                                                                            System.out.print("*");
-                                                                        }
+                                                                        decorativeLine();
                                                                         System.out.println();
                                                                         port.searchVehicleByName(vehicleName);
                                                                         break;
@@ -897,18 +818,24 @@ public class EmRuy {
         } while (running);
     }
 
-    public static String loginValidation (String enteredUsername, String enteredPassword) {
+    public static String loginValidation () {
+        System.out.print("Enter your username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter your password: ");
+        String password = scanner.nextLine();
+
         // Search for a user with the provided username in the list of registered users.
         User currentLoginUser = null;
         for (User user : userList) {
-            if (user.getUsername().equals(enteredUsername)) {
+            if (user.getUsername().equals(username)) {
                 currentLoginUser = user;
                 break; // Exit the loop once a matching username is found.
             }
         }
         if (currentLoginUser != null) {
             // If a matching username is found, validate the password.
-            if (currentLoginUser.getPassword().equals(enteredPassword)) {
+            if (currentLoginUser.getPassword().equals(password)) {
                 // Check the user's type (role).
                 if (currentLoginUser instanceof Admin) {
                     return "admin";
