@@ -102,6 +102,10 @@ public class EmRuy {
         //Login
         do {
             int choice = -1;
+            for (int i = 0;i < 50;i++){
+                System.out.print("*");
+            }
+            System.out.println();
             System.out.println("1. Login");
             System.out.println("2. Exit");
             try {
@@ -128,6 +132,10 @@ public class EmRuy {
                         choice = -1;
                         do {
                             //Menu
+                            for (int i = 0;i < 50;i++){
+                                System.out.print("*");
+                            }
+                            System.out.println();
                             System.out.println("1. Choose port");
                             System.out.println("2. Add port");
                             System.out.println("3. Remove port");
@@ -138,7 +146,10 @@ public class EmRuy {
                             } catch (Exception e) {
                                 System.out.println("Please choose a valid option: ");
                             }
-
+                            for (int i = 0;i < 50;i++){
+                                System.out.print("*");
+                            }
+                            System.out.println();
                             List<String> portIDs = new ArrayList<>();
                             for (Port port : portList) {
                                 portIDs.add(port.getPortID());
@@ -178,6 +189,10 @@ public class EmRuy {
                                                     choice = 0;
                                                     do {
                                                         //Menu
+                                                        for (int i = 0;i < 50;i++){
+                                                            System.out.print("*");
+                                                        }
+                                                        System.out.println();
                                                         System.out.println("1. Calculate distance");
                                                         System.out.println("2. Add Container");
                                                         System.out.println("3. Remove Container");
@@ -202,15 +217,25 @@ public class EmRuy {
                                                             case 1:
                                                                 List<String> portIDs2 = new ArrayList<>();
                                                                 do {
+                                                                    for (int i = 0;i < 50;i++){
+                                                                        System.out.print("*");
+                                                                    }
+                                                                    System.out.println();
                                                                     for (Port portFrom : portList) {
-                                                                        System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
-                                                                        portIDs2.add(portFrom.getPortID());
+                                                                        if (portFrom != port){
+                                                                            System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
+                                                                            portIDs2.add(portFrom.getPortID());
+                                                                        }
                                                                     }
                                                                     System.out.println("0. Go back");
                                                                     System.out.print("Enter the ID of the port above that you want to calculate distance between: ");
                                                                     String portOption2 = scanner.nextLine();
 
                                                                     //Method
+                                                                    for (int i = 0;i < 50;i++){
+                                                                        System.out.print("*");
+                                                                    }
+                                                                    System.out.println();
                                                                     if (portIDs2.contains(portOption2)) {
                                                                         System.out.println("The distance between 2 ports is: " + portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))) + "km");
                                                                         break;
@@ -228,6 +253,10 @@ public class EmRuy {
                                                             case 2:
                                                                 String containerID;
                                                                 do {
+                                                                    for (int i = 0;i < 50;i++){
+                                                                        System.out.print("*");
+                                                                    }
+                                                                    System.out.println();
                                                                     try {
                                                                         System.out.println("Please enter the container ID by the format 'c-containerID': ");
                                                                         containerID = scanner.nextLine();
@@ -285,6 +314,10 @@ public class EmRuy {
 
                                                             //Remove container
                                                             case 3:
+                                                                for (int i = 0;i < 50;i++){
+                                                                    System.out.print("*");
+                                                                }
+                                                                System.out.println();
                                                                 boolean running4 = true;
                                                                 Iterator<Container> containerIterator = port.getContainers().iterator();
                                                                 do {
@@ -319,6 +352,10 @@ public class EmRuy {
 
                                                             //Add vehicles
                                                             case 4:
+                                                                for (int i = 0;i < 50;i++){
+                                                                    System.out.print("*");
+                                                                }
+                                                                System.out.println();
                                                                 choice = -1;
                                                                 do {
                                                                     try {
@@ -643,25 +680,39 @@ public class EmRuy {
 
                                                             //Search vehicle
                                                             case 6:
+
                                                                 choice = -1;
                                                                 do {
                                                                     try {
+                                                                        for (int i = 0;i < 50;i++){
+                                                                            System.out.print("*");
+                                                                        }
+                                                                        System.out.println();
                                                                         System.out.println("1. By ID");
                                                                         System.out.println("2. By Name");
                                                                         System.out.println("3. Go back");
-                                                                        System.out.print("Your option");
+                                                                        System.out.print("Your option: ");
                                                                         choice = Integer.parseInt(scanner.nextLine());
                                                                     } catch (Exception e) {
                                                                         System.out.println("Invalid value");
                                                                     }
+
                                                                     if (choice == 1) {
                                                                         System.out.println("Please enter the ID of the vehicle that you want to find");
                                                                         String vehicleID = scanner.nextLine();
+                                                                        for (int i = 0;i < 50;i++){
+                                                                            System.out.print("*");
+                                                                        }
+                                                                        System.out.println();
                                                                         port.searchVehicleById(vehicleID);
                                                                         break;
                                                                     } else if (choice == 2) {
                                                                         System.out.println("Please enter the name of the vehicle that you want to find");
                                                                         String vehicleName = scanner.nextLine();
+                                                                        for (int i = 0;i < 50;i++){
+                                                                            System.out.print("*");
+                                                                        }
+                                                                        System.out.println();
                                                                         port.searchVehicleByName(vehicleName);
                                                                         break;
                                                                     } else if (choice == 3) {
