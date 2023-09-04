@@ -28,7 +28,6 @@ public class AdminInterface {
             e.printStackTrace();
         }
     }
-
     public static <T> List<T> readListFromFile(String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
         List<T> deserializedList = null;
@@ -40,7 +39,6 @@ public class AdminInterface {
         }
         return deserializedList;
     }
-
     public static void decorativeLine() {
         for (int i = 0;i < 50;i++){
             System.out.print("*");
@@ -617,18 +615,10 @@ public class AdminInterface {
             //Menu
             decorativeLine();
             System.out.println();
-            System.out.println("1. Calculate distance");
-            System.out.println("2. Add Container");
-            System.out.println("3. Remove Container");
-            System.out.println("4. Add Vehicle");
-            System.out.println("5. Remove Vehicle");
-            System.out.println("6. Search Vehicle");
-            System.out.println("7. Add Trips");
-            System.out.println("8. Remove Trips");
-            System.out.println("9. Display Trips");
-            System.out.println("10. Display Vehicles");
-            System.out.println("11. Display Containers");
-            System.out.println("12. Go Back");
+            System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
+            System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
+            System.out.println("7. Add Trips\t\t\t|\t\t8. Remove Trips \t\t|\t\t9. Display Trips");
+            System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
             try {
                 System.out.print("Your option: ");
                 choice = Integer.parseInt(scanner.nextLine());
@@ -799,7 +789,6 @@ public class AdminInterface {
             }
         } while (running);
     }
-
     public static String loginValidation () {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
