@@ -22,6 +22,7 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     public Vehicle getVehicle() {
         return vehicle;
     }

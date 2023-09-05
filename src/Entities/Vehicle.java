@@ -3,7 +3,10 @@ package Entities;
 import Interface.IVehicle;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.ParseException;
 
 public class Vehicle implements IVehicle, Serializable {
     private String vehicleID;
@@ -88,7 +91,9 @@ public class Vehicle implements IVehicle, Serializable {
             System.out.println("The vehicle can not go to this port!");
         }
         else{
-
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date today = new Date();
+            Trip newTrip = new Trip(this, today, null, this.port, port, false);
             //make a new trip variable(arrivalDate = null, status = false)
             this.setPort(null);
             //change port to null
