@@ -1,6 +1,7 @@
 package Entities;
 
 import Interface.IPort;
+import Users.PortManager;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -119,6 +120,31 @@ public class Port implements IPort, Serializable {
     public void removeContainer(Container container) {
         this.containers.remove(container);
         this.currentWeight -= container.getWeight();
+    }
+
+    @Override
+    public void searchContainer(String id) {
+
+    }
+
+    @Override
+    public void updateContainer(Container container) {
+
+    }
+
+    @Override
+    public void updatePort(Port port) {
+
+    }
+
+    @Override
+    public void updateVehicle() {
+
+    }
+
+    @Override
+    public void updateManagerInfo(PortManager portManager) {
+
     }
 
     @Override
