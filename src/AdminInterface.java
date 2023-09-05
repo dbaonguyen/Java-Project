@@ -792,10 +792,8 @@ public class AdminInterface {
     public static String loginValidation () {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
-
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
-
         // Search for a user with the provided username in the list of registered users.
         User currentLoginUser = null;
         for (User user : userList) {
@@ -810,10 +808,8 @@ public class AdminInterface {
                 // Check the user's type (role).
                 if (currentLoginUser instanceof Admin) {
                     return "admin";
-                } else if (currentLoginUser instanceof PortManager) {
-                    return "manager";
                 } else {
-                    return "user";
+                    return "manager";
                 }
             }
         }
