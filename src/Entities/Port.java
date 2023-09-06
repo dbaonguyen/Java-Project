@@ -138,7 +138,7 @@ public class Port implements IPort, Serializable {
     }
 
     @Override
-    public void updateVehicle() {
+    public void updateVehicle(Vehicle vehicle) {
 
     }
 
