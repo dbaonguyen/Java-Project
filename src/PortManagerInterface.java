@@ -28,7 +28,6 @@ public class PortManagerInterface {
             e.printStackTrace();
         }
     }
-
     public static <T> List<T> readListFromFile(String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
         List<T> deserializedList = null;
@@ -40,7 +39,6 @@ public class PortManagerInterface {
         }
         return deserializedList;
     }
-
     public static void decorativeLine() {
         for (int i = 0;i < 50;i++){
             System.out.print("*");
@@ -610,200 +608,192 @@ public class PortManagerInterface {
             }
         } while (running5);
     }
-    public static void run() {
+    public static void portOptions(List<String> portIDs, List<String> vehicleIDs, String portOption, List<String> containerIDs, Port port) {
+        boolean running3 = true;
+        choice = 0;
+        do {
+            //Menu
+            decorativeLine();
+            System.out.println();
+            System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
+            System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
+            System.out.println("7. Add Trips\t\t\t|\t\t8. Remove Trips \t\t|\t\t9. Display Trips");
+            System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
+            try {
+                System.out.print("Your option: ");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.print("Please choose a valid option: ");
+            }
 
+            switch (choice) {
+                //Caculate distance
+                case 1:
+                    calculateDistance(port, portIDs, portOption);
+                    break;
+                //Add container
+                case 2:
+                    addContainer(containerIDs, port);
+                    break;
+                //Remove container
+                case 3:
+                    removeContainer(port);
+                    break;
+                //Add vehicles
+                case 4:
+                    addVehicle(vehicleIDs, port);
+                    break;
+                //Remove Vehicle
+                case 5:
+                    removeContainer(port);
+                    break;
+                //Search vehicle
+                case 6:
+                    searchVehicle(port);
+                    break;
+                //Add Trip
+                case 7:
+                    break;
+                //Remove Trip
+                case 8:
+                    break;
+                //Display trips
+                case 9:
+                    port.displayTrip(new Date());
+                    //Display vehicles
+                case 10:
+                    port.displayShips();
+                    port.displayTrucks();
+                    break;
+                //Display containers
+                case 11:
+                    System.out.println(port.getContainers());
+                    break;
+                //Go back
+                case 12:
+                    running3 = false;
+                    break;
+            }
+        } while (running3);
+    }
+    public static void choosePort(List<String> portIDs) {
+        List<String> containerIDs = new ArrayList<>();
+        List<String> vehicleIDs = new ArrayList<>();
+        for (Port port : portList) {
+            for (Container container : port.getContainers()) {
+                containerIDs.add(container.getContainerID());
+            }
+            for (Vehicle vehicle : port.getVehicles()) {
+                vehicleIDs.add(vehicle.getVehicleID());
+            }
+        }
+        do {
+            //Port IDs
+            for (Port port : portList) {
+                System.out.println(port.getPortID() + ". " + port.getName());
+                portIDs.add(port.getPortID());
+            }
+
+            System.out.println("0. Go back");
+            System.out.print("Enter the ID of the port above that you want to modify: ");
+            String portOption = scanner.nextLine();
+
+            if (!portIDs.contains(portOption)) {
+                System.out.println("Port does not exist");
+            } else {
+                for (Port port : portList) {
+                    if (portOption.equals(port.getPortID())) {
+                        portOptions(portIDs, vehicleIDs, portOption, containerIDs, port);
+                    }
+                }
+            }
+            if (portOption.equals("0")) {
+                break;
+            }
+
+        } while (true);
+    }
+    public static void loginMainMenu() {
+        //validate login
+        String indicator = loginValidation();
+        if (!indicator.equals("invalid")) {
+            System.out.println("Welcome " + indicator);
+            //Admin
+            boolean running2 = true;
+            choice = -1;
+            do {
+                //Menu
+                decorativeLine();
+                System.out.println();
+                System.out.println("1. Choose port");
+                System.out.println("2. Add port");
+                System.out.println("3. Remove port");
+                System.out.println("4. Go back");
+                try {
+                    System.out.print("Your option: ");
+                    choice = Integer.parseInt(scanner.nextLine());
+                } catch (Exception e) {
+                    System.out.println("Please choose a valid option: ");
+                }
+                decorativeLine();
+                System.out.println();
+                List<String> portIDs = new ArrayList<>();
+                for (Port port : portList) {
+                    portIDs.add(port.getPortID());
+                }
+                switch (choice) {
+                    //Choose port
+                    case 1:
+                        choosePort(portIDs);
+                        break;
+                    //Add port
+                    case 2:
+                        addPort(portIDs);
+                        break;
+                    //Remove port
+                    case 3:
+                        removePort(portIDs);
+                        break;
+                    //Go back
+                    case 4:
+                        running2 = false;
+                        break;
+                    default:
+                        System.out.println("Please choose from 1-4");
+                        break;
+                }
+            } while (running2);
+
+        } else {
+            System.out.println("Incorrect username or password!");
+        }
+    }
+    public static void run() {
         //Login
         do {
             login();
             switch (choice) {
-                //Username and Password
+                //Login
                 case 1:
-                    //validate login
-                    String indicator = loginValidation();
-                    if (!indicator.equals("invalid")) {
-                        System.out.println("Welcome " + indicator);
-                        //Admin
-                        boolean running2 = true;
-                        choice = -1;
-                        do {
-                            //Menu
-                            decorativeLine();
-                            System.out.println();
-                            System.out.println("1. Choose port");
-                            System.out.println("2. Add port");
-                            System.out.println("3. Remove port");
-                            System.out.println("4. Go back");
-                            try {
-                                System.out.print("Your option: ");
-                                choice = Integer.parseInt(scanner.nextLine());
-                            } catch (Exception e) {
-                                System.out.println("Please choose a valid option: ");
-                            }
-                            decorativeLine();
-                            System.out.println();
-                            List<String> portIDs = new ArrayList<>();
-                            for (Port port : portList) {
-                                portIDs.add(port.getPortID());
-                            }
-
-
-                            switch (choice) {
-                                //Choose port
-                                case 1:
-                                    List<String> containerIDs = new ArrayList<>();
-                                    List<String> vehicleIDs = new ArrayList<>();
-                                    for (Port port : portList) {
-                                        for (Container container : port.getContainers()) {
-                                            containerIDs.add(container.getContainerID());
-                                        }
-                                        for (Vehicle vehicle : port.getVehicles()) {
-                                            vehicleIDs.add(vehicle.getVehicleID());
-                                        }
-                                    }
-                                    do {
-                                        //Port IDs
-                                        for (Port port : portList) {
-                                            System.out.println(port.getPortID() + ". " + port.getName());
-                                            portIDs.add(port.getPortID());
-                                        }
-
-                                        System.out.println("0. Go back");
-                                        System.out.print("Enter the ID of the port above that you want to modify: ");
-                                        String portOption = scanner.nextLine();
-
-                                        if (!portIDs.contains(portOption)) {
-                                            System.out.println("Port does not exist");
-                                        } else {
-                                            for (Port port : portList) {
-                                                if (portOption.equals(port.getPortID())) {
-                                                    boolean running3 = true;
-                                                    choice = 0;
-                                                    do {
-                                                        //Menu
-                                                        decorativeLine();
-                                                        System.out.println();
-                                                        System.out.println("1. Calculate distance");
-                                                        System.out.println("2. Add Container");
-                                                        System.out.println("3. Remove Container");
-                                                        System.out.println("4. Add Vehicle");
-                                                        System.out.println("5. Remove Vehicle");
-                                                        System.out.println("6. Search Vehicle");
-                                                        System.out.println("7. Add Trips");
-                                                        System.out.println("8. Remove Trips");
-                                                        System.out.println("9. Display Trips");
-                                                        System.out.println("10. Display Vehicles");
-                                                        System.out.println("11. Display Containers");
-                                                        System.out.println("12. Go Back");
-                                                        try {
-                                                            System.out.print("Your option: ");
-                                                            choice = Integer.parseInt(scanner.nextLine());
-                                                        } catch (Exception e) {
-                                                            System.out.print("Please choose a valid option: ");
-                                                        }
-
-                                                        switch (choice) {
-                                                            //Caculate distance
-                                                            case 1:
-                                                                calculateDistance(port, portIDs, portOption);
-                                                                break;
-                                                            //Add container
-                                                            case 2:
-                                                                addContainer(containerIDs, port);
-                                                                break;
-                                                            //Remove container
-                                                            case 3:
-                                                                removeContainer(port);
-                                                                break;
-                                                            //Add vehicles
-                                                            case 4:
-                                                                addVehicle(vehicleIDs, port);
-                                                                break;
-                                                            //Remove Vehicle
-                                                            case 5:
-                                                                removeContainer(port);
-                                                                break;
-                                                            //Search vehicle
-                                                            case 6:
-                                                                searchVehicle(port);
-                                                                break;
-                                                            //Add Trip
-                                                            case 7:
-                                                                break;
-                                                            //Remove Trip
-                                                            case 8:
-                                                                break;
-                                                            //Display trips
-                                                            case 9:
-                                                                port.displayTrip(new Date());
-                                                                //Display vehicles
-                                                            case 10:
-                                                                port.displayShips();
-                                                                port.displayTrucks();
-                                                                break;
-                                                            //Display containers
-                                                            case 11:
-                                                                System.out.println(port.getContainers());
-                                                                break;
-                                                            //Go back
-                                                            case 12:
-                                                                running3 = false;
-                                                                break;
-                                                        }
-                                                    } while (running3);
-                                                }
-                                            }
-                                        }
-
-                                        if (portOption.equals("0")) {
-                                            break;
-                                        }
-
-                                    } while (true);
-                                    break;
-
-                                //Add port
-                                case 2:
-                                    addPort(portIDs);
-                                    break;
-                                //Remove port
-                                case 3:
-                                    removePort(portIDs);
-                                    break;
-                                //Go back
-                                case 4:
-                                    running2 = false;
-                                    break;
-                                default:
-                                    System.out.println("Please choose from 1-4");
-                                    break;
-                            }
-                        } while (running2);
-
-                    } else {
-                        System.out.println("Incorrect username or password!");
-                    }
+                    loginMainMenu();
                     break;
-
                 //Exit
                 case 2:
                     System.out.println("Logged out");
                     running = false;
                     break;
-
+                //Default case
                 default:
                     System.out.println("Invalid option");
                     break;
             }
         } while (running);
     }
-
     public static String loginValidation () {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();
-
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
-
         // Search for a user with the provided username in the list of registered users.
         User currentLoginUser = null;
         for (User user : userList) {
@@ -818,10 +808,8 @@ public class PortManagerInterface {
                 // Check the user's type (role).
                 if (currentLoginUser instanceof Admin) {
                     return "admin";
-                } else if (currentLoginUser instanceof PortManager) {
-                    return "manager";
                 } else {
-                    return "user";
+                    return "manager";
                 }
             }
         }
