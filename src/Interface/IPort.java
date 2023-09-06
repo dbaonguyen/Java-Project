@@ -21,7 +21,7 @@ public interface IPort {
 
     void updateContainer(Container container);
     void updatePort(Port port);
-    void updateVehicle(Vehicle);
+    void updateVehicle(Vehicle vehicle);
     void updateManagerInfo(PortManager portManager);
 
     public void addVehicle(Vehicle vehicle);
