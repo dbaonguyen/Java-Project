@@ -131,7 +131,7 @@ public class Port implements IPort, Serializable {
 
         if (containerID.contains(id)) {
             for (Container container : containers) {
-                if (container.getVehicleID().equals(id)){
+                if (container.getContainerID().equals(id)){
                     System.out.println(container);
                 }
             }
