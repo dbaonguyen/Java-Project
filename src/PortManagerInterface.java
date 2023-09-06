@@ -16,7 +16,6 @@ public class PortManagerInterface {
     private static List<TankerTruck> tankerTruckList = readListFromFile("tankerTruckList.ser");
     private static List<Type> typeList = readListFromFile("typeList.ser");
     private static final String DEFAULT_DIRECTORY = "Data"; // Change this to your default directory path
-    private static int choice = -1;
     private static Scanner scanner = new Scanner(System.in);
     private static boolean running = true;
     public static <T> void writeListToFile(List<T> list, String fileName) {
@@ -44,7 +43,8 @@ public class PortManagerInterface {
             System.out.print("*");
         }
     }
-    public static void login() {
+    public static int login() {
+        int choice = -1;
         decorativeLine();
         System.out.println();
         System.out.println("1. Login");
@@ -55,6 +55,7 @@ public class PortManagerInterface {
         } catch (Exception e) {
             System.out.println("Please choose a valid option");
         }
+        return choice;
     }
     public static void calculateDistance(Port port, List<String> portIDs, String portOption) {
         List<String> portIDs2 = new ArrayList<>();
@@ -182,7 +183,7 @@ public class PortManagerInterface {
     public static void addVehicle(List<String> vehicleIDs, Port port) {
         decorativeLine();
         System.out.println();
-        choice = -1;
+        int choice = -1;
         do {
             try {
                 System.out.println("Choose the vehicle you want to add");
@@ -470,7 +471,7 @@ public class PortManagerInterface {
         } while (true);
     }
     public static void searchVehicle(Port port) {
-        choice = -1;
+        int choice = -1;
         do {
             try {
                 decorativeLine();
@@ -610,7 +611,7 @@ public class PortManagerInterface {
     }
     public static void portOptions(List<String> portIDs, List<String> vehicleIDs, String portOption, List<String> containerIDs, Port port) {
         boolean running3 = true;
-        choice = 0;
+        int choice = 0;
         do {
             //Menu
             decorativeLine();
@@ -713,14 +714,13 @@ public class PortManagerInterface {
 
         } while (true);
     }
-    public static void loginMainMenu() {
+    public static void loginMainMenu(String indicator) {
         //validate login
-        String indicator = loginValidation();
         if (!indicator.equals("invalid")) {
             System.out.println("Welcome " + indicator);
             //Admin
             boolean running2 = true;
-            choice = -1;
+            int choice = -1;
             do {
                 //Menu
                 decorativeLine();
@@ -768,26 +768,23 @@ public class PortManagerInterface {
             System.out.println("Incorrect username or password!");
         }
     }
-    public static void run() {
+    public static void run(int choice, String indicator) {
         //Login
-        do {
-            login();
-            switch (choice) {
-                //Login
-                case 1:
-                    loginMainMenu();
-                    break;
-                //Exit
-                case 2:
-                    System.out.println("Logged out");
-                    running = false;
-                    break;
-                //Default case
-                default:
-                    System.out.println("Invalid option");
-                    break;
-            }
-        } while (running);
+        switch (choice) {
+            //Login
+            case 1:
+                loginMainMenu(indicator);
+                break;
+            //Exit
+            case 2:
+                System.out.println("Logged out");
+                running = false;
+                break;
+            //Default case
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
     }
     public static String loginValidation () {
         System.out.print("Enter your username: ");
