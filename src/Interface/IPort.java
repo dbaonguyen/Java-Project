@@ -19,10 +19,6 @@ public interface IPort {
 
     void searchContainer(String id);
 
-    void updateContainer(Container container);
-    void updatePort(Port port);
-    void updateVehicle(Vehicle vehicle);
-    void updateManagerInfo(PortManager portManager);
 
     public void addVehicle(Vehicle vehicle);
     public void removeVehicle(Vehicle vehicle);

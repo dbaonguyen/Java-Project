@@ -139,27 +139,6 @@ public class Port implements IPort, Serializable {
             System.out.println("Container not found");
         }
     }
-
-    @Override
-    public void updateContainer(Container container) {
-
-    }
-
-    @Override
-    public void updatePort(Port port) {
-
-    }
-
-    @Override
-    public void updateVehicle(Vehicle vehicle) {
-
-    }
-
-    @Override
-    public void updateManagerInfo(PortManager portManager) {
-
-    }
-
     @Override
     public void addVehicle(Vehicle vehicle) {
         if (!this.isLandingAbility() && (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck)){
