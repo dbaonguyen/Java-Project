@@ -3,7 +3,10 @@ import Users.Admin;
 import Users.PortManager;
 import Users.User;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.text.ParseException;
+import java.util.Date;
 
 public class AdminInterface {
     //data load
@@ -43,6 +46,7 @@ public class AdminInterface {
             System.out.print("*");
         }
     }
+
     public static int login() {
         int choice = -1;
         decorativeLine();
@@ -571,10 +575,12 @@ public class AdminInterface {
         do {
             try {
                 System.out.println("Please enter your port landing ability (true/false):");
-                portLandingAbility = Boolean.parseBoolean(scanner.nextLine());
+                portLandingAbility = scanner.nextBoolean();
+                scanner.nextLine();
                 break;
             } catch (Exception e) {
                 System.out.println("Please enter a valid value");
+                scanner.nextLine();
             }
         } while (true);
         portList.add(new Port(portID,portName,portLatitude,portLongtitude,portCapacity,portCurrentWeight,portLandingAbility));
@@ -628,6 +634,7 @@ public class AdminInterface {
                 System.out.print("Please choose a valid option: ");
             }
 
+
             switch (choice) {
                 //Caculate distance
                 case 1:
@@ -657,6 +664,10 @@ public class AdminInterface {
                 case 7:
                     String vehicleID;
                     Vehicle theVehicle = null;
+                    String departDate;
+                    String arrivalDate;
+                    Date dDate;
+                    Date aDate;
                     List<String> vehicleIDsOfThePort = new ArrayList<>();
                     do {
                         try {
@@ -666,33 +677,94 @@ public class AdminInterface {
                             }
                             System.out.println("0. Go back");
 
+
                             System.out.println("Please enter the vehicle ID");
                             vehicleID = scanner.nextLine();
+
                             if (vehicleID.equals("0")) {
                                 break;
-                            } else {
-                                if (!vehicleIDsOfThePort.contains(vehicleID)) {
-                                    System.out.println("The vehicle does not exist");
-                                } else {
-                                    theVehicle = port.getVehicles().get(vehicleIDsOfThePort.indexOf(vehicleID));
-                                    System.out.println(theVehicle);
-                                    break;
-                                }
                             }
+
+                            if (!vehicleIDsOfThePort.contains(vehicleID)) {
+                                System.out.println("The vehicle does not exist");
+                            } else {
+                                theVehicle = port.getVehicles().get(vehicleIDsOfThePort.indexOf(vehicleID));
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                do {
+                                    try {
+                                        System.out.println("Enter the departure date with this format dd/MM/yyyy HH:mm:ss");
+                                        departDate = scanner.nextLine();
+                                        dDate = dateFormat.parse(departDate);
+                                        break;
+                                    } catch (ParseException e) {
+                                        System.out.println("Invalid date");
+                                    }
+                                } while (true);
+
+                                do {
+                                    try {
+                                        System.out.println("Enter the arrival date with this format dd/MM/yyyy HH:mm:ss");
+                                        arrivalDate = scanner.nextLine();
+                                        aDate = dateFormat.parse(arrivalDate);
+                                        break;
+                                    } catch (ParseException e) {
+                                        System.out.println("Invalid date");
+                                    }
+                                } while (true);
+
+                                do {
+                                    try {
+                                        List<String> portIDs2 = new ArrayList<>();
+                                        for (Port portFrom : portList) {
+                                            if (portFrom != port){
+                                                System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
+                                                portIDs2.add(portFrom.getPortID());
+                                            }
+                                        }
+                                        System.out.println("Please enter the id of the port to arrive to: ");
+                                        String arrivePort = scanner.nextLine();
+
+                                        if (portIDs2.contains(arrivePort)) {
+                                            Port portMoveTo = portList.get(portIDs2.indexOf(arrivePort));
+                                            break;
+                                        } else {
+                                            System.out.println("Please choose a valid option");
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println("Invalid value");
+                                    }
+                                } while (true);
+
+                                boolean status;
+                                do {
+                                    try {
+                                        System.out.println("Please enter your vehicle's status (true/false) true is arriving, false is has arrived:");
+                                        status = scanner.nextBoolean();
+                                        scanner.nextLine();
+                                        break;
+                                    } catch (Exception e) {
+                                        System.out.println("Please enter a valid value");
+                                        scanner.nextLine();
+                                    }
+                                } while (true);
+
+                                port.addTrip(new Trip(theVehicle,port, dDate, aDate, port, status));
+                                System.out.println("Trip is added");
+                                break;
+                            }
+
                         } catch (Exception e) {
                             System.out.println("Invalid value");
                         }
                     } while (true);
-
-
-
-                    break;
+                   break;
                 //Remove Trip
                 case 8:
                     break;
                 //Display trips
                 case 9:
-                    port.displayTrip(new Date());
+                    System.out.println(port.getTrips());
+                    break;
                     //Display vehicles
                 case 10:
                     port.displayShips();

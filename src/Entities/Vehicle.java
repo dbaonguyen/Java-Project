@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.Timer;
 
 public class Vehicle implements IVehicle, Serializable {
     private String vehicleID;
@@ -87,19 +88,19 @@ public class Vehicle implements IVehicle, Serializable {
     @Override
     public void moveToPort(Port port) {
         //check value of canMoveToPort()
-//        if(this.canMoveToPort(port) == false){
-//            System.out.println("The vehicle can not go to this port!");
-//        }
-//        else{
-//            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-//            Date today = new Date();
-//            Trip newTrip = new Trip(this, today, null, this.port, port, false);
-//            //make a new trip variable(arrivalDate = null, status = false)
-//            this.setPort(null);
-//            //change port to null
-//            port.removeVehicle(this);
-//            //remove vehicle from old port
-//        }
+        if(this.canMoveToPort(port) == false){
+            System.out.println("The vehicle can not go to this port!");
+        }
+        else {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date today = new Date();
+            this.port.addTrip(new Trip(this, this.port, null, today, port, false));
+            //make a new trip variable(arrivalDate = null, status = false)
+            this.setPort(null);
+            //change port to null
+            port.removeVehicle(this);
+            //remove vehicle from old port
+        }
     }
 
     @Override

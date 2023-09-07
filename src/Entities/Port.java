@@ -189,6 +189,10 @@ public class Port implements IPort, Serializable {
         }
     }
 
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
     @Override
     public void addTrip(Trip trip) {
         trips.add(trip);
@@ -197,7 +201,7 @@ public class Port implements IPort, Serializable {
     @Override
     public void displayTrip(Date date) {
         for (Trip trip : trips){
-
+            System.out.println(trip);
         }
     }
 

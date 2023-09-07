@@ -1,8 +1,8 @@
-public class  Main {
+public class Main {
     public static void main(String[] args) {
-        int choice = AdminInterface.login();
         boolean running = true;
         do {
+            int choice = AdminInterface.login();
             switch (choice) {
                 //Login
                 case 1:
@@ -29,6 +29,5 @@ public class  Main {
                     break;
             }
         } while (running);
-
     }
 }
