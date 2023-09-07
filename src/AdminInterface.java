@@ -800,24 +800,6 @@ public class AdminInterface {
             System.out.println("Incorrect username or password!");
         }
     }
-    public static void run(int choice, String indicator) {
-        //Login
-        switch (choice) {
-            //Login
-            case 1:
-                loginMainMenu(indicator);
-                break;
-            //Exit
-            case 2:
-                System.out.println("Logged out");
-                running = false;
-                break;
-            //Default case
-            default:
-                System.out.println("Invalid option");
-                break;
-        }
-    }
     public static String loginValidation () {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();

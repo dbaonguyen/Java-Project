@@ -43,20 +43,6 @@ public class PortManagerInterface {
             System.out.print("*");
         }
     }
-    public static int login() {
-        int choice = -1;
-        decorativeLine();
-        System.out.println();
-        System.out.println("1. Login");
-        System.out.println("2. Exit");
-        try {
-            System.out.print("Your option: ");
-            choice = Integer.parseInt(scanner.nextLine());
-        } catch (Exception e) {
-            System.out.println("Please choose a valid option");
-        }
-        return choice;
-    }
     public static void calculateDistance(Port port, List<String> portIDs, String portOption) {
         List<String> portIDs2 = new ArrayList<>();
         do {
@@ -767,51 +753,5 @@ public class PortManagerInterface {
         } else {
             System.out.println("Incorrect username or password!");
         }
-    }
-    public static void run(int choice, String indicator) {
-        //Login
-        switch (choice) {
-            //Login
-            case 1:
-                loginMainMenu(indicator);
-                break;
-            //Exit
-            case 2:
-                System.out.println("Logged out");
-                running = false;
-                break;
-            //Default case
-            default:
-                System.out.println("Invalid option");
-                break;
-        }
-    }
-    public static String loginValidation () {
-        System.out.print("Enter your username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter your password: ");
-        String password = scanner.nextLine();
-        // Search for a user with the provided username in the list of registered users.
-        User currentLoginUser = null;
-        for (User user : userList) {
-            if (user.getUsername().equals(username)) {
-                currentLoginUser = user;
-                break; // Exit the loop once a matching username is found.
-            }
-        }
-        if (currentLoginUser != null) {
-            // If a matching username is found, validate the password.
-            if (currentLoginUser.getPassword().equals(password)) {
-                // Check the user's type (role).
-                if (currentLoginUser instanceof Admin) {
-                    return "admin";
-                } else {
-                    return "manager";
-                }
-            }
-        }
-
-        // If no matching username or invalid password, return "invalid" as a flag.
-        return "invalid";
     }
 }
