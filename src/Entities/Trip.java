@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Trip implements Serializable {
     private Vehicle vehicle;
@@ -13,13 +16,18 @@ public class Trip implements Serializable {
     private Port arriveTo;
     private boolean status;
 
-    public Trip(Vehicle vehicle, Date departDate, Date arrivalDate, Port departFrom, Port arriveTo, boolean status) {
+    public Trip(Vehicle vehicle, String departDateStr, String arrivalDateStr, Port departFrom, Port arriveTo, boolean status) {
         this.vehicle = vehicle;
-        this.departDate = departDate;
-        this.arrivalDate = arrivalDate;
         this.departFrom = departFrom;
         this.arriveTo = arriveTo;
         this.status = status;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        try {
+            this.departDate = dateFormat.parse(departDateStr);
+            this.arrivalDate = dateFormat.parse(arrivalDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

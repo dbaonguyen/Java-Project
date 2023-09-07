@@ -75,15 +75,16 @@ public class AdminInterface {
             //Method
             decorativeLine();
             System.out.println();
-            if (portIDs2.contains(portOption2)) {
-                System.out.printf("The distance between 2 ports is: %.2f km\n", portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))));
-                break;
-            } else {
-                System.out.println("Please choose a valid option");
-            }
 
             if (portOption2.equals("0")) {
                 break;
+            } else {
+                if (portIDs2.contains(portOption2)) {
+                    System.out.printf("The distance between 2 ports is: %.2f km\n", portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))));
+                    break;
+                } else {
+                    System.out.println("Please choose a valid option");
+                }
             }
         } while (true);
     }
@@ -654,6 +655,37 @@ public class AdminInterface {
                     break;
                 //Add Trip
                 case 7:
+                    String vehicleID;
+                    Vehicle theVehicle = null;
+                    List<String> vehicleIDsOfThePort = new ArrayList<>();
+                    do {
+                        try {
+                            for (Vehicle vehicle : port.getVehicles()) {
+                                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                                vehicleIDsOfThePort.add(vehicle.getVehicleID());
+                            }
+                            System.out.println("0. Go back");
+
+                            System.out.println("Please enter the vehicle ID");
+                            vehicleID = scanner.nextLine();
+                            if (vehicleID.equals("0")) {
+                                break;
+                            } else {
+                                if (!vehicleIDsOfThePort.contains(vehicleID)) {
+                                    System.out.println("The vehicle does not exist");
+                                } else {
+                                    theVehicle = port.getVehicles().get(vehicleIDsOfThePort.indexOf(vehicleID));
+                                    System.out.println(theVehicle);
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Invalid value");
+                        }
+                    } while (true);
+
+
+
                     break;
                 //Remove Trip
                 case 8:
@@ -699,19 +731,19 @@ public class AdminInterface {
             System.out.print("Enter the ID of the port above that you want to modify: ");
             String portOption = scanner.nextLine();
 
-            if (!portIDs.contains(portOption)) {
-                System.out.println("Port does not exist");
+            if (portOption.equals("0")) {
+                break;
             } else {
-                for (Port port : portList) {
-                    if (portOption.equals(port.getPortID())) {
-                        portOptions(portIDs, vehicleIDs, portOption, containerIDs, port);
+                if (!portIDs.contains(portOption)) {
+                    System.out.println("Port does not exist");
+                } else {
+                    for (Port port : portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            portOptions(portIDs, vehicleIDs, portOption, containerIDs, port);
+                        }
                     }
                 }
             }
-            if (portOption.equals("0")) {
-                break;
-            }
-
         } while (true);
     }
     public static void loginMainMenu(String indicator) {
