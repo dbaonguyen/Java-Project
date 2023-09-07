@@ -1,6 +1,7 @@
 package Entities;
 
 import Interface.IPort;
+import Users.PortManager;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -121,6 +122,23 @@ public class Port implements IPort, Serializable {
         this.currentWeight -= container.getWeight();
     }
 
+    @Override
+    public void searchContainer(String id) {
+        List<String> containerID = new ArrayList<>();
+        for (Container container : containers){
+            containerID.add(container.getContainerID());
+        }
+
+        if (containerID.contains(id)) {
+            for (Container container : containers) {
+                if (container.getContainerID().equals(id)){
+                    System.out.println(container);
+                }
+            }
+        } else{
+            System.out.println("Container not found");
+        }
+    }
     @Override
     public void addVehicle(Vehicle vehicle) {
         if (!this.isLandingAbility() && (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck)){

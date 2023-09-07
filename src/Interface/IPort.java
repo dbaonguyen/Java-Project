@@ -4,6 +4,8 @@ import Entities.Container;
 import Entities.Port;
 import Entities.Trip;
 import Entities.Vehicle;
+import Users.PortManager;
+
 import java.util.*;
 
 import java.awt.*;
@@ -14,6 +16,8 @@ public interface IPort {
     void addContainer(Container container);
 
     void removeContainer(Container container);
+
+    void searchContainer(String id);
 
 
     public void addVehicle(Vehicle vehicle);
