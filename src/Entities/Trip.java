@@ -16,21 +16,16 @@ public class Trip implements Serializable {
     private Port arriveTo;
     private boolean status;
 
-    public Trip(Vehicle vehicle, String departDateStr, String arrivalDateStr, Port departFrom, Port arriveTo, boolean status) {
+    public Trip(Vehicle vehicle, Port departFrom, Date departDate, Date arrivalDate, Port arriveTo, boolean status) {
         this.vehicle = vehicle;
         this.departFrom = departFrom;
         this.arriveTo = arriveTo;
         this.status = status;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
-        try {
-            this.departDate = dateFormat.parse(departDateStr);
-            this.arrivalDate = dateFormat.parse(arrivalDateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        this.departDate = departDate;
+        this.arrivalDate = arrivalDate;
     }
 
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -79,14 +74,16 @@ public class Trip implements Serializable {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return "Trip{" +
-                "vehicle=" + vehicle +
-                ", departDate=" + departDate +
-                ", arrivalDate=" + arrivalDate +
-                ", departFrom=" + departFrom +
-                ", arriveTo=" + arriveTo +
+                "vehicle=" + vehicle.getVehicleID() +
+                ", departDate=" + dateFormat.format(departDate) +
+                ", arrivalDate=" + dateFormat.format(arrivalDate) +
+                ", departFrom=" + departFrom.getPortID() +
+                ", arriveTo=" + arriveTo.getPortID() +
                 ", status=" + status +
                 '}';
     }

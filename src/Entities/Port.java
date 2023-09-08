@@ -130,19 +130,15 @@ public class Port implements IPort, Serializable {
 
     @Override
     public void searchContainer(String id) {
-        List<String> containerID = new ArrayList<>();
-        for (Container container : containers){
-            containerID.add(container.getContainerID());
-        }
-
-        if (containerID.contains(id)) {
-            for (Container container : containers) {
-                if (container.getContainerID().equals(id)){
-                    System.out.println(container);
-                }
+        boolean found = false;
+        for (Container container : containers) {
+            if (container.getContainerID().equals(id)){
+                found = true;
+                System.out.println(container);
             }
-        } else{
-            System.out.println("Container not found");
+        }
+        if (!found) {
+            System.out.println("container not found");
         }
     }
     @Override
@@ -195,6 +191,10 @@ public class Port implements IPort, Serializable {
         }
     }
 
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
     @Override
     public void addTrip(Trip trip) {
         trips.add(trip);
@@ -203,7 +203,7 @@ public class Port implements IPort, Serializable {
     @Override
     public void displayTrip(Date date) {
         for (Trip trip : trips){
-
+            System.out.println(trip);
         }
     }
 
@@ -268,9 +268,6 @@ public class Port implements IPort, Serializable {
                 "\nCurrent Weight: " + currentWeight +
                 "\nCapacity: " + capacity +
                 "\nLanding Ability: " + landingAbility +
-                "\nContainers: " + containers +
-                "\nVehicles: " + vehicles +
-                "\nTrips: " + trips +
                 "\nCurrent Date: " + currentDate +
                 "\nUsed Fuel: " + usedFuel;
     }

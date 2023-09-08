@@ -3,7 +3,10 @@ import Users.Admin;
 import Users.PortManager;
 import Users.User;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.text.ParseException;
+import java.util.Date;
 
 public class AdminInterface {
     //data load
@@ -11,6 +14,13 @@ public class AdminInterface {
     private static List<Port> portList = readListFromFile("portList.ser");
     private static List<Container> containerList = readListFromFile("containerList.ser");
     private static List<Ship> shipList = readListFromFile("shipList.ser");
+
+
+    public static void addShip () {
+        for (Ship ship: shipList) {
+            System.out.println(ship);
+        }
+    }
     private static List<Truck> truckList = readListFromFile("truckList.ser");
     private static List<ReeferTruck> reeferTruckList = readListFromFile("reeferTruckList.ser");
     private static List<TankerTruck> tankerTruckList = readListFromFile("tankerTruckList.ser");
@@ -43,6 +53,7 @@ public class AdminInterface {
             System.out.print("*");
         }
     }
+
     public static int login() {
         int choice = -1;
         decorativeLine();
@@ -571,10 +582,12 @@ public class AdminInterface {
         do {
             try {
                 System.out.println("Please enter your port landing ability (true/false):");
-                portLandingAbility = Boolean.parseBoolean(scanner.nextLine());
+                portLandingAbility = scanner.nextBoolean();
+                scanner.nextLine();
                 break;
             } catch (Exception e) {
                 System.out.println("Please enter a valid value");
+                scanner.nextLine();
             }
         } while (true);
         portList.add(new Port(portID,portName,portLatitude,portLongtitude,portCapacity,portCurrentWeight,portLandingAbility));
@@ -619,7 +632,7 @@ public class AdminInterface {
             System.out.println();
             System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
             System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
-            System.out.println("7. Add Trips\t\t\t|\t\t8. Remove Trips \t\t|\t\t9. Display Trips");
+            System.out.println("7. null\t\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
             System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
             try {
                 System.out.print("Your option: ");
@@ -627,6 +640,7 @@ public class AdminInterface {
             } catch (Exception e) {
                 System.out.print("Please choose a valid option: ");
             }
+
 
             switch (choice) {
                 //Caculate distance
@@ -653,46 +667,63 @@ public class AdminInterface {
                 case 6:
                     searchVehicle(port);
                     break;
-                //Add Trip
+                //Unload
                 case 7:
-                    String vehicleID;
-                    Vehicle theVehicle = null;
-                    List<String> vehicleIDsOfThePort = new ArrayList<>();
+                    break;
+                //Load
+                case 8:
                     do {
-                        try {
-                            for (Vehicle vehicle : port.getVehicles()) {
-                                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
-                                vehicleIDsOfThePort.add(vehicle.getVehicleID());
-                            }
-                            System.out.println("0. Go back");
+                        List<String> portVehicleIDs = new ArrayList<>();
+                        for (Vehicle vehicle : port.getVehicles()) {
+                            System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                            portVehicleIDs.add(vehicle.getVehicleID());
+                        }
+                        System.out.println("0. Go back");
+                        System.out.println("Please choose the vehicle ID that you want to unload containers from:");
+                        String vehicleID = scanner.nextLine();
 
-                            System.out.println("Please enter the vehicle ID");
-                            vehicleID = scanner.nextLine();
-                            if (vehicleID.equals("0")) {
-                                break;
-                            } else {
-                                if (!vehicleIDsOfThePort.contains(vehicleID)) {
-                                    System.out.println("The vehicle does not exist");
-                                } else {
-                                    theVehicle = port.getVehicles().get(vehicleIDsOfThePort.indexOf(vehicleID));
-                                    System.out.println(theVehicle);
-                                    break;
+                        if (vehicleID.equals("0")) {
+                            break;
+                        } else {
+                            for (Vehicle vehicle : port.getVehicles()) {
+                                if (vehicleID.equals(vehicle.getVehicleID())) {
+                                    boolean running4 = true;
+                                    do {
+                                        for (Container container : port.getContainers()) {
+                                            System.out.println(container.getContainerID() + ". " + container.getType());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Enter the container ID you want to load to the vehicle:");
+                                        String containerID = scanner.nextLine();
+                                        if (containerID.equals("0")) {
+                                            break;
+                                        } else {
+                                            if (!containerIDs.contains(containerID)) {
+                                                System.out.println("The container does not exist");
+                                            } else {
+                                                for (Container container : port.getContainers()) {
+                                                    if (containerID.equals(container.getContainerID())) {
+                                                        if (vehicle.loadContainer(container)) {
+                                                            System.out.println("The container is loaded to the vehicle");
+                                                            running4 = false;
+                                                            break;
+                                                        } else {
+                                                            System.out.println("This container can not be loaded on this vehicle!");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } while (running4);
                                 }
                             }
-                        } catch (Exception e) {
-                            System.out.println("Invalid value");
                         }
                     } while (true);
-
-
-
-                    break;
-                //Remove Trip
-                case 8:
                     break;
                 //Display trips
                 case 9:
-                    port.displayTrip(new Date());
+                    System.out.println(port.getTrips());
+                    break;
                     //Display vehicles
                 case 10:
                     port.displayShips();
@@ -760,7 +791,10 @@ public class AdminInterface {
                 System.out.println("1. Choose port");
                 System.out.println("2. Add port");
                 System.out.println("3. Remove port");
-                System.out.println("4. Go back");
+                System.out.println("4. Transportation");
+                System.out.println("5. Register");
+                System.out.println("6. Statistics");
+                System.out.println("7. Go back");
                 try {
                     System.out.print("Your option: ");
                     choice = Integer.parseInt(scanner.nextLine());
@@ -786,8 +820,95 @@ public class AdminInterface {
                     case 3:
                         removePort(portIDs);
                         break;
-                    //Go back
+
                     case 4:
+                        boolean running3 = true;
+                        choice = -1;
+                        do {
+                            System.out.println("1. Ship");
+                            System.out.println("2. Truck");
+                            System.out.println("3. Reefer Truck");
+                            System.out.println("4. Tanker Truck");
+                            System.out.println("5. Go back");
+                            try {
+                                System.out.println("Please choose the type vehicle that you want to do the transportation:");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Invalid option");
+                            }
+
+                            switch (choice) {
+                                case 1:
+                                    for (Ship ship : shipList) {
+                                        System.out.println(ship.getVehicleID() + " " + ship.getPort());
+                                    }
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    running3 = false;
+                                    break;
+                                default:
+                                    System.out.println("Please choose from 1-5");
+                                    break;
+                            }
+                        } while (running3);
+                        break;
+                    //Go back
+                    case 6:
+                        boolean running4 = true;
+                        choice = -1;
+                        do {
+                            decorativeLine();
+                            System.out.println();
+                            System.out.println("1. Display all ports");
+                            System.out.println("2. Display all containers");
+                            System.out.println("3. Display all vehicles");
+                            System.out.println("4. Go back");
+                            try {
+                                System.out.print("Your option: ");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Please choose a valid option: ");
+                            }
+                            switch (choice){
+                                case 1:
+                                    for (Port port : portList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(port);
+                                    }
+                                    break;
+                                case 2:
+                                    for (Container container : containerList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(container);
+                                    }
+                                    break;
+                                case 3:
+                                    for (Vehicle vehicle : shipList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+
+                                    break;
+                                case 4:
+                                    running4 = false;
+                                    break;
+                                default:
+                                    System.out.println("Please choose from 1-4");
+                                    break;
+                            }
+                        } while (running4);
+
+                        break;
+                    case 7:
                         running2 = false;
                         break;
                     default:

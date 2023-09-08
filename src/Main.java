@@ -1,14 +1,16 @@
-public class  Main {
+public class Main {
     public static void main(String[] args) {
-        int choice = AdminInterface.login();
+
         boolean running = true;
         do {
+            int choice = AdminInterface.login();
             switch (choice) {
                 //Login
                 case 1:
                     String indicator = AdminInterface.loginValidation();
                     while (indicator.equals("invalid")) {
                         System.out.println("Invalid credentials, please enter again!");
+                        AdminInterface.login();
                         indicator = AdminInterface.loginValidation();
                     }
                     if (indicator.equals("admin")) {
@@ -25,10 +27,8 @@ public class  Main {
                 //Default case
                 default:
                     System.out.println("Invalid option");
-                    choice = AdminInterface.login();
                     break;
             }
         } while (running);
-
     }
 }
