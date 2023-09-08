@@ -20,7 +20,7 @@ public class AdminInterface {
     private static List<Type> typeList = new ArrayList<>();
     private static final String DEFAULT_DIRECTORY = "Data";
     private static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {
+    public static void run() {
         Port port1 = new Port("p-1", "Harbor City Port", 40.7128, -74.0060, 100000, 0, true);
         Port port2 = new Port("p-2", "Pacific Harbor Port", 34.0522, -118.2437, 80000, 0, true);
         Port port3 = new Port("p-3", "London Bay Port", 51.5074, -0.1278, 120000, 0, true);
@@ -38,6 +38,7 @@ public class AdminInterface {
         PortManager manager5 = new PortManager("5", "5", port5);
 
         Admin admin = new Admin("0", "0");
+        userList.add(admin);
 
         Type dryStorage = new Type("Dry storage", 4.6, 3.5);
         Type openTop = new Type("Open top", 3.2, 2.8);
