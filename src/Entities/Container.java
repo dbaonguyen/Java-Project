@@ -43,10 +43,10 @@ public class Container implements Serializable {
 
     @Override
     public String toString() {
-        return "Container{" +
-                "containerID='" + containerID + '\'' +
-                ", weight=" + weight +
-                ", containerType=" + containerType +
-                '}';
+        return "Container Information:" +
+                "\nContainer ID: " + containerID +
+                "\nWeight: " + weight + " kg" +
+                "\nContainer Type: " + containerType.getType();
     }
+
 }

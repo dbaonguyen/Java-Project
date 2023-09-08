@@ -859,6 +859,55 @@ public class AdminInterface {
                         } while (running3);
                         break;
                     //Go back
+                    case 6:
+                        boolean running4 = true;
+                        choice = -1;
+                        do {
+                            decorativeLine();
+                            System.out.println();
+                            System.out.println("1. Display all ports");
+                            System.out.println("2. Display all containers");
+                            System.out.println("3. Display all vehicles");
+                            System.out.println("4. Go back");
+                            try {
+                                System.out.print("Your option: ");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Please choose a valid option: ");
+                            }
+                            switch (choice){
+                                case 1:
+                                    for (Port port : portList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(port);
+                                    }
+                                    break;
+                                case 2:
+                                    for (Container container : containerList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(container);
+                                    }
+                                    break;
+                                case 3:
+                                    for (Vehicle vehicle : shipList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+
+                                    break;
+                                case 4:
+                                    running4 = false;
+                                    break;
+                                default:
+                                    System.out.println("Please choose from 1-4");
+                                    break;
+                            }
+                        } while (running4);
+
+                        break;
                     case 7:
                         running2 = false;
                         break;

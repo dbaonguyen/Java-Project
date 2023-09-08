@@ -257,9 +257,6 @@ public class Port implements IPort, Serializable {
                 "\nCurrent Weight: " + currentWeight +
                 "\nCapacity: " + capacity +
                 "\nLanding Ability: " + landingAbility +
-                "\nContainers: " + containers +
-                "\nVehicles: " + vehicles +
-                "\nTrips: " + trips +
                 "\nCurrent Date: " + currentDate +
                 "\nUsed Fuel: " + usedFuel;
     }
