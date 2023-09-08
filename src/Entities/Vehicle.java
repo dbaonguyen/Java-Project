@@ -142,8 +142,8 @@ public class Vehicle implements IVehicle, Serializable {
                 "\nCurrent Fuel: " + currentFuel +
                 "\nCapacity: " + capacity +
                 "\nFuel Capacity: " + fuelCapacity +
-                "\nPort: " + port.getName() +
-                "\nContainers: " + containers;
+                "\nPort: " + port.getName();
+
     }
 
     public String getVehicleID() {

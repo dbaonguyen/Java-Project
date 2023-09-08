@@ -10,146 +10,24 @@ import java.util.Date;
 
 public class AdminInterface {
     //data load
-    private static List<User> userList = new ArrayList<>();
-    private static List<Port> portList = new ArrayList<>();
-    private static List<Container> containerList = new ArrayList<>();
-    private static List<Ship> shipList = new ArrayList<>();
-    private static List<Truck> truckList = new ArrayList<>();
-    private static List<ReeferTruck> reeferTruckList = new ArrayList<>();
-    private static List<TankerTruck> tankerTruckList = new ArrayList<>();
-    private static List<Type> typeList = new ArrayList<>();
+    private static List<User> userList = readListFromFile("userList.ser");
+    private static List<Port> portList = readListFromFile("portList.ser");
+    private static List<Container> containerList = readListFromFile("containerList.ser");
+    private static List<Ship> shipList = readListFromFile("shipList.ser");
+
+
+    public static void addShip () {
+        for (Ship ship: shipList) {
+            System.out.println(ship);
+        }
+    }
+    private static List<Truck> truckList = readListFromFile("truckList.ser");
+    private static List<ReeferTruck> reeferTruckList = readListFromFile("reeferTruckList.ser");
+    private static List<TankerTruck> tankerTruckList = readListFromFile("tankerTruckList.ser");
+    private static List<Type> typeList = readListFromFile("typeList.ser");
     private static final String DEFAULT_DIRECTORY = "Data"; // Change this to your default directory path
     private static Scanner scanner = new Scanner(System.in);
-
-    public static void main(String[] args) {
-        Port port1 = new Port("p-1", "Harbor City Port", 40.7128, -74.0060, 100000, 0, true);
-        Port port2 = new Port("p-2", "Pacific Harbor Port", 34.0522, -118.2437, 80000, 0, true);
-        Port port3 = new Port("p-3", "London Bay Port", 51.5074, -0.1278, 120000, 0, true);
-        Port port4 = new Port("p-4", "Paris Dock Port", 48.8566, 2.3522, 90000, 0, false);
-        Port port5 = new Port("p-5", "Golden Gate Port", 37.7749, -122.4194, 75000, 0, true);
-        portList.add(port1);
-        portList.add(port2);
-        portList.add(port3);
-        portList.add(port4);
-        portList.add(port5);
-        PortManager manager1 = new PortManager("1", "1", port1);
-        PortManager manager2 = new PortManager("2", "2", port2);
-        PortManager manager3 = new PortManager("3", "3", port3);
-        PortManager manager4 = new PortManager("4", "4", port4);
-        PortManager manager5 = new PortManager("5", "5", port5);
-
-        Admin admin = new Admin("0", "0");
-
-        Type dryStorage = new Type("Dry storage", 4.6, 3.5);
-        Type openTop = new Type("Open top", 3.2, 2.8);
-        Type openSide = new Type("Open side", 3.2, 2.7);
-        Type refrigerated = new Type("Refrigerated", 5.4, 4.5);
-        Type liquid = new Type("Liquid", 5.3, 4.8);
-        typeList.add(dryStorage);
-        typeList.add(openTop);
-        typeList.add(openSide);
-        typeList.add(refrigerated);
-        typeList.add(liquid);
-        Container c1 = new Container("c-1", 5000, dryStorage);
-        Container c2 = new Container("c-2", 6000, openTop);
-        Container c3 = new Container("c-3", 5500, openSide);
-        Container c4 = new Container("c-4", 7000, refrigerated);
-        Container c5 = new Container("c-5", 8000, liquid);
-        Container c6 = new Container("c-6", 4800, dryStorage);
-        Container c7 = new Container("c-7", 5200, openTop);
-        Container c8 = new Container("c-8", 6200, openSide);
-        Container c9 = new Container("c-9", 7500, refrigerated);
-        Container c10 = new Container("c-10", 9000, liquid);
-        Container c11 = new Container("c-11", 5100, dryStorage);
-        Container c12 = new Container("c-12", 5900, openTop);
-        Container c13 = new Container("c-13", 5300, openSide);
-        Container c14 = new Container("c-14", 7200, refrigerated);
-        Container c15 = new Container("c-15", 8500, liquid);
-        Container c16 = new Container("c-16", 4700, dryStorage);
-        Container c17 = new Container("c-17", 6400, openTop);
-        Container c18 = new Container("c-18", 5600, openSide);
-        Container c19 = new Container("c-19", 7300, refrigerated);
-        Container c20 = new Container("c-20", 8800, liquid);
-        Container c21 = new Container("c-21", 4900, dryStorage);
-        Container c22 = new Container("c-22", 6100, openTop);
-        Container c23 = new Container("c-23", 5400, openSide);
-        Container c24 = new Container("c-24", 7100, refrigerated);
-        Container c25 = new Container("c-25", 8400, liquid);
-        Container c26 = new Container("c-26", 5200, dryStorage);
-        Container c27 = new Container("c-27", 6300, openTop);
-        Container c28 = new Container("c-28", 5800, openSide);
-        Container c29 = new Container("c-29", 7400, refrigerated);
-        Container c30 = new Container("c-30", 8900, liquid);
-        containerList.add(c1);
-        containerList.add(c2);
-        containerList.add(c3);
-        containerList.add(c4);
-        containerList.add(c5);
-        containerList.add(c6);
-        containerList.add(c7);
-        containerList.add(c8);
-        containerList.add(c9);
-        containerList.add(c10);
-        containerList.add(c11);
-        containerList.add(c12);
-        containerList.add(c13);
-        containerList.add(c14);
-        containerList.add(c15);
-        containerList.add(c16);
-        containerList.add(c17);
-        containerList.add(c18);
-        containerList.add(c19);
-        containerList.add(c20);
-        containerList.add(c21);
-        containerList.add(c22);
-        containerList.add(c23);
-        containerList.add(c24);
-        containerList.add(c25);
-        containerList.add(c26);
-        containerList.add(c27);
-        containerList.add(c28);
-        containerList.add(c29);
-        containerList.add(c30);
-        // Create Trucks
-        Truck truck1 = new Truck("tr-001", "Truck 1", 10000, 200, port1);
-        Truck truck2 = new Truck("tr-002", "Truck 2", 12000, 220, port2);
-        Truck truck3 = new Truck("tr-003", "Truck 3", 11000, 210, port3);
-        Truck truck4 = new Truck("tr-004", "Truck 4", 10500, 205, port4);
-        Truck truck5 = new Truck("tr-005", "Truck 5", 9500, 190, port5);
-        truckList.add(truck1);
-        truckList.add(truck2);
-        truckList.add(truck3);
-        truckList.add(truck4);
-        truckList.add(truck5);
-        // Create Ships
-        Ship ship1 = new Ship("s-001", "Ship 1", 50000, 10000, port1);
-        Ship ship2 = new Ship("s-002", "Ship 2", 55000, 12000, port4);
-        Ship ship3 = new Ship("s-003", "Ship 3", 52000, 11000, port5);
-        Ship ship4 = new Ship("s-004", "Ship 4", 53000, 11200, port2);
-        Ship ship5 = new Ship("s-005", "Ship 5", 51000, 10800, port3);
-        shipList.add(ship1);
-        shipList.add(ship2);
-        shipList.add(ship3);
-        shipList.add(ship4);
-        shipList.add(ship5);
-        // Create ReeferTrucks
-        ReeferTruck reeferTruck1 = new ReeferTruck("rf-001", "ReeferTruck 1", 14000, 250, port2);
-        ReeferTruck reeferTruck2 = new ReeferTruck("rf-002", "ReeferTruck 2", 15000, 270, port4);
-        ReeferTruck reeferTruck3 = new ReeferTruck("rf-003", "ReeferTruck 3", 14500, 260, port5);
-        ReeferTruck reeferTruck4 = new ReeferTruck("rf-004", "ReeferTruck 4", 14300, 255, port1);
-        ReeferTruck reeferTruck5 = new ReeferTruck("rf-005", "ReeferTruck 5", 14700, 265, port3);
-        reeferTruckList.add(reeferTruck1);
-        reeferTruckList.add(reeferTruck2);
-        reeferTruckList.add(reeferTruck3);
-        reeferTruckList.add(reeferTruck4);
-        reeferTruckList.add(reeferTruck5);
-        // Create TankerTrucks
-        TankerTruck tankerTruck1 = new TankerTruck("tt-001", "TankerTruck 1", 16000, 300, port3);
-        TankerTruck tankerTruck2 = new TankerTruck("tt-002", "TankerTruck 2", 17000, 320, port4);
-        TankerTruck tankerTruck3 = new TankerTruck("tt-003", "TankerTruck 3", 16500, 310, port2);
-        TankerTruck tankerTruck4 = new TankerTruck("tt-004", "TankerTruck 4", 16300, 305, port1);
-        TankerTruck tankerTruck5 = new TankerTruck("tt-005", "TankerTruck 5", 16700, 315, port5);
-    }
+    private static boolean running = true;
     public static <T> void writeListToFile(List<T> list, String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
         try (FileOutputStream fileOut = new FileOutputStream(filePath);
@@ -314,6 +192,40 @@ public class AdminInterface {
             }
         } while (running4);
     }
+    public static void removeVehicle(Port port) {
+        decorativeLine();
+        System.out.println();
+        boolean running4 = true;
+        Iterator<Vehicle> vehicleIterator = port.getVehicles().iterator();
+        do {
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Enter the vehicle ID that you want to remove");
+            String containerRemoved = scanner.nextLine();
+
+            if (containerRemoved.equals("0")) {
+                break;
+            }
+
+            boolean vehicleFound = false;
+            while (vehicleIterator.hasNext()) {
+                Vehicle vehicle = vehicleIterator.next();
+                if (containerRemoved.equals(vehicle.getVehicleID())) {
+                    vehicleIterator.remove();
+                    vehicleFound = true;
+                    running4 = false;
+                    System.out.println("Vehicle is removed");
+                    break;
+                }
+            }
+
+            if (!vehicleFound) {
+                System.out.println("The vehicle does not exist");
+            }
+        } while (running4);
+    }
     public static void addVehicle(List<String> vehicleIDs, Port port) {
         decorativeLine();
         System.out.println();
@@ -360,17 +272,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -393,9 +294,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new Ship(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, port));
+                new Ship(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -427,17 +327,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -449,7 +338,6 @@ public class AdminInterface {
                     }
                 } while (true);
 
-
                 double fuelCapacity = 0;
                 do {
                     try {
@@ -460,9 +348,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new Truck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, port));
+                new Truck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -494,17 +381,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -526,9 +402,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, port));
+                new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -560,17 +435,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -592,12 +456,10 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, port));
+                new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             } else if (choice == 5) {
-                System.out.println(vehicleIDs);
                 break;
             } else {
                 System.out.println("Please enter from 1-5");
@@ -783,7 +645,7 @@ public class AdminInterface {
                     break;
                 //Remove Vehicle
                 case 5:
-                    removeContainer(port);
+                    removeVehicle(port);
                     break;
                 //Search vehicle
                 case 6:
@@ -981,6 +843,55 @@ public class AdminInterface {
                         } while (running3);
                         break;
                     //Go back
+                    case 6:
+                        boolean running4 = true;
+                        choice = -1;
+                        do {
+                            decorativeLine();
+                            System.out.println();
+                            System.out.println("1. Display all ports");
+                            System.out.println("2. Display all containers");
+                            System.out.println("3. Display all vehicles");
+                            System.out.println("4. Go back");
+                            try {
+                                System.out.print("Your option: ");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Please choose a valid option: ");
+                            }
+                            switch (choice){
+                                case 1:
+                                    for (Port port : portList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(port);
+                                    }
+                                    break;
+                                case 2:
+                                    for (Container container : containerList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(container);
+                                    }
+                                    break;
+                                case 3:
+                                    for (Vehicle vehicle : shipList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+
+                                    break;
+                                case 4:
+                                    running4 = false;
+                                    break;
+                                default:
+                                    System.out.println("Please choose from 1-4");
+                                    break;
+                            }
+                        } while (running4);
+
+                        break;
                     case 7:
                         running2 = false;
                         break;

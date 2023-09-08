@@ -7,7 +7,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.time.LocalDate;
 
 public class Port implements IPort, Serializable {
     private static final long serialVersionUID = 1030224541977093439L;
@@ -21,8 +25,10 @@ public class Port implements IPort, Serializable {
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
-    public Date currentDate;
+    public String currentDate;
     private double usedFuel;
+    private HashMap<String, Double> fuelHistory = new HashMap<String, Double>();
+    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     public Port(String portID, String name, double latitude, double longtitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
         this.name = name;
@@ -238,13 +244,27 @@ public class Port implements IPort, Serializable {
         System.out.println(port);
     }
     public void addUsedFuel(double newFuel){
-        if(currentDate == this.currentDate){
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String str = today.format(dtf);
+        if(today.equals(this.currentDate)){
             this.usedFuel += newFuel;
         }
         else{
+            fuelHistory.put(currentDate, usedFuel);
             this.currentDate = currentDate;
             this.usedFuel = newFuel;
         }
+    }
+
+    public double getWeightOfContainerType(Type type){
+        double totalWeight = 0;
+        for(Container container : this.containers){
+            if(container.getType() == type){
+                totalWeight += container.getWeight();
+            }
+        }
+        return totalWeight;
     }
 
     @Override
@@ -257,9 +277,6 @@ public class Port implements IPort, Serializable {
                 "\nCurrent Weight: " + currentWeight +
                 "\nCapacity: " + capacity +
                 "\nLanding Ability: " + landingAbility +
-                "\nContainers: " + containers +
-                "\nVehicles: " + vehicles +
-                "\nTrips: " + trips +
                 "\nCurrent Date: " + currentDate +
                 "\nUsed Fuel: " + usedFuel;
     }

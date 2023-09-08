@@ -1,5 +1,4 @@
 package Entities;
-
 import java.io.Serializable;
 
 public class Ship extends Vehicle implements Serializable {
