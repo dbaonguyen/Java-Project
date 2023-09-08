@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Timer;
 
 public class Vehicle implements IVehicle, Serializable {
@@ -65,7 +66,6 @@ public class Vehicle implements IVehicle, Serializable {
             return true;
         }
         else{
-            System.out.println("This container can not be loaded on this vehicle!");
             return false;
         }
     }
@@ -136,13 +136,18 @@ public class Vehicle implements IVehicle, Serializable {
 
     @Override
     public String toString() {
+        List<String> containerIDs = new ArrayList<>();
+        for (Container container : containers) {
+            containerIDs.add(container.getContainerID());
+        }
         return "Vehicle Information:" +
                 "\nVehicle ID: " + vehicleID +
                 "\nName: " + name +
                 "\nCurrent Fuel: " + currentFuel +
                 "\nCapacity: " + capacity +
                 "\nFuel Capacity: " + fuelCapacity +
-                "\nPort: " + port.getName();
+                "\nPort: " + port.getName() +
+                "\nContainers: " + containerIDs;
 
     }
 

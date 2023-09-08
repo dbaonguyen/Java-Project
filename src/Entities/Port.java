@@ -14,6 +14,11 @@ import java.util.Locale;
 import java.time.LocalDate;
 
 public class Port implements IPort, Serializable {
+    public static void decorativeLine() {
+        for (int i = 0;i < 50;i++){
+            System.out.print("*");
+        }
+    }
     private static final long serialVersionUID = 1030224541977093439L;
     private String portID;
     private String name;
@@ -217,6 +222,8 @@ public class Port implements IPort, Serializable {
         for (Vehicle vehicle : vehicles){
             if (vehicle instanceof Ship){
                 System.out.println(vehicle);
+                decorativeLine();
+                System.out.println();
             }
         }
     }
@@ -225,6 +232,8 @@ public class Port implements IPort, Serializable {
         for (Vehicle vehicle : vehicles){
             if (vehicle instanceof ReeferTruck || vehicle instanceof Truck || vehicle instanceof TankerTruck){
                 System.out.println(vehicle);
+                decorativeLine();
+                System.out.println();
             }
         }
     }
@@ -233,6 +242,8 @@ public class Port implements IPort, Serializable {
     public void displayContainers() {
         for (Container container : containers){
             System.out.println(container);
+            decorativeLine();
+            System.out.println();
         }
     }
 

@@ -37,7 +37,7 @@ public class AdminInterface {
         PortManager manager4 = new PortManager("4", "4", port4);
         PortManager manager5 = new PortManager("5", "5", port5);
 
-        Admin admin = new Admin("0", "0");
+        Admin admin = new Admin("1", "1");
         userList.add(admin);
 
         Type dryStorage = new Type("Dry storage", 4.6, 3.5);
@@ -110,6 +110,43 @@ public class AdminInterface {
         containerList.add(c28);
         containerList.add(c29);
         containerList.add(c30);
+
+        port1.addContainer(c1);
+        port3.addContainer(c2);
+        port2.addContainer(c3);
+        port5.addContainer(c4);
+        port4.addContainer(c5);
+
+        port2.addContainer(c6);
+        port1.addContainer(c7);
+        port3.addContainer(c8);
+        port5.addContainer(c9);
+        port4.addContainer(c10);
+
+        port3.addContainer(c11);
+        port1.addContainer(c12);
+        port2.addContainer(c13);
+        port4.addContainer(c14);
+        port5.addContainer(c15);
+
+        port4.addContainer(c16);
+        port5.addContainer(c17);
+        port3.addContainer(c18);
+        port2.addContainer(c19);
+        port1.addContainer(c20);
+
+        port5.addContainer(c21);
+        port4.addContainer(c22);
+        port3.addContainer(c23);
+        port2.addContainer(c24);
+        port1.addContainer(c25);
+
+        port1.addContainer(c26);
+        port3.addContainer(c27);
+        port2.addContainer(c28);
+        port4.addContainer(c29);
+        port5.addContainer(c30);
+
         // Create Trucks
         Truck truck1 = new Truck("tr-001", "Truck 1", 10000, 200, port1);
         Truck truck2 = new Truck("tr-002", "Truck 2", 12000, 220, port2);
@@ -183,8 +220,6 @@ public class AdminInterface {
 
     public static int login() {
         int choice = -1;
-        decorativeLine();
-        System.out.println();
         System.out.println("1. Login");
         System.out.println("2. Exit");
         try {
@@ -253,7 +288,7 @@ public class AdminInterface {
         double containerWeight = 0;
         do {
             try {
-                System.out.println("Please enter your port current weight:");
+                System.out.println("Please enter your container weight:");
                 containerWeight = Double.parseDouble(scanner.nextLine());
                 if (containerIDs.contains(containerID) && containerWeight > port.getCurrentWeight()) {
                     containerIDs.remove(containerID);
@@ -283,7 +318,6 @@ public class AdminInterface {
             }
         } while (true);
         port.addContainer(new Container(containerID, containerWeight, typeList.get(typeID)));
-        System.out.println(containerIDs);
     }
     public static void removeContainer(Port port) {
         decorativeLine();
@@ -292,7 +326,7 @@ public class AdminInterface {
         Iterator<Container> containerIterator = port.getContainers().iterator();
         do {
             for (Container container : port.getContainers()) {
-                System.out.println(container.getContainerID() + ". " + container.getType());
+                System.out.println(container.getContainerID() + ". " + container.getType().getType());
             }
             System.out.println("0. Go back");
             System.out.println("Enter the container ID that you want to remove");
@@ -743,13 +777,13 @@ public class AdminInterface {
             System.out.println();
             System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
             System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
-            System.out.println("7. null\t\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
+            System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
             System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
             try {
                 System.out.print("Your option: ");
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
-                System.out.print("Please choose a valid option: ");
+                System.out.println("Please choose a valid option: ");
             }
 
 
@@ -778,8 +812,11 @@ public class AdminInterface {
                 case 6:
                     searchVehicle(port);
                     break;
-                //Unload
+                //Search container
                 case 7:
+                    System.out.println("Please enter the id of the container that you want to search:");
+                    String searchContainerID = scanner.nextLine();
+                    port.searchContainer(searchContainerID);
                     break;
                 //Load
                 case 8:
@@ -801,7 +838,7 @@ public class AdminInterface {
                                     boolean running4 = true;
                                     do {
                                         for (Container container : port.getContainers()) {
-                                            System.out.println(container.getContainerID() + ". " + container.getType());
+                                            System.out.println(container.getContainerID() + ". " + container.getType().getType());
                                         }
                                         System.out.println("0. Go back");
                                         System.out.println("Enter the container ID you want to load to the vehicle:");
@@ -847,6 +884,9 @@ public class AdminInterface {
                 //Go back
                 case 12:
                     running3 = false;
+                    break;
+                default:
+                    System.out.println("Please choose from 1-12");
                     break;
             }
         } while (running3);
@@ -1003,6 +1043,21 @@ public class AdminInterface {
                                     break;
                                 case 3:
                                     for (Vehicle vehicle : shipList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+                                    for (Vehicle vehicle : truckList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+                                    for (Vehicle vehicle : reeferTruckList){
+                                        decorativeLine();
+                                        System.out.println();
+                                        System.out.println(vehicle);
+                                    }
+                                    for (Vehicle vehicle : tankerTruckList){
                                         decorativeLine();
                                         System.out.println();
                                         System.out.println(vehicle);
