@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Truck extends Vehicle implements Serializable {
-
+    private static final long serialVersionUID = -483225685009908350L;
 
     public Truck(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         super(vehicleID, name,currentWeight, currentFuel, capacity, fuelCapacity, port);

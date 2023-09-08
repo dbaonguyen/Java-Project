@@ -14,6 +14,13 @@ public class AdminInterface {
     private static List<Port> portList = readListFromFile("portList.ser");
     private static List<Container> containerList = readListFromFile("containerList.ser");
     private static List<Ship> shipList = readListFromFile("shipList.ser");
+
+
+    public static void addShip () {
+        for (Ship ship: shipList) {
+            System.out.println(ship);
+        }
+    }
     private static List<Truck> truckList = readListFromFile("truckList.ser");
     private static List<ReeferTruck> reeferTruckList = readListFromFile("reeferTruckList.ser");
     private static List<TankerTruck> tankerTruckList = readListFromFile("tankerTruckList.ser");
@@ -625,7 +632,7 @@ public class AdminInterface {
             System.out.println();
             System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
             System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
-            System.out.println("7. Add Trips\t\t\t|\t\t8. Remove Trips \t\t|\t\t9. Display Trips");
+            System.out.println("7. null\t\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
             System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
             try {
                 System.out.print("Your option: ");
@@ -660,106 +667,58 @@ public class AdminInterface {
                 case 6:
                     searchVehicle(port);
                     break;
-                //Add Trip
+                //Unload
                 case 7:
-                    String vehicleID;
-                    Vehicle theVehicle = null;
-                    String departDate;
-                    String arrivalDate;
-                    Date dDate;
-                    Date aDate;
-                    List<String> vehicleIDsOfThePort = new ArrayList<>();
+                    break;
+                //Load
+                case 8:
                     do {
-                        try {
+                        List<String> portVehicleIDs = new ArrayList<>();
+                        for (Vehicle vehicle : port.getVehicles()) {
+                            System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                            portVehicleIDs.add(vehicle.getVehicleID());
+                        }
+                        System.out.println("0. Go back");
+                        System.out.println("Please choose the vehicle ID that you want to unload containers from:");
+                        String vehicleID = scanner.nextLine();
+
+                        if (vehicleID.equals("0")) {
+                            break;
+                        } else {
                             for (Vehicle vehicle : port.getVehicles()) {
-                                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
-                                vehicleIDsOfThePort.add(vehicle.getVehicleID());
-                            }
-                            System.out.println("0. Go back");
-
-
-                            System.out.println("Please enter the vehicle ID");
-                            vehicleID = scanner.nextLine();
-
-                            if (vehicleID.equals("0")) {
-                                break;
-                            }
-
-                            if (!vehicleIDsOfThePort.contains(vehicleID)) {
-                                System.out.println("The vehicle does not exist");
-                            } else {
-                                theVehicle = port.getVehicles().get(vehicleIDsOfThePort.indexOf(vehicleID));
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                do {
-                                    try {
-                                        System.out.println("Enter the departure date with this format dd/MM/yyyy HH:mm:ss");
-                                        departDate = scanner.nextLine();
-                                        dDate = dateFormat.parse(departDate);
-                                        break;
-                                    } catch (ParseException e) {
-                                        System.out.println("Invalid date");
-                                    }
-                                } while (true);
-
-                                do {
-                                    try {
-                                        System.out.println("Enter the arrival date with this format dd/MM/yyyy HH:mm:ss");
-                                        arrivalDate = scanner.nextLine();
-                                        aDate = dateFormat.parse(arrivalDate);
-                                        break;
-                                    } catch (ParseException e) {
-                                        System.out.println("Invalid date");
-                                    }
-                                } while (true);
-
-                                do {
-                                    try {
-                                        List<String> portIDs2 = new ArrayList<>();
-                                        for (Port portFrom : portList) {
-                                            if (portFrom != port){
-                                                System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
-                                                portIDs2.add(portFrom.getPortID());
-                                            }
+                                if (vehicleID.equals(vehicle.getVehicleID())) {
+                                    boolean running4 = true;
+                                    do {
+                                        for (Container container : port.getContainers()) {
+                                            System.out.println(container.getContainerID() + ". " + container.getType());
                                         }
-                                        System.out.println("Please enter the id of the port to arrive to: ");
-                                        String arrivePort = scanner.nextLine();
-
-                                        if (portIDs2.contains(arrivePort)) {
-                                            Port portMoveTo = portList.get(portIDs2.indexOf(arrivePort));
+                                        System.out.println("0. Go back");
+                                        System.out.println("Enter the container ID you want to load to the vehicle:");
+                                        String containerID = scanner.nextLine();
+                                        if (containerID.equals("0")) {
                                             break;
                                         } else {
-                                            System.out.println("Please choose a valid option");
+                                            if (!containerIDs.contains(containerID)) {
+                                                System.out.println("The container does not exist");
+                                            } else {
+                                                for (Container container : port.getContainers()) {
+                                                    if (containerID.equals(container.getContainerID())) {
+                                                        if (vehicle.loadContainer(container)) {
+                                                            System.out.println("The container is loaded to the vehicle");
+                                                            running4 = false;
+                                                            break;
+                                                        } else {
+                                                            System.out.println("This container can not be loaded on this vehicle!");
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
-                                    } catch (Exception e) {
-                                        System.out.println("Invalid value");
-                                    }
-                                } while (true);
-
-                                boolean status;
-                                do {
-                                    try {
-                                        System.out.println("Please enter your vehicle's status (true/false) true is arriving, false is has arrived:");
-                                        status = scanner.nextBoolean();
-                                        scanner.nextLine();
-                                        break;
-                                    } catch (Exception e) {
-                                        System.out.println("Please enter a valid value");
-                                        scanner.nextLine();
-                                    }
-                                } while (true);
-
-                                port.addTrip(new Trip(theVehicle,port, dDate, aDate, port, status));
-                                System.out.println("Trip is added");
-                                break;
+                                    } while (running4);
+                                }
                             }
-
-                        } catch (Exception e) {
-                            System.out.println("Invalid value");
                         }
                     } while (true);
-                   break;
-                //Remove Trip
-                case 8:
                     break;
                 //Display trips
                 case 9:
@@ -832,7 +791,10 @@ public class AdminInterface {
                 System.out.println("1. Choose port");
                 System.out.println("2. Add port");
                 System.out.println("3. Remove port");
-                System.out.println("4. Go back");
+                System.out.println("4. Transportation");
+                System.out.println("5. Register");
+                System.out.println("6. Statistics");
+                System.out.println("7. Go back");
                 try {
                     System.out.print("Your option: ");
                     choice = Integer.parseInt(scanner.nextLine());
@@ -858,8 +820,46 @@ public class AdminInterface {
                     case 3:
                         removePort(portIDs);
                         break;
-                    //Go back
+
                     case 4:
+                        boolean running3 = true;
+                        choice = -1;
+                        do {
+                            System.out.println("1. Ship");
+                            System.out.println("2. Truck");
+                            System.out.println("3. Reefer Truck");
+                            System.out.println("4. Tanker Truck");
+                            System.out.println("5. Go back");
+                            try {
+                                System.out.println("Please choose the type vehicle that you want to do the transportation:");
+                                choice = Integer.parseInt(scanner.nextLine());
+                            } catch (Exception e) {
+                                System.out.println("Invalid option");
+                            }
+
+                            switch (choice) {
+                                case 1:
+                                    for (Ship ship : shipList) {
+                                        System.out.println(ship.getVehicleID() + " " + ship.getPort());
+                                    }
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    break;
+                                case 4:
+                                    break;
+                                case 5:
+                                    running3 = false;
+                                    break;
+                                default:
+                                    System.out.println("Please choose from 1-5");
+                                    break;
+                            }
+                        } while (running3);
+                        break;
+                    //Go back
+                    case 7:
                         running2 = false;
                         break;
                     default:

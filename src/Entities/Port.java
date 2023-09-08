@@ -124,19 +124,15 @@ public class Port implements IPort, Serializable {
 
     @Override
     public void searchContainer(String id) {
-        List<String> containerID = new ArrayList<>();
-        for (Container container : containers){
-            containerID.add(container.getContainerID());
-        }
-
-        if (containerID.contains(id)) {
-            for (Container container : containers) {
-                if (container.getContainerID().equals(id)){
-                    System.out.println(container);
-                }
+        boolean found = false;
+        for (Container container : containers) {
+            if (container.getContainerID().equals(id)){
+                found = true;
+                System.out.println(container);
             }
-        } else{
-            System.out.println("Container not found");
+        }
+        if (!found) {
+            System.out.println("container not found");
         }
     }
     @Override

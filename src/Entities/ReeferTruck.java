@@ -3,6 +3,7 @@ package Entities;
 import java.io.Serializable;
 
 public class ReeferTruck extends Vehicle implements Serializable {
+    private static final long serialVersionUID = -4126447521088482559L;
 
     public ReeferTruck(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
         super(vehicleID, name,currentWeight, currentFuel, capacity, fuelCapacity, port);

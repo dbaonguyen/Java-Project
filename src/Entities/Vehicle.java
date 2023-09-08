@@ -39,6 +39,7 @@ public class Vehicle implements IVehicle, Serializable {
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
         this.port = port;
+        port.addVehicle(this);
     }
 
 

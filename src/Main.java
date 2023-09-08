@@ -1,5 +1,6 @@
 public class Main {
     public static void main(String[] args) {
+
         boolean running = true;
         do {
             int choice = AdminInterface.login();
@@ -9,6 +10,7 @@ public class Main {
                     String indicator = AdminInterface.loginValidation();
                     while (indicator.equals("invalid")) {
                         System.out.println("Invalid credentials, please enter again!");
+                        AdminInterface.login();
                         indicator = AdminInterface.loginValidation();
                     }
                     if (indicator.equals("admin")) {
@@ -25,7 +27,6 @@ public class Main {
                 //Default case
                 default:
                     System.out.println("Invalid option");
-                    choice = AdminInterface.login();
                     break;
             }
         } while (running);
