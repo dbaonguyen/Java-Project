@@ -192,6 +192,40 @@ public class AdminInterface {
             }
         } while (running4);
     }
+    public static void removeVehicle(Port port) {
+        decorativeLine();
+        System.out.println();
+        boolean running4 = true;
+        Iterator<Vehicle> vehicleIterator = port.getVehicles().iterator();
+        do {
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Enter the vehicle ID that you want to remove");
+            String containerRemoved = scanner.nextLine();
+
+            if (containerRemoved.equals("0")) {
+                break;
+            }
+
+            boolean vehicleFound = false;
+            while (vehicleIterator.hasNext()) {
+                Vehicle vehicle = vehicleIterator.next();
+                if (containerRemoved.equals(vehicle.getVehicleID())) {
+                    vehicleIterator.remove();
+                    vehicleFound = true;
+                    running4 = false;
+                    System.out.println("Vehicle is removed");
+                    break;
+                }
+            }
+
+            if (!vehicleFound) {
+                System.out.println("The vehicle does not exist");
+            }
+        } while (running4);
+    }
     public static void addVehicle(List<String> vehicleIDs, Port port) {
         decorativeLine();
         System.out.println();
@@ -238,17 +272,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -271,9 +294,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new Ship(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                new Ship(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, capacity, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -305,17 +327,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -327,7 +338,6 @@ public class AdminInterface {
                     }
                 } while (true);
 
-
                 double fuelCapacity = 0;
                 do {
                     try {
@@ -338,9 +348,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new Truck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                new Truck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, capacity, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -372,17 +381,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -404,9 +402,8 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, capacity, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             }
 
@@ -438,17 +435,6 @@ public class AdminInterface {
 
                 double vehicleCurrentWeight = 0;
 
-                double curruntFuel = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle current fuel:");
-                        curruntFuel = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
                 double capacity = 0;
                 do {
                     try {
@@ -470,12 +456,10 @@ public class AdminInterface {
                         System.out.println("Invalid value");
                     }
                 } while (true);
-                port.addVehicle(new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, curruntFuel, capacity, fuelCapacity, port));
+                new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, capacity, fuelCapacity, port);
                 System.out.println("New vehicle has been added");
-                System.out.println(vehicleIDs);
                 break;
             } else if (choice == 5) {
-                System.out.println(vehicleIDs);
                 break;
             } else {
                 System.out.println("Please enter from 1-5");
@@ -661,7 +645,7 @@ public class AdminInterface {
                     break;
                 //Remove Vehicle
                 case 5:
-                    removeContainer(port);
+                    removeVehicle(port);
                     break;
                 //Search vehicle
                 case 6:
