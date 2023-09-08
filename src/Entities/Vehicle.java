@@ -31,11 +31,11 @@ public class Vehicle implements IVehicle, Serializable {
         fuelConsumption = 0;
     }
 
-    public Vehicle(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
+    public Vehicle(String vehicleID, String name, double capacity, double fuelCapacity, Port port) {
         this.vehicleID = vehicleID;
         this.name = name;
-        this.currentWeight = currentWeight;
-        this.currentFuel = currentFuel;
+        this.currentWeight = 0;
+        this.currentFuel = fuelCapacity;
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
         this.port = port;

@@ -3,8 +3,8 @@ package Entities;
 import java.io.Serializable;
 
 public class Ship extends Vehicle implements Serializable {
-    public Ship(String vehicleID, String name, double currentWeight, double currentFuel, double capacity, double fuelCapacity, Port port) {
-        super(vehicleID, name,currentWeight, currentFuel, capacity, fuelCapacity, port);
+    public Ship(String vehicleID, String name, double capacity, double fuelCapacity, Port port) {
+        super(vehicleID, name, capacity, fuelCapacity, port);
     }
 
     //load method for ships
