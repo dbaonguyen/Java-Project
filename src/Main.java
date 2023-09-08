@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-
+        AdminInterface.run();
         boolean running = true;
         do {
             int choice = AdminInterface.login();
@@ -16,7 +16,7 @@ public class Main {
                     if (indicator.equals("admin")) {
                         AdminInterface.loginMainMenu(indicator);
                     } else {
-                        PortManagerInterface.loginMainMenu(indicator);
+//                        PortManagerInterface.loginMainMenu(indicator);
                     }
                     break;
                 //Exit
