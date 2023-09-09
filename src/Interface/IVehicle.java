@@ -4,11 +4,17 @@ import Entities.CanMoveToPort;
 import Entities.Container;
 import Entities.Port;
 
+import java.util.Date;
+
 public interface IVehicle {
     public boolean canMoveToPort(Port port);
     public boolean loadContainer(Container container);
     public boolean unloadContainer(Container container);
     public void moveToPort(Port port);
+
+    void moveToPort(Port port, String departureDate, String arrivalDate);
+
+    void moveToPort(Port port, Date departureDate, Date arrivalDate);
 
     public void hasArrived(Port port);
     public void refuel();

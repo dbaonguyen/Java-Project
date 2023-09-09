@@ -990,9 +990,57 @@ public class AdminInterface {
 
                             switch (choice) {
                                 case 1:
-                                    for (Ship ship : shipList) {
-                                        System.out.println(ship.getVehicleID() + " " + ship.getPort());
-                                    }
+                                    do {
+                                        List<String> shipIDs = new ArrayList<>();
+                                        for (Ship ship : shipList) {
+                                            System.out.println(ship.getVehicleID() + " " + ship.getPort().getPortID());
+                                            shipIDs.add(ship.getVehicleID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Please enter the ID of the ship that you want to do the transportation:");
+                                        String shipID = scanner.nextLine();
+
+                                        if (shipIDs.equals("0")) {
+                                            break;
+                                        } else {
+                                            if (shipIDs.contains(shipID)) {
+                                                for (Ship ship : shipList) {
+                                                    if (shipID.equals(ship.getVehicleID())) {
+                                                        do {
+                                                            List<String> portCanMoveToIDs = new ArrayList<>();
+                                                            for (Port port : portList) {
+                                                                if (port != ship.getPort()) {
+                                                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                                                    portCanMoveToIDs.add(port.getPortID());
+                                                                }
+                                                            }
+                                                            System.out.println("0. Go back");
+                                                            System.out.println("Please enter the ID of the port that you want the ship to move to:");
+                                                            String portCanMoveToID = scanner.nextLine();
+
+                                                            if (portCanMoveToID.equals("0")) {
+                                                                break;
+                                                            } else {
+                                                                if (portCanMoveToIDs.contains(portCanMoveToID)) {
+                                                                    for (Port port : portList) {
+                                                                        if (portCanMoveToID.equals(port.getPortID())) {
+                                                                            System.out.println("The transportation procedure is completed!");
+                                                                        }
+                                                                    }
+                                                                    break;
+                                                                } else {
+                                                                    System.out.println("Port does not exist");
+                                                                }
+                                                            }
+                                                        } while (true);
+                                                    }
+                                                }
+                                            } else {
+                                                System.out.println("The ship does not exist");
+                                            }
+                                        }
+                                    } while (true);
+
                                     break;
                                 case 2:
                                     break;
