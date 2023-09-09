@@ -85,6 +85,16 @@ public class Vehicle implements IVehicle, Serializable {
     }
 
     @Override
+    public void moveToPort(Port port) {
+
+    }
+
+    @Override
+    public void moveToPort(Port port, String departureDate, String arrivalDate) {
+
+    }
+
+    @Override
     public void moveToPort(Port port, Date departureDate, Date arrivalDate) {
         //check value of canMoveToPort()
         if(this.canMoveToPort(port) == false){
