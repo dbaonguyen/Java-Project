@@ -151,7 +151,7 @@ public class AdminInterface {
         Truck truck1 = new Truck("tr-001", "Truck 1", 10000, 200, port1);
         Truck truck2 = new Truck("tr-002", "Truck 2", 12000, 220, port2);
         Truck truck3 = new Truck("tr-003", "Truck 3", 11000, 210, port3);
-        Truck truck4 = new Truck("tr-004", "Truck 4", 10500, 205, port4);
+        Truck truck4 = new Truck("tr-004", "Truck 4", 10500, 205, port3);
         Truck truck5 = new Truck("tr-005", "Truck 5", 9500, 190, port5);
         truckList.add(truck1);
         truckList.add(truck2);
@@ -162,8 +162,8 @@ public class AdminInterface {
         Ship ship1 = new Ship("s-001", "Ship 1", 50000, 10000, port1);
         Ship ship2 = new Ship("s-002", "Ship 2", 55000, 12000, port4);
         Ship ship3 = new Ship("s-003", "Ship 3", 52000, 11000, port5);
-        Ship ship4 = new Ship("s-004", "Ship 4", 53000, 11200, port2);
-        Ship ship5 = new Ship("s-005", "Ship 5", 51000, 10800, port3);
+        Ship ship4 = new Ship("s-004", "Ship 4", 53000, 11200, port4);
+        Ship ship5 = new Ship("s-005", "Ship 5", 51000, 10800, port4);
         shipList.add(ship1);
         shipList.add(ship2);
         shipList.add(ship3);
@@ -171,7 +171,7 @@ public class AdminInterface {
         shipList.add(ship5);
         // Create ReeferTrucks
         ReeferTruck reeferTruck1 = new ReeferTruck("rf-001", "ReeferTruck 1", 14000, 250, port2);
-        ReeferTruck reeferTruck2 = new ReeferTruck("rf-002", "ReeferTruck 2", 15000, 270, port4);
+        ReeferTruck reeferTruck2 = new ReeferTruck("rf-002", "ReeferTruck 2", 15000, 270, port1);
         ReeferTruck reeferTruck3 = new ReeferTruck("rf-003", "ReeferTruck 3", 14500, 260, port5);
         ReeferTruck reeferTruck4 = new ReeferTruck("rf-004", "ReeferTruck 4", 14300, 255, port1);
         ReeferTruck reeferTruck5 = new ReeferTruck("rf-005", "ReeferTruck 5", 14700, 265, port3);
@@ -182,7 +182,7 @@ public class AdminInterface {
         reeferTruckList.add(reeferTruck5);
         // Create TankerTrucks
         TankerTruck tankerTruck1 = new TankerTruck("tt-001", "TankerTruck 1", 16000, 300, port3);
-        TankerTruck tankerTruck2 = new TankerTruck("tt-002", "TankerTruck 2", 17000, 320, port4);
+        TankerTruck tankerTruck2 = new TankerTruck("tt-002", "TankerTruck 2", 17000, 320, port2);
         TankerTruck tankerTruck3 = new TankerTruck("tt-003", "TankerTruck 3", 16500, 310, port2);
         TankerTruck tankerTruck4 = new TankerTruck("tt-004", "TankerTruck 4", 16300, 305, port1);
         TankerTruck tankerTruck5 = new TankerTruck("tt-005", "TankerTruck 5", 16700, 315, port5);
