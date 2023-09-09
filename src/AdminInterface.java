@@ -1000,7 +1000,7 @@ public class AdminInterface {
                                         System.out.println("Please enter the ID of the ship that you want to do the transportation:");
                                         String shipID = scanner.nextLine();
 
-                                        if (shipIDs.equals("0")) {
+                                        if (shipID.equals("0")) {
                                             break;
                                         } else {
                                             if (shipIDs.contains(shipID)) {
@@ -1040,13 +1040,162 @@ public class AdminInterface {
                                             }
                                         }
                                     } while (true);
-
                                     break;
                                 case 2:
+                                    do {
+                                        List<String> truckIDs = new ArrayList<>();
+                                        for (Truck truck : truckList) {
+                                            System.out.println(truck.getVehicleID() + " " + truck.getPort().getPortID());
+                                            truckIDs.add(truck.getVehicleID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Please enter the ID of the truck that you want to do the transportation:");
+                                        String truckID = scanner.nextLine();
+
+                                        if (truckID.equals("0")) {
+                                            break;
+                                        } else {
+                                            if (truckIDs.contains(truckID)) {
+                                                for (Truck truck : truckList) {
+                                                    if (truckID.equals(truck.getVehicleID())) {
+                                                        do {
+                                                            List<String> portCanMoveToIDs = new ArrayList<>();
+                                                            for (Port port : portList) {
+                                                                if (port != truck.getPort()) {
+                                                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                                                    portCanMoveToIDs.add(port.getPortID());
+                                                                }
+                                                            }
+                                                            System.out.println("0. Go back");
+                                                            System.out.println("Please enter the ID of the port that you want the truck to move to:");
+                                                            String portCanMoveToID = scanner.nextLine();
+
+                                                            if (portCanMoveToID.equals("0")) {
+                                                                break;
+                                                            } else {
+                                                                if (portCanMoveToIDs.contains(portCanMoveToID)) {
+                                                                    for (Port port : portList) {
+                                                                        if (portCanMoveToID.equals(port.getPortID())) {
+                                                                            System.out.println("The transportation procedure is completed!");
+                                                                        }
+                                                                    }
+                                                                    break;
+                                                                } else {
+                                                                    System.out.println("Port does not exist");
+                                                                }
+                                                            }
+                                                        } while (true);
+                                                    }
+                                                }
+                                            } else {
+                                                System.out.println("The truck does not exist");
+                                            }
+                                        }
+                                    } while (true);
                                     break;
                                 case 3:
+                                    do {
+                                        List<String> reeferTruckIDs = new ArrayList<>();
+                                        for (ReeferTruck reeferTruck : reeferTruckList) {
+                                            System.out.println(reeferTruck.getVehicleID() + " " + reeferTruck.getPort().getPortID());
+                                            reeferTruckIDs.add(reeferTruck.getVehicleID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Please enter the ID of the reefer truck that you want to do the transportation:");
+                                        String reeferTruckID = scanner.nextLine();
+
+                                        if (reeferTruckID.equals("0")) {
+                                            break;
+                                        } else {
+                                            if (reeferTruckIDs.contains(reeferTruckID)) {
+                                                for (ReeferTruck reeferTruck : reeferTruckList) {
+                                                    if (reeferTruckID.equals(reeferTruck.getVehicleID())) {
+                                                        do {
+                                                            List<String> portCanMoveToIDs = new ArrayList<>();
+                                                            for (Port port : portList) {
+                                                                if (port != reeferTruck.getPort()) {
+                                                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                                                    portCanMoveToIDs.add(port.getPortID());
+                                                                }
+                                                            }
+                                                            System.out.println("0. Go back");
+                                                            System.out.println("Please enter the ID of the port that you want the reefer truck to move to:");
+                                                            String portCanMoveToID = scanner.nextLine();
+
+                                                            if (portCanMoveToID.equals("0")) {
+                                                                break;
+                                                            } else {
+                                                                if (portCanMoveToIDs.contains(portCanMoveToID)) {
+                                                                    for (Port port : portList) {
+                                                                        if (portCanMoveToID.equals(port.getPortID())) {
+                                                                            System.out.println("The transportation procedure is completed!");
+                                                                        }
+                                                                    }
+                                                                    break;
+                                                                } else {
+                                                                    System.out.println("Port does not exist");
+                                                                }
+                                                            }
+                                                        } while (true);
+                                                    }
+                                                }
+                                            } else {
+                                                System.out.println("The reefer truck does not exist");
+                                            }
+                                        }
+                                    } while (true);
                                     break;
                                 case 4:
+                                    do {
+                                        List<String> tankerTruckIDs = new ArrayList<>();
+                                        for (TankerTruck tankerTruck : tankerTruckList) {
+                                            System.out.println(tankerTruck.getVehicleID() + " " + tankerTruck.getPort().getPortID());
+                                            tankerTruckIDs.add(tankerTruck.getVehicleID());
+                                        }
+                                        System.out.println("0. Go back");
+                                        System.out.println("Please enter the ID of the tanker truck that you want to do the transportation:");
+                                        String tankerTruckID = scanner.nextLine();
+
+                                        if (tankerTruckID.equals("0")) {
+                                            break;
+                                        } else {
+                                            if (tankerTruckIDs.contains(tankerTruckID)) {
+                                                for (TankerTruck tankerTruck : tankerTruckList) {
+                                                    if (tankerTruckID.equals(tankerTruck.getVehicleID())) {
+                                                        do {
+                                                            List<String> portCanMoveToIDs = new ArrayList<>();
+                                                            for (Port port : portList) {
+                                                                if (port != tankerTruck.getPort()) {
+                                                                    System.out.println(port.getPortID() + ". " + port.getName());
+                                                                    portCanMoveToIDs.add(port.getPortID());
+                                                                }
+                                                            }
+                                                            System.out.println("0. Go back");
+                                                            System.out.println("Please enter the ID of the port that you want the reefer truck to move to:");
+                                                            String portCanMoveToID = scanner.nextLine();
+
+                                                            if (portCanMoveToID.equals("0")) {
+                                                                break;
+                                                            } else {
+                                                                if (portCanMoveToIDs.contains(portCanMoveToID)) {
+                                                                    for (Port port : portList) {
+                                                                        if (portCanMoveToID.equals(port.getPortID())) {
+                                                                            System.out.println("The transportation procedure is completed!");
+                                                                        }
+                                                                    }
+                                                                    break;
+                                                                } else {
+                                                                    System.out.println("Port does not exist");
+                                                                }
+                                                            }
+                                                        } while (true);
+                                                    }
+                                                }
+                                            } else {
+                                                System.out.println("The reefer truck does not exist");
+                                            }
+                                        }
+                                    } while (true);
                                     break;
                                 case 5:
                                     running3 = false;
