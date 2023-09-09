@@ -3,6 +3,7 @@ package Interface;
 import Entities.CanMoveToPort;
 import Entities.Container;
 import Entities.Port;
+import Entities.Trip;
 
 import java.util.Date;
 
@@ -16,6 +17,6 @@ public interface IVehicle {
 
     void moveToPort(Port port, Date departureDate, Date arrivalDate);
 
-    public void hasArrived(Port port);
+    public void hasArrived(Trip trip);
     public void refuel();
 }

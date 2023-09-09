@@ -101,35 +101,26 @@ public class Vehicle implements IVehicle, Serializable {
             System.out.println("The vehicle can not go to this port!");
         }
         else {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date today = new Date();
-            this.port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
-            //make a new trip variable(arrivalDate = null, status = false)
             this.setPort(null);
             //change port to null
             port.removeVehicle(this);
             //remove vehicle from old port
         }
     }
-
+    //make a new trip variable(status = false)
+//this.port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
+            //port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
     @Override
-    public void hasArrived(Port port){
-        //for loop to find trip of same vehicle and null arrivalDate
-        Trip thistrip;
-        //update arrivalDate and status in trip
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date today = new Date();
-
-//        thistrip.setArrivalDate(formatter.format(today));
-//        thistrip.setStatus(true);
-//        //add trip to both ports
-//        thistrip.departFrom.addTrip(thistrip);
-//        this.port.addTrip(thistrip);
-
+    public void hasArrived(Trip trip){
+        //update status in trip
+        trip.setStatus(true);
+        //add trip to both ports
+        trip.getDepartFrom().addTrip(trip);
+        trip.getArriveTo().addTrip(trip);
         //add this vehicle to the new port
-        this.port = port;
-        port.addVehicle(this);
-        this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(port);
+        this.port = trip.getArriveTo();
+        trip.getArriveTo().addVehicle(this);
+        this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom());
     }
     @Override
     public void refuel() {

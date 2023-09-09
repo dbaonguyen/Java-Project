@@ -92,6 +92,8 @@ public class Port implements IPort, Serializable {
         return vehicles;
     }
 
+
+
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -258,7 +260,7 @@ public class Port implements IPort, Serializable {
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String str = today.format(dtf);
-        if(today.equals(this.currentDate)){
+        if(str.equals(this.currentDate)){
             this.usedFuel += newFuel;
         }
         else{

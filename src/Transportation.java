@@ -82,12 +82,15 @@ public class Transportation implements Runnable {
                         long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
 
                         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                        //make a new trip without adding to any port
 
                         // Schedule departure action
+                        //run moveToPort
                         Runnable departureTask = new Transportation(newVehicle, newPort, departureDate, arrivalDate);
                         ScheduledFuture<?> departureFuture = scheduler.schedule(departureTask, departureDelayMillis, TimeUnit.MILLISECONDS);
 
                         // Schedule arrival action
+                        //complete trip and add it 2 ports with hasArrived
                         Runnable arrivalTask = new Transportation(newVehicle, newPort, departureDate, arrivalDate);
                         ScheduledFuture<?> arrivalFuture = scheduler.schedule(arrivalTask, arrivalDelayMillis, TimeUnit.MILLISECONDS);
 

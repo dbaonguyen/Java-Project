@@ -66,7 +66,7 @@ public class Trip implements Serializable {
         this.arriveTo = arriveTo;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 
