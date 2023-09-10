@@ -985,6 +985,58 @@ public class AdminInterface {
             }
         } while (running5);
     }
+
+    public static void addUser(List<String> userNameList, List<String> usedPortsID){
+        String userName;
+        do {
+            decorativeLine();
+            System.out.println();
+            try {
+                System.out.println("Please enter a new user name: ");
+                userName = scanner.nextLine();
+                if (!userNameList.contains(userName)) {
+                    userNameList.add(userName);
+                    break;
+                } else {
+                    System.out.println("This user name is already existed!");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid value");
+            }
+        } while (true);
+
+        String password;
+        do{
+            try{
+                System.out.println("Please enter a password for this user: ");
+                password = scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid value");
+            }
+        } while(true);
+
+        int portID = -1;
+        do {
+            for (int i = 0; i < portList.size(); i++) {
+                System.out.println(i + ". " + portList.get(i).getName());
+            }
+            try {
+                System.out.println("Please choose the port to assign this user to: ");
+                portID = Integer.parseInt(scanner.nextLine());
+
+                if (portID >= 0 && portID < portList.size() && !usedPortsID.contains(portList.get(portID).getPortID())) {
+                    usedPortsID.add(portList.get(portID).getPortID());
+                    break;
+                } else {
+                    System.out.println("Please enter a valid option");
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid value");
+            }
+        } while (true);
+
+        userList.add(new User(userName, password, portList.get(portID)));
+    }
     public static int portOptionsMenu(int choice) {
         //Menu
         decorativeLine();
