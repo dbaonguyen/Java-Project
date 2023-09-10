@@ -79,7 +79,6 @@ public class Vehicle implements IVehicle, Serializable {
             return true;
         }
         else{
-            System.out.println("This vehicle can not unload this container now!");
             return false;
         }
     }
@@ -95,21 +94,26 @@ public class Vehicle implements IVehicle, Serializable {
     }
 
     @Override
-    public void moveToPort(Port port, Date departureDate, Date arrivalDate) {
+    public Trip moveToPort1(Port port, Date departureDate, Date arrivalDate) {
         //check value of canMoveToPort()
         if(this.canMoveToPort(port) == false){
             System.out.println("The vehicle can not go to this port!");
+            return null;
         }
         else {
-            this.setPort(null);
             //change port to null
-            port.removeVehicle(this);
+            this.setPort(null);
             //remove vehicle from old port
+            this.port.removeVehicle(this);
+            //make a new trip variable(status = false)
+            Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
+            this.port.addTrip(trip);
+            port.addTrip(trip);
+            return trip;
         }
     }
-    //make a new trip variable(status = false)
-//this.port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
-            //port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
+
+
     @Override
     public void hasArrived(Trip trip){
         //update status in trip
@@ -121,6 +125,7 @@ public class Vehicle implements IVehicle, Serializable {
         this.port = trip.getArriveTo();
         trip.getArriveTo().addVehicle(this);
         this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom());
+
     }
     @Override
     public void refuel() {

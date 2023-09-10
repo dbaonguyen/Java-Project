@@ -15,7 +15,7 @@ public interface IVehicle {
 
     void moveToPort(Port port, String departureDate, String arrivalDate);
 
-    void moveToPort(Port port, Date departureDate, Date arrivalDate);
+    Trip moveToPort1(Port port, Date departureDate, Date arrivalDate);
 
     public void hasArrived(Trip trip);
     public void refuel();
