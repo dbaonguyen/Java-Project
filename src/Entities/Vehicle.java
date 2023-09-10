@@ -100,13 +100,13 @@ public class Vehicle implements IVehicle, Serializable {
         }
         else {
             //change port to null
-            this.setPort(null);
+            Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
             //remove vehicle from old port
             this.port.removeVehicle(this);
             //make a new trip variable(status = false)
-            Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
             this.port.addTrip(trip);
             port.addTrip(trip);
+            this.setPort(null);
             return trip;
         }
     }

@@ -1051,7 +1051,7 @@ public class AdminInterface {
             }
         } while (true);
     }
-    public static void unloadContainer(Port port, List<String> containerIDs) {
+    public static void unloadContainer(Port port) {
         do {
             List<String> portVehicleIDs = new ArrayList<>();
             for (Vehicle vehicle : port.getVehicles()) {
@@ -1150,7 +1150,7 @@ public class AdminInterface {
                 case 12 -> running3 = false;
 
                 //Unload container
-                case 13 -> unloadContainer(port, containerIDs);
+                case 13 -> unloadContainer(port);
                 default -> System.out.println("Please choose from 1-12");
             }
         } while (running3);
