@@ -831,7 +831,7 @@ public class AdminInterface {
         int portID = -1;
         do {
             for (int i = 0; i < portList.size(); i++) {
-                System.out.println(i + ". " + typeList.get(i).getType());
+                System.out.println(i + ". " + portList.get(i).getName());
             }
             try {
                 System.out.println("Please choose the port to assign this user to: ");
