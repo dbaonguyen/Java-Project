@@ -79,7 +79,6 @@ public class Vehicle implements IVehicle, Serializable {
             return true;
         }
         else{
-            System.out.println("This vehicle can not unload this container now!");
             return false;
         }
     }
@@ -107,9 +106,8 @@ public class Vehicle implements IVehicle, Serializable {
             //remove vehicle from old port
         }
     }
-    //make a new trip variable(status = false)
-//this.port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
-            //port.addTrip(new Trip(this, this.port, departureDate, arrivalDate, port, false));
+
+
     @Override
     public void hasArrived(Trip trip){
         //update status in trip

@@ -3,7 +3,13 @@ import Users.Admin;
 import Users.PortManager;
 import Users.User;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class AdminInterface {
     //data load
@@ -217,6 +223,28 @@ public class AdminInterface {
     public static void decorativeLine() {
         for (int i = 0;i < 50;i++){
             System.out.print("*");
+        }
+    }
+    public static boolean isValidDate(String input) {
+        // Define a regular expression pattern to match a valid date format
+        String dateFormatPattern = "\\d{1,2}/\\d{1,2}/\\d{4} \\d{2}:\\d{2}:\\d{2}";
+
+        // Check if the input matches the pattern
+        if (!input.matches(dateFormatPattern)) {
+            return false;
+        }
+
+        // If it matches the pattern, try to parse it as a date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        sdf.setLenient(false); // Disable leniency to enforce strict date parsing
+
+        try {
+            Date parsedDate = sdf.parse(input);
+            // If parsing succeeds without exceptions, it's a valid date
+            return true;
+        } catch (ParseException e) {
+            // Parsing failed, so it's an invalid date
+            return false;
         }
     }
 
@@ -774,10 +802,11 @@ public class AdminInterface {
         //Menu
         decorativeLine();
         System.out.println();
-        System.out.println("1. Calculate distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
+        System.out.println("1. Calculate Distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
         System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
         System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
         System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
+        System.out.println("13. Unload Container");
         try {
             System.out.print("Your option: ");
             choice = Integer.parseInt(scanner.nextLine());
@@ -794,7 +823,7 @@ public class AdminInterface {
                 portVehicleIDs.add(vehicle.getVehicleID());
             }
             System.out.println("0. Go back");
-            System.out.println("Please choose the vehicle ID that you want to unload containers from:");
+            System.out.println("Please choose the vehicle ID that you want to load containers to:");
             String vehicleID = scanner.nextLine();
 
             if (vehicleID.equals("0")) {
@@ -823,7 +852,56 @@ public class AdminInterface {
                                                 running4 = false;
                                                 break;
                                             } else {
-                                                System.out.println("This container can not be loaded on this vehicle!");
+                                                System.out.println("This vehicle can not load this container now!");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } while (running4);
+                    }
+                }
+            }
+        } while (true);
+    }
+    public static void unloadContainer(Port port, List<String> containerIDs) {
+        do {
+            List<String> portVehicleIDs = new ArrayList<>();
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                portVehicleIDs.add(vehicle.getVehicleID());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Please choose the vehicle ID that you want to unload containers from:");
+            String vehicleID = scanner.nextLine();
+
+            if (vehicleID.equals("0")) {
+                break;
+            } else {
+                for (Vehicle vehicle : port.getVehicles()) {
+                    if (vehicleID.equals(vehicle.getVehicleID())) {
+                        boolean running4 = true;
+                        do {
+                            for (Container container : vehicle.getContainers()) {
+                                System.out.println(container.getContainerID() + ". " + container.getType().getType());
+                            }
+                            System.out.println("0. Go back");
+                            System.out.println("Enter the container ID you want to unload from the vehicle:");
+                            String containerID = scanner.nextLine();
+                            if (containerID.equals("0")) {
+                                break;
+                            } else {
+                                if (!containerIDs.contains(containerID)) {
+                                    System.out.println("The container does not exist");
+                                } else {
+                                    for (Container container : vehicle.getContainers()) {
+                                        if (containerID.equals(container.getContainerID())) {
+                                            if (vehicle.unloadContainer(container)) {
+                                                System.out.println("The container is unloaded from the vehicle");
+                                                running4 = false;
+                                                break;
+                                            } else {
+                                                System.out.println("This container can not be unloaded from this vehicle!");
                                             }
                                         }
                                     }
@@ -881,6 +959,9 @@ public class AdminInterface {
 
                 //Go back
                 case 12 -> running3 = false;
+
+                //Unload container
+                case 13 -> unloadContainer(port, containerIDs);
                 default -> System.out.println("Please choose from 1-12");
             }
         } while (running3);
@@ -957,6 +1038,55 @@ public class AdminInterface {
                                     if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                         for (Port port : portList) {
                                             if (portCanMoveToID.equals(port.getPortID())) {
+                                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                                try {
+                                                    Date dDate = dateFormat.parse("10/09/2023 02:03:00");
+                                                    ship.moveToPort1(port, dDate,dDate);
+//                                                    ship.hasArrived(ship.moveToPort1(port, dDate,dDate));
+                                                } catch (Exception e) {
+                                                    System.out.println();
+                                                }
+//                                                do {
+//                                                    try {
+//                                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+//                                                        Date currentTime = new Date(); // Get the current time
+//
+//                                                        System.out.println("Please enter the departure date (dd/MM/yyyy HH:mm:ss)");
+//                                                        String departureDateStr = scanner.nextLine();
+//
+//                                                        System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
+//                                                        String arrivalDateStr = scanner.nextLine();
+//
+//                                                        if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
+//                                                            Date departureDate = dateFormat.parse(departureDateStr);
+//                                                            Date arrivalDate = dateFormat.parse(arrivalDateStr);
+//
+//                                                            if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
+//                                                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+//                                                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+//
+//                                                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+//                                                                //make a new trip without adding to any port
+//
+//                                                                // Schedule departure action
+//                                                                Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
+//                                                                ScheduledFuture<?> departureFuture = scheduler.schedule(departureTask::run, departureDelayMillis, TimeUnit.MILLISECONDS);
+//
+//                                                                // Schedule arrival action
+//                                                                Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
+//                                                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(arrivalTask::run2, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+//
+//                                                                break;
+//                                                            } else {
+//                                                                System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
+//                                                            }
+//                                                        } else {
+//                                                            System.out.println("Invalid date format. Try again.");
+//                                                        }
+//                                                    } catch (ParseException e) {
+//                                                        System.out.println("Invalid date format. Try again.");
+//                                                    }
+//                                                } while (true);
                                                 System.out.println("The transportation procedure is completed!");
                                             }
                                         }
