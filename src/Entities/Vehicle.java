@@ -40,8 +40,6 @@ public class Vehicle implements IVehicle, Serializable {
         this.port = port;
         port.addVehicle(this);
     }
-
-
     @Override
     public boolean canMoveToPort(Port port) {
         //calculate fuel needs
@@ -125,7 +123,6 @@ public class Vehicle implements IVehicle, Serializable {
         this.port = trip.getArriveTo();
         trip.getArriveTo().addVehicle(this);
         this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom());
-
     }
     @Override
     public void refuel() {
