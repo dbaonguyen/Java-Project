@@ -35,6 +35,6 @@ public interface IPort {
 
     public void displayContainers();
 
-    public double totalFuel();
+    public double totalFuel(String date);
 
 }

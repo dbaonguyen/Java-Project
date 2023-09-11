@@ -250,9 +250,25 @@ public class Port implements IPort, Serializable {
     }
 
     @Override
-    public double totalFuel() {
-        return usedFuel;
+    public double totalFuel(String date) {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String str = today.format(dtf);
+        if (str.equals(date)) {
+            return this.usedFuel;
+        }
+        else {
+            for(String history : fuelHistory.keySet()){
+                if(history.equals(date)){
+
+                    return fuelHistory.get(history);
+                }
+            }
+            System.out.println("There is no data on this date!");
+            return 0;
+        }
     }
+
     public void displayPortInfo(Port port){
         System.out.println(port);
     }
