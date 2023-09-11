@@ -1346,7 +1346,8 @@ public class AdminInterface {
                 System.out.println("4. Transportation");
                 System.out.println("5. Register");
                 System.out.println("6. Statistics");
-                System.out.println("7. Go back");
+                System.out.println("7. Modification");
+                System.out.println("0. Go back");
                 try {
                     System.out.print("Your option: ");
                     choice = Integer.parseInt(scanner.nextLine());
@@ -1453,7 +1454,21 @@ public class AdminInterface {
                             }
                         } while (running4);
                     }
-                    case 7 -> running2 = false;
+                    case 7 ->{
+                        boolean running5 = true;
+
+                        do {
+                            choice = updateMenu(choice);
+                            switch (choice){
+                                case 1 -> {
+                                    choosePortToUpdate(portIDs);
+                                }
+                                case 0 -> running5 = false;
+                                default -> System.out.println("Please choose from 1-4");
+                            }
+                        }while (running5);
+                    }
+                    case 0 -> running2 = false;
                     default -> System.out.println("Please choose from 1-4");
                 }
             } while (running2);
@@ -1461,6 +1476,192 @@ public class AdminInterface {
         } else {
             System.out.println("Incorrect username or password!");
         }
+    }
+    public static int updateMenu(int choice){
+        decorativeLine();
+        System.out.println();
+        System.out.println("1. Update Port");
+        System.out.println("2. Update Vehicle");
+        System.out.println("3. Update Container");
+        System.out.println("4. Update Port Manager account");
+        System.out.println("0. Go back");
+        try {
+            System.out.print("Your option: ");
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Please choose a valid option: ");
+        }
+
+        return choice;
+    }
+    public static int portOptionsMenuToUpdate(int choice) {
+        //Menu
+        decorativeLine();
+        System.out.println();
+        System.out.println("1. Update Port ID \t|\t\t2. Update Port name \t\t|\t\t3. Update Port latitude");
+        System.out.println("4. Update Port longitude \t\t\t|\t\t5. Update Port capacity \t\t|\t\t6. Update Port landing ability");
+        System.out.println("0. Go back\t\t|\t\t");
+
+        try {
+            System.out.print("Your option: ");
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Please choose a valid option: ");
+        }
+        return choice;
+    }
+    public static void portOptionsToUpdate(List<String> portIDs, Port port) {
+        boolean running3 = true;
+        int choice = 0;
+        do {
+            choice = portOptionsMenuToUpdate(choice);
+            switch (choice) {
+                //Update portID
+                case 1 -> {
+                    String portID;
+                    String tempID;
+
+                    do {
+                        try {
+                            System.out.println("Please enter the port ID by the format 'p-portID': ");
+                            portID = scanner.nextLine();
+
+                            if (!portID.matches("p-\\d+")) {
+                                System.out.println("Invalid ID. The ID must be in the format 'p-<integer>'.");
+                            } else {
+                                if (!portIDs.contains(portID)) {
+                                    tempID = port.getPortID();
+                                    portIDs.add(portID);
+                                    portIDs.remove(tempID);
+                                    portIDs.remove(tempID);
+                                    break;
+                                } else {
+                                    System.out.println("The ID is already existed!");
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Invalid value");
+                        }
+                    } while (true);
+                    port.setPortID(portID);
+                }
+
+                //Update port name
+                case 2 -> {
+                    System.out.println("Please enter your port name:");
+                    String portName = scanner.nextLine();
+                    port.setName(portName);
+                }
+
+                //Update port latitude
+                case 3 -> {
+                    double portLatitude = 0;
+                    do {
+                        try {
+                            System.out.println("Please enter your port latitude:");
+                            portLatitude = Double.parseDouble(scanner.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                        }
+                    } while (true);
+                    port.setLatitude(portLatitude);
+
+                }
+
+                //Update port longitude
+                case 4 -> {
+                    double portLongtitude = 0;
+                    do {
+                        try {
+                            System.out.println("Please enter your port longtitude:");
+                            portLongtitude = Double.parseDouble(scanner.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                        }
+                    } while (true);
+                    port.setLongtitude(portLongtitude);
+                }
+
+                //Update port capacity
+                case 5 -> {
+                    double portCapacity = 0;
+                    do {
+                        try {
+                            System.out.println("Please enter your port capacity:");
+                            portCapacity = Double.parseDouble(scanner.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                        }
+                    } while (true);
+                    port.setCapacity(portCapacity);
+                }
+
+                //Update port landing ability
+                case 6 -> {
+                    boolean portLandingAbility;
+                    boolean found = false;
+                    do {
+                        try {
+                            System.out.println("Please enter your port landing ability (true/false):");
+                            portLandingAbility = scanner.nextBoolean();
+                            scanner.nextLine();
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                            scanner.nextLine();
+                        }
+                    } while (true);
+
+                    for (Vehicle vehicle : port.getVehicles()){
+                        if (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck){
+                            found = true;
+                            System.out.println("The port is containing trucks, please remove all trucks to modify");
+                            break;
+                        }
+                    }
+
+                    if (!found){
+                        port.setLandingAbility(portLandingAbility);
+                    }
+                }
+
+                //Exit
+                case 0 -> running3 = false;
+                default -> System.out.println("Please choose from 1-12");
+            }
+        } while (running3);
+    }
+    public static void choosePortToUpdate(List<String> portIDs) {
+
+
+        do {
+            //Port IDs
+            for (Port port : portList) {
+                System.out.println(port.getPortID() + ". " + port.getName());
+                portIDs.add(port.getPortID());
+            }
+
+            System.out.println("0. Go back");
+            System.out.print("Enter the ID of the port above that you want to modify: ");
+            String portOption = scanner.nextLine();
+
+            if (portOption.equals("0")) {
+                break;
+            } else {
+                if (!portIDs.contains(portOption)) {
+                    System.out.println("Port does not exist");
+                } else {
+                    for (Port port : portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            portOptionsToUpdate(portIDs, port);
+                        }
+                    }
+                }
+            }
+        } while (true);
     }
     public static String loginValidation () {
         System.out.print("Enter your username: ");
