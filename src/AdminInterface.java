@@ -24,7 +24,8 @@ public class AdminInterface {
     private static List<Type> typeList = new ArrayList<>();
     private static List<String> usedUsername = new ArrayList<>();
     private static List<String> usedPortID = new ArrayList<>();
-
+    private static List<Trip> tripList = new ArrayList<>();
+    public static List<String> notificationList = new ArrayList<>();
 
     private static final String DEFAULT_DIRECTORY = "Data";
     private static Scanner scanner = new Scanner(System.in);
