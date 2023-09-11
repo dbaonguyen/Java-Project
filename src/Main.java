@@ -16,8 +16,10 @@ public class Main {
                     choice = AdminInterface.login();
                 } else if (indicator.equals("admin")) {
                     AdminInterface.loginMainMenu(indicator);
+                    choice = AdminInterface.login();
                 } else {
                     PortManagerInterface.loginMainMenu(indicator);
+                    choice = AdminInterface.login();
                 }
             }
             if (choice == 2) {
