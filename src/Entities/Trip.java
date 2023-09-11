@@ -25,7 +25,6 @@ public class Trip implements Serializable {
         this.arrivalDate = arrivalDate;
     }
 
-
     public Vehicle getVehicle() {
         return vehicle;
     }
