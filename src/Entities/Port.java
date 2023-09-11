@@ -293,5 +293,4 @@ public class Port implements IPort, Serializable {
                 "\nCurrent Date: " + currentDate +
                 "\nUsed Fuel: " + usedFuel;
     }
-
 }
