@@ -869,9 +869,9 @@ public class AdminInterface {
         System.out.println();
         System.out.println("1. Calculate Distance \t|\t\t2. Add Container \t\t|\t\t3. Remove Container");
         System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
-        System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Display Trips");
-        System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Go Back");
-        System.out.println("13. Unload Container");
+        System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Unload Container");
+        System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Display Trips");
+        System.out.println("13. Go Back");
         try {
             System.out.print("Your option: ");
             choice = Integer.parseInt(scanner.nextLine());
@@ -1013,22 +1013,23 @@ public class AdminInterface {
                 //Load
                 case 8 -> loadContainer(port, containerIDs);
 
-                //Display trips
-                case 9 -> System.out.println(port.getTrips());
+                //Unload container
+                case 9 -> unloadContainer(port);
 
                 //Display vehicles
                 case 10 -> {
                     port.displayShips();
                     port.displayTrucks();
                 }
+
                 //Display containers
                 case 11 -> System.out.println(port.getContainers());
 
-                //Go back
-                case 12 -> running3 = false;
+                //Display trips
+                case 12 -> System.out.println(port.getTrips());
 
-                //Unload container
-                case 13 -> unloadContainer(port);
+                //Go back
+                case 13 -> running3 = false;
                 default -> System.out.println("Please choose from 1-13");
             }
         } while (running3);

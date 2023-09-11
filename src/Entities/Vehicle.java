@@ -116,9 +116,6 @@ public class Vehicle implements IVehicle, Serializable {
     public void hasArrived(Trip trip){
         //update status in trip
         trip.setStatus(true);
-        //add trip to both ports
-        trip.getDepartFrom().addTrip(trip);
-        trip.getArriveTo().addTrip(trip);
         //add this vehicle to the new port
         this.port = trip.getArriveTo();
         trip.getArriveTo().addVehicle(this);
