@@ -809,7 +809,6 @@ public class AdminInterface {
             }
         } while (running5);
     }
-
     public static void addUser(List<String> userNameList, List<String> usedPortsID){
         String userName;
         do {
@@ -1029,7 +1028,7 @@ public class AdminInterface {
 
                 //Unload container
                 case 13 -> unloadContainer(port);
-                default -> System.out.println("Please choose from 1-12");
+                default -> System.out.println("Please choose from 1-13");
             }
         } while (running3);
     }
@@ -1105,56 +1104,57 @@ public class AdminInterface {
                                     if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                         for (Port port : portList) {
                                             if (portCanMoveToID.equals(port.getPortID())) {
-                                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                                                try {
-                                                    Date dDate = dateFormat.parse("10/09/2023 02:03:00");
-                                                    Trip trip = ship.moveToPort1(port, dDate,dDate);
-                                                    System.out.println(trip);
-                                                    ship.hasArrived(trip);
-                                                } catch (Exception e) {
-                                                    System.out.println();
-                                                }
-//                                                do {
-//                                                    try {
-//                                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//                                                        Date currentTime = new Date(); // Get the current time
-//
-//                                                        System.out.println("Please enter the departure date (dd/MM/yyyy HH:mm:ss)");
-//                                                        String departureDateStr = scanner.nextLine();
-//
-//                                                        System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
-//                                                        String arrivalDateStr = scanner.nextLine();
-//
-//                                                        if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
-//                                                            Date departureDate = dateFormat.parse(departureDateStr);
-//                                                            Date arrivalDate = dateFormat.parse(arrivalDateStr);
-//
-//                                                            if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
-//                                                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
-//                                                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
-//
-//                                                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-//                                                                //make a new trip without adding to any port
-//
-//                                                                // Schedule departure action
-//                                                                Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
-//                                                                ScheduledFuture<?> departureFuture = scheduler.schedule(departureTask::run, departureDelayMillis, TimeUnit.MILLISECONDS);
-//
-//                                                                // Schedule arrival action
-//                                                                Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
-//                                                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(arrivalTask::run2, arrivalDelayMillis, TimeUnit.MILLISECONDS);
-//
-//                                                                break;
-//                                                            } else {
-//                                                                System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
-//                                                            }
-//                                                        } else {
-//                                                            System.out.println("Invalid date format. Try again.");
-//                                                        }
-//                                                    } catch (ParseException e) {
-//                                                        System.out.println("Invalid date format. Try again.");
-//                                                    }
-//                                                } while (true);
+                                                do {
+                                                    try {
+                                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                                        Date currentTime = new Date(); // Get the current time
+
+                                                        System.out.println("Please enter the departure date (dd/MM/yyyy HH:mm:ss)");
+                                                        String departureDateStr = scanner.nextLine();
+
+                                                        System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
+                                                        String arrivalDateStr = scanner.nextLine();
+
+                                                        if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
+                                                            Date departureDate = dateFormat.parse(departureDateStr);
+                                                            Date arrivalDate = dateFormat.parse(arrivalDateStr);
+
+                                                            if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
+                                                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+                                                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+
+                                                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                                                                //make a new trip without adding to any port
+                                                                CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
+                                                                // Schedule departure action
+                                                                Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
+                                                                ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
+                                                                    Trip trip = departureTask.run();
+                                                                    tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
+                                                                }, departureDelayMillis, TimeUnit.MILLISECONDS);
+                                                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
+                                                                    try {
+                                                                        // Wait for the departure task to complete and retrieve the Trip object
+                                                                        Trip trip = tripFuture.get();
+                                                                        // Now you have the Trip object, you can use it in the arrival task
+                                                                        Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
+                                                                        arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
+                                                                    } catch (InterruptedException | ExecutionException e) {
+                                                                        // Handle exceptions if needed
+                                                                    }
+                                                                }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+
+                                                                break;
+                                                            } else {
+                                                                System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
+                                                            }
+                                                        } else {
+                                                            System.out.println("Invalid date format. Try again.");
+                                                        }
+                                                    } catch (ParseException e) {
+                                                        System.out.println("Invalid date format. Try again.");
+                                                    }
+                                                } while (true);
                                                 System.out.println("The transportation procedure is completed!");
                                             }
                                         }
