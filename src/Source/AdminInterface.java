@@ -1,4 +1,5 @@
 import Entities.*;
+import Source.Transportation;
 import Users.Admin;
 import Users.PortManager;
 import Users.User;
@@ -213,7 +214,6 @@ public class AdminInterface {
         tankerTruckList.add(tankerTruck4);
         tankerTruckList.add(tankerTruck5);
     }
-
     public static <T> void writeListToFile(List<T> list, String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
         try (FileOutputStream fileOut = new FileOutputStream(filePath);
@@ -295,597 +295,6 @@ public class AdminInterface {
         }
         return choice;
     }
-    public static void calculateDistance(Port port, List<String> portIDs, String portOption) {
-        List<String> portIDs2 = new ArrayList<>();
-        do {
-            decorativeLine();
-            System.out.println();
-            for (Port portFrom : portList) {
-                if (portFrom != port){
-                    System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
-                    portIDs2.add(portFrom.getPortID());
-                }
-            }
-            System.out.println("0. Go back");
-            System.out.print("Enter the ID of the port above that you want to calculate distance between: ");
-            String portOption2 = scanner.nextLine();
-
-            //Method
-            decorativeLine();
-            System.out.println();
-
-            if (portOption2.equals("0")) {
-                break;
-            } else {
-                if (portIDs2.contains(portOption2)) {
-                    System.out.printf("The distance between 2 ports is: %.2f km\n", portList.get(portIDs.indexOf(portOption)).calculateDistance(portList.get(portIDs2.indexOf(portOption2))));
-                    break;
-                } else {
-                    System.out.println("Please choose a valid option");
-                }
-            }
-        } while (true);
-    }
-    public static void addContainer(List<String> containerIDs, Port port) {
-        String containerID;
-        do {
-            decorativeLine();
-            System.out.println();
-            try {
-                System.out.println("Please enter the container ID by the format 'c-containerID': ");
-                containerID = scanner.nextLine();
-
-                if (!containerID.matches("c-\\d+")) {
-                    System.out.println("Invalid ID. The ID must be in the format 'c-<integer>'.");
-                } else {
-                    if (!containerIDs.contains(containerID)) {
-                        containerIDs.add(containerID);
-                        break;
-                    } else {
-                        System.out.println("The ID is already existed!");
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-
-        double containerWeight;
-        do {
-            try {
-                System.out.println("Please enter your container weight:");
-                containerWeight = Double.parseDouble(scanner.nextLine());
-                if (containerIDs.contains(containerID) && containerWeight > port.getCurrentWeight()) {
-                    containerIDs.remove(containerID);
-                }
-                break;
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-
-        int typeID = -1;
-        do {
-            for (int i = 0; i < typeList.size(); i++) {
-                System.out.println(i + ". " + typeList.get(i).getType());
-            }
-            try {
-                System.out.println("Please choose the container type number 0-4");
-                typeID = Integer.parseInt(scanner.nextLine());
-
-                if (typeID >= 0 && typeID < typeList.size()) {
-                    break;
-                } else {
-                    System.out.println("Please enter a valid option (0-4)");
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-        port.addContainer(new Container(containerID, containerWeight, typeList.get(typeID)));
-    }
-    public static void removeContainer(Port port) {
-        decorativeLine();
-        System.out.println();
-        boolean running4 = true;
-        Iterator<Container> containerIterator = port.getContainers().iterator();
-        do {
-            for (Container container : port.getContainers()) {
-                System.out.println(container.getContainerID() + ". " + container.getType().getType());
-            }
-            System.out.println("0. Go back");
-            System.out.println("Enter the container ID that you want to remove");
-            String containerRemoved = scanner.nextLine();
-
-            if (containerRemoved.equals("0")) {
-                break;
-            }
-
-            boolean containerFound = false;
-            while (containerIterator.hasNext()) {
-                Container container = containerIterator.next();
-                if (containerRemoved.equals(container.getContainerID())) {
-                    containerIterator.remove();
-                    containerFound = true;
-                    running4 = false;
-                    System.out.println("Container is removed");
-                    break;
-                }
-            }
-
-            if (!containerFound) {
-                System.out.println("The container does not exist");
-            }
-        } while (running4);
-    }
-    public static void removeVehicle(Port port) {
-        decorativeLine();
-        System.out.println();
-        boolean running4 = true;
-        Iterator<Vehicle> vehicleIterator = port.getVehicles().iterator();
-        do {
-            for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
-            }
-            System.out.println("0. Go back");
-            System.out.println("Enter the vehicle ID that you want to remove");
-            String containerRemoved = scanner.nextLine();
-
-            if (containerRemoved.equals("0")) {
-                break;
-            }
-
-            boolean vehicleFound = false;
-            while (vehicleIterator.hasNext()) {
-                Vehicle vehicle = vehicleIterator.next();
-                if (containerRemoved.equals(vehicle.getVehicleID())) {
-                    vehicleIterator.remove();
-                    vehicleFound = true;
-                    running4 = false;
-                    System.out.println("Vehicle is removed");
-                    break;
-                }
-            }
-
-            if (!vehicleFound) {
-                System.out.println("The vehicle does not exist");
-            }
-        } while (running4);
-    }
-    public static void addVehicle(List<String> vehicleIDs, Port port) {
-        decorativeLine();
-        System.out.println();
-        int choice = -1;
-        do {
-            try {
-                System.out.println("Choose the vehicle you want to add");
-                System.out.println("1. Ship");
-                System.out.println("2. Truck");
-                System.out.println("3. Reefer Truck");
-                System.out.println("4. Tanker Truck");
-                System.out.println("5. Go back");
-                System.out.print("Your option: ");
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception e) {
-                System.out.println("Please choose a valid option");
-            }
-
-            //Ship
-            if (choice == 1) {
-                String vehicleID;
-                do {
-                    try {
-                        System.out.println("Please enter the vehicle ID by the format 's-vehicleID': ");
-                        vehicleID = scanner.nextLine();
-
-                        if (!vehicleID.matches("s-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 's-<integer>'.");
-                        } else {
-                            if (!vehicleIDs.contains(vehicleID)) {
-                                vehicleIDs.add(vehicleID);
-                                break;
-                            } else {
-                                System.out.println("The ID is already existed!");
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                System.out.println("Please enter your vehicle name:");
-                String vehicleName = scanner.nextLine();
-
-                double vehicleCurrentWeight = 0;
-
-                double capacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle capacity:");
-                        capacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-
-                double fuelCapacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle fuel capacity:");
-                        fuelCapacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-                new Ship(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
-                System.out.println("New vehicle has been added");
-                break;
-            }
-
-            //Truck
-            else if (choice == 2) {
-                String vehicleID;
-                do {
-                    try {
-                        System.out.println("Please enter the vehicle ID by the format 't-vehicleID': ");
-                        vehicleID = scanner.nextLine();
-
-                        if (!vehicleID.matches("t-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 't-<integer>'.");
-                        } else {
-                            if (!vehicleIDs.contains(vehicleID)) {
-                                vehicleIDs.add(vehicleID);
-                                break;
-                            } else {
-                                System.out.println("The ID is already existed!");
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                System.out.println("Please enter your vehicle name:");
-                String vehicleName = scanner.nextLine();
-
-                double vehicleCurrentWeight = 0;
-
-                double capacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle capacity:");
-                        capacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                double fuelCapacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle fuel capacity:");
-                        fuelCapacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-                new Truck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
-                System.out.println("New vehicle has been added");
-                break;
-            }
-
-            //Reefer Truck
-            else if (choice == 3) {
-                String vehicleID;
-                do {
-                    try {
-                        System.out.println("Please enter the vehicle ID by the format 'rt-vehicleID': ");
-                        vehicleID = scanner.nextLine();
-
-                        if (!vehicleID.matches("rt-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 'rt-<integer>'.");
-                        } else {
-                            if (!vehicleIDs.contains(vehicleID)) {
-                                vehicleIDs.add(vehicleID);
-                                break;
-                            } else {
-                                System.out.println("The ID is already existed!");
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                System.out.println("Please enter your vehicle name:");
-                String vehicleName = scanner.nextLine();
-
-                double vehicleCurrentWeight = 0;
-
-                double capacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle capacity:");
-                        capacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                double fuelCapacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle fuel capacity:");
-                        fuelCapacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-                new ReeferTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
-                System.out.println("New vehicle has been added");
-                break;
-            }
-
-            //Tanker Truck
-            else if (choice == 4) {
-                String vehicleID;
-                do {
-                    try {
-                        System.out.println("Please enter the vehicle ID by the format 'tt-vehicleID': ");
-                        vehicleID = scanner.nextLine();
-
-                        if (!vehicleID.matches("tt-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 'tt-<integer>'.");
-                        } else {
-                            if (!vehicleIDs.contains(vehicleID)) {
-                                vehicleIDs.add(vehicleID);
-                                break;
-                            } else {
-                                System.out.println("The ID is already existed!");
-                            }
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-
-                System.out.println("Please enter your vehicle name:");
-                String vehicleName = scanner.nextLine();
-
-                double vehicleCurrentWeight = 0;
-
-                double capacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle capacity:");
-                        capacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Please enter a valid value");
-                    }
-                } while (true);
-
-                double fuelCapacity = 0;
-                do {
-                    try {
-                        System.out.println("Please enter your vehicle fuel capacity:");
-                        fuelCapacity = Double.parseDouble(scanner.nextLine());
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("Invalid value");
-                    }
-                } while (true);
-                new TankerTruck(vehicleID, vehicleName, vehicleCurrentWeight, fuelCapacity, port);
-                System.out.println("New vehicle has been added");
-                break;
-            } else if (choice == 5) {
-                break;
-            } else {
-                System.out.println("Please enter from 1-5");
-            }
-        } while (true);
-    }
-    public static void searchVehicle(Port port) {
-        int choice = -1;
-        do {
-            try {
-                decorativeLine();
-                System.out.println();
-                System.out.println("1. By ID");
-                System.out.println("2. By Name");
-                System.out.println("3. Go back");
-                System.out.print("Your option: ");
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-
-            if (choice == 1) {
-                System.out.println("Please enter the ID of the vehicle that you want to find");
-                String vehicleID = scanner.nextLine();
-                decorativeLine();
-                System.out.println();
-                port.searchVehicleById(vehicleID);
-                break;
-            } else if (choice == 2) {
-                System.out.println("Please enter the name of the vehicle that you want to find");
-                String vehicleName = scanner.nextLine();
-                decorativeLine();
-                System.out.println();
-                port.searchVehicleByName(vehicleName);
-                break;
-            } else if (choice == 3) {
-                break;
-            } else {
-                System.out.println("Please enter from 1-3");
-            }
-        } while (true);
-    }
-    public static void addPort(List<String> portIDs) {
-        String portID;
-        do {
-            try {
-                System.out.println("Please enter the port ID by the format 'p-portID': ");
-                portID = scanner.nextLine();
-
-                if (!portID.matches("p-\\d+")) {
-                    System.out.println("Invalid ID. The ID must be in the format 'p-<integer>'.");
-                } else {
-                    if (!portIDs.contains(portID)) {
-                        portIDs.add(portID);
-                        break;
-                    } else {
-                        System.out.println("The ID is already existed!");
-                    }
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-
-        System.out.println("Please enter your port name:");
-        String portName = scanner.nextLine();
-
-        double portLatitude = 0;
-        do {
-            try {
-                System.out.println("Please enter your port latitude:");
-                portLatitude = Double.parseDouble(scanner.nextLine());
-                break;
-            } catch (Exception e) {
-                System.out.println("Please enter a valid value");
-            }
-        } while (true);
-
-        double portLongtitude = 0;
-        do {
-            try {
-                System.out.println("Please enter your port longtitude:");
-                portLongtitude = Double.parseDouble(scanner.nextLine());
-                break;
-            } catch (Exception e) {
-                System.out.println("Please enter a valid value");
-            }
-        } while (true);
-
-        double portCapacity = 0;
-        do {
-            try {
-                System.out.println("Please enter your port capacity:");
-                portCapacity = Double.parseDouble(scanner.nextLine());
-                break;
-            } catch (Exception e) {
-                System.out.println("Please enter a valid value");
-            }
-        } while (true);
-
-        double portCurrentWeight = 0;
-
-        boolean portLandingAbility;
-        do {
-            try {
-                System.out.println("Please enter your port landing ability (true/false):");
-                portLandingAbility = scanner.nextBoolean();
-                scanner.nextLine();
-                break;
-            } catch (Exception e) {
-                System.out.println("Please enter a valid value");
-                scanner.nextLine();
-            }
-        } while (true);
-        portList.add(new Port(portID,portName,portLatitude,portLongtitude,portCapacity,portCurrentWeight,portLandingAbility));
-        System.out.println("New port has been added");
-    }
-    public static void removePort(List<String> portIDs) {
-        boolean running5 = true;
-        do {
-            Iterator<Port> iterator = portList.iterator();
-            for (Port port : portList) {
-                System.out.println(port.getPortID() + ". " + port.getName());
-            }
-            System.out.println("0. Go back");
-            System.out.println("Enter the port ID that you want to remove:");
-            String portRemoved = scanner.nextLine();
-            if (portRemoved.equals("0")) {
-                running5 = false;
-            }
-            boolean found = false;
-            while (iterator.hasNext()) {
-                Port port = iterator.next();
-                if (port.getPortID().equals(portRemoved)) {
-                    iterator.remove();
-                    portIDs.remove(portRemoved);
-                    System.out.println("Port is removed");
-                    found = true;
-                    running5 = false;
-                    break;
-                }
-            }
-            if (!found) {
-                System.out.println("Port does not exist");
-            }
-        } while (running5);
-    }
-    public static void addUser(List<String> userNameList, List<String> usedPortsID){
-        String userName;
-        do {
-            decorativeLine();
-            System.out.println();
-            try {
-                System.out.println("Please enter a new user name: ");
-                userName = scanner.nextLine();
-                if (!userNameList.contains(userName)) {
-                    userNameList.add(userName);
-                    break;
-                } else {
-                    System.out.println("This user name is already existed!");
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-
-        String password;
-        do{
-            try{
-                System.out.println("Please enter a password for this user: ");
-                password = scanner.nextLine();
-                break;
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while(true);
-
-        int portID = -1;
-        do {
-            for (int i = 0; i < portList.size(); i++) {
-                System.out.println(i + ". " + portList.get(i).getName());
-            }
-            try {
-                System.out.println("Please choose the port to assign this user to: ");
-                portID = Integer.parseInt(scanner.nextLine());
-
-                if (portID >= 0 && portID < portList.size() && !usedPortsID.contains(portList.get(portID).getPortID())) {
-                    usedPortsID.add(portList.get(portID).getPortID());
-                    break;
-                } else {
-                    System.out.println("Please enter a valid option");
-                }
-            } catch (Exception e) {
-                System.out.println("Invalid value");
-            }
-        } while (true);
-
-        userList.add(new PortManager(userName, password, portList.get(portID)));
-        usedUsername.add(userName);
-    }
     public static int portOptionsMenu(int choice) {
         //Menu
         decorativeLine();
@@ -904,105 +313,138 @@ public class AdminInterface {
         }
         return choice;
     }
-    public static void loadContainer(Port port, List<String> containerIDs) {
+    public static void allTripInGivenDay () {
+        for (int i = 0; i < portList.size(); i++) {
+            tripList.addAll(portList.get(i).getTrips());
+        }
         do {
-            List<String> portVehicleIDs = new ArrayList<>();
-            for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
-                portVehicleIDs.add(vehicle.getVehicleID());
-            }
-            System.out.println("0. Go back");
-            System.out.println("Please choose the vehicle ID that you want to load containers to:");
-            String vehicleID = scanner.nextLine();
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                System.out.println("0. Go back");
+                System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
+                String givenDateStr = scanner.nextLine();
 
-            if (vehicleID.equals("0")) {
-                break;
-            } else {
-                for (Vehicle vehicle : port.getVehicles()) {
-                    if (vehicleID.equals(vehicle.getVehicleID())) {
-                        boolean running4 = true;
-                        do {
-                            for (Container container : port.getContainers()) {
-                                System.out.println(container.getContainerID() + ". " + container.getType().getType());
+                if (givenDateStr.equals("0")) {
+                    break;
+                } else {
+                    if (isValidDay(givenDateStr)) {
+                        Date givenDate = dateFormat.parse(givenDateStr);
+                        long givenDateTime = givenDate.getTime();
+                        for (int i = 0; i < tripList.size(); i++) {
+                            if (tripList.get(i).getDepartDate().getTime() > givenDateTime && tripList.get(i).getDepartDate().getTime() < givenDateTime + 86399999) {
+                                System.out.println(tripList.get(i));
                             }
-                            System.out.println("0. Go back");
-                            System.out.println("Enter the container ID you want to load to the vehicle:");
-                            String containerID = scanner.nextLine();
-                            if (containerID.equals("0")) {
-                                break;
-                            } else {
-                                if (!containerIDs.contains(containerID)) {
-                                    System.out.println("The container does not exist");
-                                } else {
-                                    for (Container container : port.getContainers()) {
-                                        if (containerID.equals(container.getContainerID())) {
-                                            if (vehicle.loadContainer(container)) {
-                                                System.out.println("The container is loaded to the vehicle");
-                                                running4 = false;
-                                                break;
-                                            } else {
-                                                System.out.println("This vehicle can not load this container now!");
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        } while (running4);
+                        }
+                    } else {
+                        System.out.println("Invalid date format. Try again.");
                     }
                 }
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Try again.");
             }
         } while (true);
     }
-    public static void unloadContainer(Port port) {
+    public static void allTripFromDayAtoB() {
         do {
-            List<String> portVehicleIDs = new ArrayList<>();
-            for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
-                portVehicleIDs.add(vehicle.getVehicleID());
-            }
-            System.out.println("0. Go back");
-            System.out.println("Please choose the vehicle ID that you want to unload containers from:");
-            String vehicleID = scanner.nextLine();
+            try {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                for (int i = 0; i < portList.size(); i++) {
+                    tripList.addAll(portList.get(i).getTrips());
+                }
+                System.out.println("0. Go back");
+                System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
+                String dayAStr = scanner.nextLine();
 
-            if (vehicleID.equals("0")) {
-                break;
-            } else {
-                for (Vehicle vehicle : port.getVehicles()) {
-                    if (vehicleID.equals(vehicle.getVehicleID())) {
-                        boolean running4 = true;
-                        List<String> vehicleContainersIDs = new ArrayList<>();
-                        do {
-                            for (Container container : vehicle.getContainers()) {
-                                System.out.println(container.getContainerID() + ". " + container.getType().getType());
-                                vehicleContainersIDs.add(container.getContainerID());
+                if (dayAStr.equals("0")) {
+                    break;
+                } else {
+                    System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
+                    String dayBStr = scanner.nextLine();
+                    if (isValidDay(dayAStr) && isValidDay(dayBStr)) {
+                        Date dayA = dateFormat.parse(dayAStr);
+                        Date dayB = dateFormat.parse(dayBStr);
+                        long dayATime = dayA.getTime();
+                        long dayBTime = dayB.getTime();
+                        for (int i = 0; i < tripList.size(); i++) {
+                            if (tripList.get(i).getDepartDate().getTime() > dayATime && tripList.get(i).getDepartDate().getTime() < dayBTime) {
+                                System.out.println(tripList.get(i));
                             }
-                            System.out.println("0. Go back");
-                            System.out.println("Enter the container ID you want to unload from the vehicle:");
-                            String containerID = scanner.nextLine();
-                            if (containerID.equals("0")) {
-                                break;
-                            } else {
-                                if (!vehicleContainersIDs.contains(containerID)) {
-                                    System.out.println("The container does not exist");
-                                } else {
-                                    for (Container container : vehicle.getContainers()) {
-                                        if (containerID.equals(container.getContainerID())) {
-                                            if (vehicle.unloadContainer(container)) {
-                                                System.out.println("The container is unloaded from the vehicle");
-                                                running4 = false;
-                                                break;
-                                            } else {
-                                                System.out.println("This container can not be unloaded from this vehicle!");
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        } while (running4);
+                        }
+                    } else {
+                        System.out.println("Invalid date format. Try again.");
                     }
                 }
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Try again.");
             }
         } while (true);
+    }
+    public static void statisticsMenu() {
+        boolean running = true;
+        do {
+            int choice = -1;
+            System.out.println();
+            System.out.println("1. Display all ports");
+            System.out.println("2. Display all containers");
+            System.out.println("3. Display all vehicles");
+            System.out.println("4. Display all the trips in a given day");
+            System.out.println("5. Display all the trips from day A to day B");
+            System.out.println("6. Fuel consumption within a day");
+            System.out.println("7. Calculate how much weight of each type of all containers");
+            System.out.println("0. Go back");
+            try {
+                System.out.print("Your option: ");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Please choose a valid option: ");
+            }
+            switch (choice) {
+                case 1 -> {
+                    for (Port port : portList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(port);
+                    }
+                }
+                case 2 -> {
+                    for (Container container : containerList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(container);
+                    }
+                }
+                case 3 -> {
+                    for (Vehicle vehicle : shipList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(vehicle);
+                    }
+                    for (Vehicle vehicle : truckList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(vehicle);
+                    }
+                    for (Vehicle vehicle : reeferTruckList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(vehicle);
+                    }
+                    for (Vehicle vehicle : tankerTruckList) {
+                        decorativeLine();
+                        System.out.println();
+                        System.out.println(vehicle);
+                    }
+                }
+                case 4 -> allTripInGivenDay();
+                case 5 -> allTripFromDayAtoB();
+                case 6 -> {
+                }
+                case 7 -> {
+                }
+                case 0 -> running = false;
+                default -> System.out.println("Please choose from 1-4");
+            }
+        } while (running);
     }
     public static void portOptions(List<String> portIDs, List<String> vehicleIDs, String portOption, List<String> containerIDs, Port port) {
         boolean running3 = true;
@@ -1010,24 +452,22 @@ public class AdminInterface {
         do {
             choice = portOptionsMenu(choice);
             switch (choice) {
-                //Caculate distance
-                case 1 -> calculateDistance(port, portIDs, portOption);
-
+                //Calculate distance
+                case 1 -> Port.calculateDistance(port, portOption);
                 //Add container
-                case 2 -> addContainer(containerIDs, port);
-
+                case 2 -> Port.addContainer(port);
                 //Remove container
-                case 3 -> removeContainer(port);
-
+                case 3 -> {
+                    Port.removeContainer(port);
+                }
                 //Add vehicles
-                case 4 -> addVehicle(vehicleIDs, port);
-
+                case 4 -> Port.addVehicle(vehicleIDs, port);
                 //Remove Vehicle
-                case 5 -> removeVehicle(port);
-
+                case 5 -> {
+                    Port.removeVehicle(port);
+                }
                 //Search vehicle
-                case 6 -> searchVehicle(port);
-
+                case 6 -> Port.searchVehicle(port);
                 //Search container
                 case 7 -> {
                     System.out.println("Please enter the id of the container that you want to search:");
@@ -1035,23 +475,18 @@ public class AdminInterface {
                     port.searchContainer(searchContainerID);
                 }
                 //Load
-                case 8 -> loadContainer(port, containerIDs);
-
+                case 8 -> Port.loadContainer(port, containerIDs);
                 //Unload container
-                case 9 -> unloadContainer(port);
-
+                case 9 -> Port.unloadContainer(port);
                 //Display vehicles
                 case 10 -> {
                     port.displayShips();
                     port.displayTrucks();
                 }
-
                 //Display containers
                 case 11 -> System.out.println(port.getContainers());
-
                 //Display trips
                 case 12 -> System.out.println(port.getTrips());
-
                 //Go back
                 case 0 -> running3 = false;
                 default -> System.out.println("Please choose from 1-13");
@@ -1562,169 +997,10 @@ public class AdminInterface {
                     case 2 -> addPort(portIDs);
 
                     //Remove port
-                    case 3 -> removePort(portIDs);
-                    case 4 -> {
-                        boolean running3 = true;
-                        choice = -1;
-                        do {
-                            System.out.println("1. Ship");
-                            System.out.println("2. Truck");
-                            System.out.println("3. Reefer Truck");
-                            System.out.println("4. Tanker Truck");
-                            System.out.println("0. Go back");
-                            try {
-                                System.out.println("Please choose the type vehicle that you want to do the transportation:");
-                                choice = Integer.parseInt(scanner.nextLine());
-                            } catch (Exception e) {
-                                System.out.println("Invalid option");
-                            }
-
-                            switch (choice) {
-                                case 1 -> transportationShip();
-                                case 2 -> transportationTruck();
-                                case 3 -> transportationReeferTruck();
-                                case 4 -> transportationTankerTruck();
-                                case 0 -> running3 = false;
-                                default -> System.out.println("Please choose from 1-5");
-                            }
-                        } while (running3);
-                    }
-                    case 5 -> {}
-                    case 6 -> {
-                        boolean running4 = true;
-                        choice = -1;
-                        do {
-                            System.out.println();
-                            System.out.println("1. Display all ports");
-                            System.out.println("2. Display all containers");
-                            System.out.println("3. Display all vehicles");
-                            System.out.println("4. Display all the trips in a given day");
-                            System.out.println("5. Display all the trips from day A to day B");
-                            System.out.println("6. Fuel consumption within a day");
-                            System.out.println("7. Calculate how much weight of each type of all containers");
-                            System.out.println("0. Go back");
-                            try {
-                                System.out.print("Your option: ");
-                                choice = Integer.parseInt(scanner.nextLine());
-                            } catch (Exception e) {
-                                System.out.println("Please choose a valid option: ");
-                            }
-                            switch (choice) {
-                                case 1 -> {
-                                    for (Port port : portList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(port);
-                                    }
-                                }
-                                case 2 -> {
-                                    for (Container container : containerList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(container);
-                                    }
-                                }
-                                case 3 -> {
-                                    for (Vehicle vehicle : shipList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(vehicle);
-                                    }
-                                    for (Vehicle vehicle : truckList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(vehicle);
-                                    }
-                                    for (Vehicle vehicle : reeferTruckList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(vehicle);
-                                    }
-                                    for (Vehicle vehicle : tankerTruckList) {
-                                        decorativeLine();
-                                        System.out.println();
-                                        System.out.println(vehicle);
-                                    }
-                                }
-                                case 4 -> {
-                                    do {
-                                        try {
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                            for (int i = 0; i < portList.size(); i++) {
-                                                tripList.addAll(portList.get(i).getTrips());
-                                            }
-
-                                            System.out.println("0. Go back");
-                                            System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
-                                            String givenDateStr = scanner.nextLine();
-
-                                            if (givenDateStr.equals("0")) {
-                                                break;
-                                            } else {
-                                                if (isValidDay(givenDateStr)) {
-                                                    Date givenDate = dateFormat.parse(givenDateStr);
-                                                    long givenDateTime = givenDate.getTime();
-                                                    for (int i = 0; i < tripList.size(); i++) {
-                                                        if (tripList.get(i).getDepartDate().getTime() > givenDateTime && tripList.get(i).getDepartDate().getTime() < givenDateTime + 86399999) {
-                                                            System.out.println(tripList.get(i));
-                                                        }
-                                                    }
-                                                } else {
-                                                    System.out.println("Invalid date format. Try again.");
-                                                }
-                                            }
-                                        } catch (ParseException e) {
-                                            System.out.println("Invalid date format. Try again.");
-                                        }
-                                    } while (true);
-                                }
-                                case 5 -> {
-                                    do {
-                                        try {
-                                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                                            for (int i = 0; i < portList.size(); i++) {
-                                                tripList.addAll(portList.get(i).getTrips());
-                                            }
-
-                                            System.out.println("0. Go back");
-                                            System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
-                                            String dayAStr = scanner.nextLine();
-
-                                            if (dayAStr.equals("0")) {
-                                                break;
-                                            } else {
-                                                System.out.println("Please enter the date that you want to display all the trip (dd/MM/yyyy)");
-                                                String dayBStr = scanner.nextLine();
-                                                if (isValidDay(dayAStr) && isValidDay(dayBStr)) {
-                                                    Date dayA = dateFormat.parse(dayAStr);
-                                                    Date dayB = dateFormat.parse(dayBStr);
-                                                    long dayATime = dayA.getTime();
-                                                    long dayBTime = dayB.getTime();
-                                                    for (int i = 0; i < tripList.size(); i++) {
-                                                        if (tripList.get(i).getDepartDate().getTime() > dayATime && tripList.get(i).getDepartDate().getTime() < dayBTime) {
-                                                            System.out.println(tripList.get(i));
-                                                        }
-                                                    }
-                                                } else {
-                                                    System.out.println("Invalid date format. Try again.");
-                                                }
-                                            }
-                                        } catch (ParseException e) {
-                                            System.out.println("Invalid date format. Try again.");
-                                        }
-                                    } while (true);
-                                }
-                                case 6 -> {
-
-                                }
-                                case 7 -> {
-
-                                }
-                                case 0 -> running4 = false;
-                                default -> System.out.println("Please choose from 1-4");
-                            }
-                        } while (running4);
-                    }
+                    case 3 -> Port.removePort();
+                    case 4 -> transportationMenu();
+                    case 5 -> User.addUser(usedUsername, usedPortID);
+                    case 6 -> statisticsMenu();
                     case 7 ->{
                         boolean running5 = true;
 
