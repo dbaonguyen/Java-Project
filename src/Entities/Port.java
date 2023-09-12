@@ -108,9 +108,6 @@ public class Port implements IPort, Serializable {
     public List<Vehicle> getVehicles() {
         return vehicles;
     }
-
-
-
     public boolean isLandingAbility() {
         return landingAbility;
     }
@@ -203,7 +200,6 @@ public class Port implements IPort, Serializable {
             try {
                 System.out.println("Please choose the container type number 0-4");
                 typeID = Integer.parseInt(scanner.nextLine());
-
                 if (typeID >= 0 && typeID < AdminInterface.typeList.size()) {
                     break;
                 } else {
@@ -213,7 +209,6 @@ public class Port implements IPort, Serializable {
                 System.out.println("Invalid value");
             }
         } while (true);
-
         do {
             System.out.print("Do you want to create this container? (y/n): ");
             String confirmation = scanner.nextLine();
@@ -230,7 +225,6 @@ public class Port implements IPort, Serializable {
                 System.out.println("Please enter y or n for confirmation!");
             }
         } while (true);
-
     }
     public static void removeContainer(Port port) {
         decorativeLine();
