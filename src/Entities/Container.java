@@ -40,7 +40,6 @@ public class Container implements Serializable {
         return this.containerType.getShipConsume();
     }
 
-
     @Override
     public String toString() {
         return "Container Information:" +

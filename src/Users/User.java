@@ -35,7 +35,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    public static void addUser(List<String> userNameList, List<String> usedPortsID){
+    public static void addUser(){
         String userName;
         do {
             AdminInterface.decorativeLine();
@@ -43,8 +43,8 @@ public class User implements Serializable {
             try {
                 System.out.println("Please enter a new user name: ");
                 userName = scanner.nextLine();
-                if (!userNameList.contains(userName)) {
-                    userNameList.add(userName);
+                if (!AdminInterface.usedUsername.contains(userName)) {
+                    AdminInterface.usedUsername.add(userName);
                     break;
                 } else {
                     System.out.println("This user name is already existed!");
@@ -64,7 +64,7 @@ public class User implements Serializable {
                 System.out.println("Invalid value");
             }
         } while(true);
-
+        boolean run = true;
         do {
             for (Port port : AdminInterface.portList) {
                 System.out.println(port.getPortID() + ". " + port.getName());
@@ -86,17 +86,14 @@ public class User implements Serializable {
                                 AdminInterface.usedUsername.add(userName);
                                 AdminInterface.usedPortID.add(portOption);
                                 System.out.println("A new port manager has been created");
+                                run = false;
                             } else {
-                                PortManager newPortManager = new PortManager(userName, password, port);
-                                newPortManager.setPortManaged(null);
-                                AdminInterface.userList.add(newPortManager);
-                                System.out.println("Failed to add a new manager to this port. The port for this user will be set to null");
+                                System.out.println("This port has been managed by another manager. Please enter another port.");
                             }
                         }
                     }
-                    break;
                 }
             }
-        } while (true);
+        } while (run);
     }
 }

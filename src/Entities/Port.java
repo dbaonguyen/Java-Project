@@ -167,7 +167,6 @@ public class Port implements IPort, Serializable {
                     System.out.println("Invalid ID. The ID must be in the format 'c-<integer>'.");
                 } else {
                     if (!AdminInterface.containerIDs.contains(containerID)) {
-                        AdminInterface.containerIDs.add(containerID);
                         break;
                     } else {
                         System.out.println("The ID is already existed!");
@@ -216,6 +215,7 @@ public class Port implements IPort, Serializable {
                 Container newContainer = new Container(containerID, containerWeight, AdminInterface.typeList.get(typeID));
                 AdminInterface.containerList.add(newContainer);
                 port.addContainer(newContainer);
+                AdminInterface.containerIDs.add(containerID);
                 break;
             } else if (confirmation.equals("n")) {
                 AdminInterface.containerIDs.remove(containerID);

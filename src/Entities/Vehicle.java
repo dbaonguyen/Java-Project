@@ -232,4 +232,9 @@ public class Vehicle implements IVehicle, Serializable {
     public void setStatus(boolean status) {
         this.status = status;
     }
+    public void containerIDs() {
+        for (Container container: containers) {
+            System.out.print(container.getContainerID() + "\t");
+        }
+    }
 }

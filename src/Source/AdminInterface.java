@@ -553,11 +553,9 @@ public class AdminInterface {
         boolean running3 = true;
         int choice = -1;
         do {
-            System.out.println("1. Ship");
-            System.out.println("2. Truck");
-            System.out.println("3. Reefer Truck");
-            System.out.println("4. Tanker Truck");
-            System.out.println("0. Go back");
+            System.out.println("1. Ship \t\t\t| \t\t\t2. Truck");
+            System.out.println("3. Reefer Truck \t\t| \t\t4. Tanker Truck");
+            System.out.println("--------------------0. Go back--------------------");
             try {
                 System.out.println("Please choose the type vehicle that you want to do the transportation:");
                 choice = Integer.parseInt(scanner.nextLine());
@@ -611,7 +609,7 @@ public class AdminInterface {
                     //Remove port
                     case 3 -> Port.removePort();
                     case 4 -> transportationMenu();
-                    case 5 -> User.addUser(usedUsername, usedPortID);
+                    case 5 -> User.addUser();
                     case 6 -> statisticsMenu();
                     case 7 -> modificationMenu();
                     case 8 -> displayNotification();
