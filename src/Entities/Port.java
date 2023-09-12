@@ -679,7 +679,9 @@ public class Port implements IPort, Serializable {
     public static void unloadContainer(Port port) {
         do {
             for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                System.out.print(vehicle.getVehicleID() + " | " + vehicle.getName() + " | containers: ");
+                vehicle.containerIDs();
+                System.out.println();
             }
             System.out.println("0. Go back");
             System.out.println("Please choose the vehicle ID that you want to unload containers from:");

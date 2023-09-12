@@ -192,22 +192,22 @@ public class AdminInterface {
         shipList.add(ship4);
         shipList.add(ship5);
         // Create ReeferTrucks
-        ReeferTruck reeferTruck1 = new ReeferTruck("rf-001", "ReeferTruck 1", 14000, 250, port2,true);
-        ReeferTruck reeferTruck2 = new ReeferTruck("rf-002", "ReeferTruck 2", 15000, 270, port1,true);
-        ReeferTruck reeferTruck3 = new ReeferTruck("rf-003", "ReeferTruck 3", 14500, 260, port5,true);
-        ReeferTruck reeferTruck4 = new ReeferTruck("rf-004", "ReeferTruck 4", 14300, 255, port1,true);
-        ReeferTruck reeferTruck5 = new ReeferTruck("rf-005", "ReeferTruck 5", 14700, 265, port3,true);
+        ReeferTruck reeferTruck1 = new ReeferTruck("tr-001", "ReeferTruck 1", 14000, 250, port2,true);
+        ReeferTruck reeferTruck2 = new ReeferTruck("tr-002", "ReeferTruck 2", 15000, 270, port1,true);
+        ReeferTruck reeferTruck3 = new ReeferTruck("tr-003", "ReeferTruck 3", 14500, 260, port5,true);
+        ReeferTruck reeferTruck4 = new ReeferTruck("tr-004", "ReeferTruck 4", 14300, 255, port1,true);
+        ReeferTruck reeferTruck5 = new ReeferTruck("tr-005", "ReeferTruck 5", 14700, 265, port3,true);
         reeferTruckList.add(reeferTruck1);
         reeferTruckList.add(reeferTruck2);
         reeferTruckList.add(reeferTruck3);
         reeferTruckList.add(reeferTruck4);
         reeferTruckList.add(reeferTruck5);
         // Create TankerTrucks
-        TankerTruck tankerTruck1 = new TankerTruck("tt-001", "TankerTruck 1", 16000, 300, port3,true);
-        TankerTruck tankerTruck2 = new TankerTruck("tt-002", "TankerTruck 2", 17000, 320, port2,true);
-        TankerTruck tankerTruck3 = new TankerTruck("tt-003", "TankerTruck 3", 16500, 310, port2,true);
-        TankerTruck tankerTruck4 = new TankerTruck("tt-004", "TankerTruck 4", 16300, 305, port1,true);
-        TankerTruck tankerTruck5 = new TankerTruck("tt-005", "TankerTruck 5", 16700, 315, port5,true);
+        TankerTruck tankerTruck1 = new TankerTruck("tr-001", "TankerTruck 1", 16000, 300, port3,true);
+        TankerTruck tankerTruck2 = new TankerTruck("tr-002", "TankerTruck 2", 17000, 320, port2,true);
+        TankerTruck tankerTruck3 = new TankerTruck("tr-003", "TankerTruck 3", 16500, 310, port2,true);
+        TankerTruck tankerTruck4 = new TankerTruck("tr-004", "TankerTruck 4", 16300, 305, port1,true);
+        TankerTruck tankerTruck5 = new TankerTruck("tr-005", "TankerTruck 5", 16700, 315, port5,true);
         tankerTruckList.add(tankerTruck1);
         tankerTruckList.add(tankerTruck2);
         tankerTruckList.add(tankerTruck3);
@@ -250,7 +250,6 @@ public class AdminInterface {
             System.out.print("*");
         }
     }
-
     public static int login() {
         int choice = -1;
         System.out.println("1. Login");
@@ -408,6 +407,58 @@ public class AdminInterface {
                 case 6 -> {
                 }
                 case 7 -> {
+                    boolean running2 = true;
+                    do {
+                        for (int i = 1; i < typeList.size() + 1; i++) {
+                            System.out.println(i + ". " + typeList.get(i-1).getType());
+                        }
+                        choice = -1;
+                        try {
+                            System.out.println("0. Go back");
+                            System.out.println("Enter the type of container that you want to get weight of: ");
+                            choice = Integer.parseInt(scanner.nextLine());
+                        } catch (Exception e) {
+                            System.out.println();
+                        }
+                        double total = 0;
+                        switch (choice) {
+                            case 1 -> {
+                                for (Port port : portList) {
+                                    total += port.getWeightOfContainerType(typeList.get(0));
+                                }
+                                System.out.println("The total weight of this type of container is: " + total + " kg");
+                            }
+                            case 2 -> {
+                                for (Port port : portList) {
+                                    total += port.getWeightOfContainerType(typeList.get(1));
+                                }
+                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                            }
+                            case 3 -> {
+                                for (Port port : portList) {
+                                    total += port.getWeightOfContainerType(typeList.get(2));
+                                }
+                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                            }
+                            case 4 -> {
+                                for (Port port : portList) {
+                                    total += port.getWeightOfContainerType(typeList.get(3));
+                                }
+                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                            }
+
+                            case 5 -> {
+                                for (Port port : portList) {
+                                    total += port.getWeightOfContainerType(typeList.get(4));
+                                }
+                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                            }
+                            case 0 -> running2 = false;
+
+                            default ->
+                                System.out.println("Invalid option");
+                        }
+                    } while (running2);
                 }
                 case 0 -> running = false;
                 default -> System.out.println("Please choose from 1-4");
@@ -484,7 +535,6 @@ public class AdminInterface {
             }
         } while (true);
     }
-
     public static void modificationMenu() {
         boolean running = true;
         do {
@@ -579,8 +629,6 @@ public class AdminInterface {
             System.out.println(notification);
         }
     }
-
-
     public static String loginValidation () {
         System.out.print("Enter your username: ");
         String username = scanner.nextLine();

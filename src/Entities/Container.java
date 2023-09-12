@@ -48,5 +48,4 @@ public class Container implements Serializable {
                 "\nWeight: " + weight + " kg" +
                 "\nContainer Type: " + containerType.getType();
     }
-
 }
