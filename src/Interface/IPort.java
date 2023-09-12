@@ -26,6 +26,7 @@ public interface IPort {
 
     public void searchVehicleByName(String name);
     public void addTrip(Trip trip);
+    public void removeTrip(Trip trip);
 
     public void displayTrip(Date date);
 

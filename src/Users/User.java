@@ -89,8 +89,8 @@ public class User implements Serializable {
                             } else {
                                 PortManager newPortManager = new PortManager(userName, password, port);
                                 newPortManager.setPortManaged(null);
+                                AdminInterface.userList.add(newPortManager);
                                 System.out.println("Failed to add a new manager to this port. The port for this user will be set to null");
-                                System.out.println(newPortManager);
                             }
                         }
                     }

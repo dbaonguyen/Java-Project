@@ -5,8 +5,8 @@ import java.util.*;
 public class Truck extends Vehicle implements Serializable {
     private static final long serialVersionUID = -483225685009908350L;
 
-    public Truck(String vehicleID, String name, double capacity, double fuelCapacity, Port port) {
-        super(vehicleID, name, capacity, fuelCapacity, port);
+    public Truck(String vehicleID, String name, double capacity, double fuelCapacity, Port port, boolean status) {
+        super(vehicleID, name, capacity, fuelCapacity, port, status);
 
     }
 

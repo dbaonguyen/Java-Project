@@ -1,6 +1,7 @@
 package Entities;
 
 import Interface.IVehicle;
+import Source.AdminInterface;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ public class Vehicle implements IVehicle, Serializable {
     private double capacity;
     private double fuelCapacity;
     private Port port;
+    private boolean status;
     private ArrayList<Container> containers = new ArrayList<>();
     private double fuelConsumption;
 
@@ -28,9 +30,10 @@ public class Vehicle implements IVehicle, Serializable {
         fuelCapacity = 0;
         port = null;
         fuelConsumption = 0;
+        status = true;
     }
 
-    public Vehicle(String vehicleID, String name, double capacity, double fuelCapacity, Port port) {
+    public Vehicle(String vehicleID, String name, double capacity, double fuelCapacity, Port port, boolean status) {
         this.vehicleID = vehicleID;
         this.name = name;
         this.currentWeight = 0;
@@ -38,6 +41,7 @@ public class Vehicle implements IVehicle, Serializable {
         this.capacity = capacity;
         this.fuelCapacity = fuelCapacity;
         this.port = port;
+        this.status = status;
         port.addVehicle(this);
     }
     @Override
@@ -105,6 +109,7 @@ public class Vehicle implements IVehicle, Serializable {
             this.port.removeVehicle(this);
             //make a new trip variable(status = false)
             this.port.addTrip(trip);
+            AdminInterface.tripList.add(trip);
             this.setPort(null);
             return trip;
         }
@@ -113,6 +118,7 @@ public class Vehicle implements IVehicle, Serializable {
 
     @Override
     public void hasArrived(Trip trip){
+        this.status = true;
         //update status in trip
         trip.setStatus(true);
         //add this vehicle to the new port
@@ -213,4 +219,17 @@ public class Vehicle implements IVehicle, Serializable {
         this.fuelConsumption = newConsumption;
     }
 
+    public String getStatus() {
+        if (!status) {
+            return "unavailable";
+        }
+        return "available";
+    }
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }

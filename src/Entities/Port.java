@@ -337,7 +337,7 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this ship? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        AdminInterface.shipList.add(new Ship(vehicleID, vehicleName, capacity, fuelCapacity, port));
+                        AdminInterface.shipList.add(new Ship(vehicleID, vehicleName, capacity, fuelCapacity, port,true));
                         System.out.println("New ship has been added");
                         break;
                     } else if (confirmation.equals("n")) {
@@ -403,7 +403,7 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        AdminInterface.truckList.add(new Truck(vehicleID, vehicleName, capacity, fuelCapacity, port));
+                        AdminInterface.truckList.add(new Truck(vehicleID, vehicleName, capacity, fuelCapacity, port,true));
                         System.out.println("New truck has been added");
                         break;
                     } else if (confirmation.equals("n")) {
@@ -469,7 +469,7 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        AdminInterface.reeferTruckList.add(new ReeferTruck(vehicleID, vehicleName, capacity, fuelCapacity, port));
+                        AdminInterface.reeferTruckList.add(new ReeferTruck(vehicleID, vehicleName, capacity, fuelCapacity, port,true));
                         System.out.println("New vehicle has been added");
                         break;
                     } else if (confirmation.equals("n")) {
@@ -535,7 +535,7 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        AdminInterface.tankerTruckList.add(new TankerTruck(vehicleID, vehicleName, capacity, fuelCapacity, port));
+                        AdminInterface.tankerTruckList.add(new TankerTruck(vehicleID, vehicleName, capacity, fuelCapacity, port,true));
                         System.out.println("New vehicle has been added");
                         break;
                     } else if (confirmation.equals("n")) {
@@ -832,21 +832,40 @@ public class Port implements IPort, Serializable {
             String portRemoved = scanner.nextLine();
             if (portRemoved.equals("0")) {
                 running5 = false;
-            }
-            boolean found = false;
-            while (iterator.hasNext()) {
-                Port port = iterator.next();
-                if (port.getPortID().equals(portRemoved)) {
-                    iterator.remove();
-                    AdminInterface.portIDs.remove(portRemoved);
-                    System.out.println("Port is removed");
-                    found = true;
-                    running5 = false;
+            } else {
+                boolean found = false;
+                for (Port port : AdminInterface.portList) {
+                    if (portRemoved.equals(port.getPortID())) {
+                        for (Vehicle vehicle : port.getVehicles()) {
+                            if (!vehicle.isStatus()) {
+                                System.out.println("Cannot remove this port as there are vehicles with schedules!");
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
                     break;
                 }
-            }
-            if (!found) {
-                System.out.println("Port does not exist");
+                // Check if the port is used as arriveTo in any trip
+                for (Trip trip : AdminInterface.tripList) {
+                    if (trip.getArriveTo().getPortID().equals(portRemoved) && !trip.getStatus()) {
+                        System.out.println("Port cannot be removed as it is used as arriveTo in a trip.");
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    while (iterator.hasNext()) {
+                        Port port = iterator.next();
+                        if (port.getPortID().equals(portRemoved)) {
+                            iterator.remove();
+                            AdminInterface.portIDs.remove(portRemoved);
+                            System.out.println("Port is removed");
+                            break;
+                        }
+                    }
+                }
             }
         } while (running5);
     }
@@ -948,6 +967,9 @@ public class Port implements IPort, Serializable {
     @Override
     public void addTrip(Trip trip) {
         trips.add(trip);
+    }
+    public void removeTrip(Trip trip) {
+        trips.remove(trip);
     }
 
     @Override
