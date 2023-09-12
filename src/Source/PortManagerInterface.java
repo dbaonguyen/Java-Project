@@ -1,3 +1,5 @@
+package Source;
+
 import Entities.*;
 import Users.Admin;
 import Users.PortManager;
@@ -1137,11 +1139,11 @@ public class PortManagerInterface {
 //                                                                //make a new trip without adding to any port
 //
 //                                                                // Schedule departure action
-//                                                                Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
+//                                                                Source.Transportation departureTask = new Source.Transportation(ship, port, departureDate, arrivalDate);
 //                                                                ScheduledFuture<?> departureFuture = scheduler.schedule(departureTask::run, departureDelayMillis, TimeUnit.MILLISECONDS);
 //
 //                                                                // Schedule arrival action
-//                                                                Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
+//                                                                Source.Transportation arrivalTask = new Source.Transportation(ship, port, departureDate, arrivalDate);
 //                                                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(arrivalTask::run2, arrivalDelayMillis, TimeUnit.MILLISECONDS);
 //
 //                                                                break;
@@ -1342,7 +1344,7 @@ public class PortManagerInterface {
                 System.out.println("1. Choose port");
                 System.out.println("2. Add port");
                 System.out.println("3. Remove port");
-                System.out.println("4. Transportation");
+                System.out.println("4. Source.Transportation");
                 System.out.println("5. Register");
                 System.out.println("6. Statistics");
                 System.out.println("7. Go back");

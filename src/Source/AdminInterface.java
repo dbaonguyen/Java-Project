@@ -1,3 +1,5 @@
+package Source;
+
 import Entities.*;
 import Source.Transportation;
 import Users.Admin;
@@ -13,21 +15,24 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
 public class AdminInterface {
     //data load
-    private static List<User> userList = new ArrayList<>();
-    private static List<Port> portList = new ArrayList<>();
-    private static List<Container> containerList = new ArrayList<>();
-    private static List<Ship> shipList = new ArrayList<>();
-    private static List<Truck> truckList = new ArrayList<>();
-    private static List<ReeferTruck> reeferTruckList = new ArrayList<>();
-    private static List<TankerTruck> tankerTruckList = new ArrayList<>();
-    private static List<Type> typeList = new ArrayList<>();
-    private static List<String> usedUsername = new ArrayList<>();
-    private static List<String> usedPortID = new ArrayList<>();
-    private static List<Trip> tripList = new ArrayList<>();
+    public static List<User> userList = new ArrayList<>();
+    public static List<Port> portList = new ArrayList<>();
+    public static List<Container> containerList = new ArrayList<>();
+    public static List<Ship> shipList = new ArrayList<>();
+    public static List<Truck> truckList = new ArrayList<>();
+    public static List<ReeferTruck> reeferTruckList = new ArrayList<>();
+    public static List<TankerTruck> tankerTruckList = new ArrayList<>();
+    public static List<Type> typeList = new ArrayList<>();
+    public static List<String> usedUsername = new ArrayList<>();
+    public static List<String> usedPortID = new ArrayList<>();
+    public static List<Trip> tripList = new ArrayList<>();
     public static List<String> notificationList = new ArrayList<>();
-
+    public static List<String> containerIDs = new ArrayList<>();
+    public static List<String> vehicleIDs = new ArrayList<>();
+    public static List<String> portIDs = new ArrayList<>();
     private static final String DEFAULT_DIRECTORY = "Data";
     private static Scanner scanner = new Scanner(System.in);
     public static void run() {
@@ -213,6 +218,17 @@ public class AdminInterface {
         tankerTruckList.add(tankerTruck3);
         tankerTruckList.add(tankerTruck4);
         tankerTruckList.add(tankerTruck5);
+        for (Port port : portList) {
+            portIDs.add(port.getPortID());
+            for (Container container : port.getContainers()) {
+                containerIDs.add(container.getContainerID());
+            }
+            for (Vehicle vehicle : port.getVehicles()) {
+                vehicleIDs.add(vehicle.getVehicleID());
+            }
+        }
+
+
     }
     public static <T> void writeListToFile(List<T> list, String fileName) {
         String filePath = DEFAULT_DIRECTORY + File.separator + fileName;
@@ -304,7 +320,7 @@ public class AdminInterface {
         System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Unload Container");
         System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Display Trips");
         System.out.println("0. Go Back");
-        System.out.println(notificationList);
+
         try {
             System.out.print("Your option: ");
             choice = Integer.parseInt(scanner.nextLine());
@@ -446,7 +462,7 @@ public class AdminInterface {
             }
         } while (running);
     }
-    public static void portOptions(List<String> portIDs, List<String> vehicleIDs, String portOption, List<String> containerIDs, Port port) {
+    public static void portOptions(String portOption, Port port) {
         boolean running3 = true;
         int choice = 0;
         do {
@@ -493,28 +509,14 @@ public class AdminInterface {
             }
         } while (running3);
     }
-    public static void choosePort(List<String> portIDs) {
-        List<String> containerIDs = new ArrayList<>();
-        List<String> vehicleIDs = new ArrayList<>();
-        for (Port port : portList) {
-            for (Container container : port.getContainers()) {
-                containerIDs.add(container.getContainerID());
-            }
-            for (Vehicle vehicle : port.getVehicles()) {
-                vehicleIDs.add(vehicle.getVehicleID());
-            }
-        }
+    public static void choosePort() {
         do {
-            //Port IDs
             for (Port port : portList) {
                 System.out.println(port.getPortID() + ". " + port.getName());
-                portIDs.add(port.getPortID());
             }
-
             System.out.println("0. Go back");
             System.out.print("Enter the ID of the port above that you want to modify: ");
             String portOption = scanner.nextLine();
-
             if (portOption.equals("0")) {
                 break;
             } else {
@@ -523,7 +525,7 @@ public class AdminInterface {
                 } else {
                     for (Port port : portList) {
                         if (portOption.equals(port.getPortID())) {
-                            portOptions(portIDs, vehicleIDs, portOption, containerIDs, port);
+                            portOptions(portOption, port);
                         }
                     }
                 }
@@ -958,6 +960,32 @@ public class AdminInterface {
             }
         } while (true);
     }
+    public static void transportationMenu() {
+        boolean running3 = true;
+        int choice = -1;
+        do {
+            System.out.println("1. Ship");
+            System.out.println("2. Truck");
+            System.out.println("3. Reefer Truck");
+            System.out.println("4. Tanker Truck");
+            System.out.println("0. Go back");
+            try {
+                System.out.println("Please choose the type vehicle that you want to do the transportation:");
+                choice = Integer.parseInt(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid option");
+            }
+
+            switch (choice) {
+                case 1 -> transportationShip();
+                case 2 -> transportationTruck();
+                case 3 -> transportationReeferTruck();
+                case 4 -> transportationTankerTruck();
+                case 0 -> running3 = false;
+                default -> System.out.println("Please choose from 1-5");
+            }
+        } while (running3);
+    }
     public static void loginMainMenu(String indicator) {
         //validate login
         if (!indicator.equals("invalid")) {
@@ -985,25 +1013,18 @@ public class AdminInterface {
                 }
                 decorativeLine();
                 System.out.println();
-                List<String> portIDs = new ArrayList<>();
-                for (Port port : portList) {
-                    portIDs.add(port.getPortID());
-                }
                 switch (choice) {
                     //Choose port
-                    case 1 -> choosePort(portIDs);
-
+                    case 1 -> choosePort();
                     //Add port
-                    case 2 -> addPort(portIDs);
-
+                    case 2 -> Port.addPort();
                     //Remove port
                     case 3 -> Port.removePort();
                     case 4 -> transportationMenu();
                     case 5 -> User.addUser(usedUsername, usedPortID);
                     case 6 -> statisticsMenu();
                     case 7 ->{
-                        boolean running5 = true;
-
+                        boolean running = true;
                         do {
                             choice = updateMenu(choice);
                             switch (choice){
@@ -1013,13 +1034,15 @@ public class AdminInterface {
                                 case 2 ->{
                                     choosePortToUpdateVehicle(portIDs);
                                 }
-                                case 3 ->{
-                                    choosePortToUpdateContainer(portIDs);
+                                case 3 -> choosePortToUpdateContainer(portIDs);
+
+                                case 4->{
+                                    chooseUserToUpdate(usedUsername);
                                 }
-                                case 0 -> running5 = false;
+                                case 0 -> running = false;
                                 default -> System.out.println("Please choose from 1-4");
                             }
-                        }while (running5);
+                        }while (running);
                     }
                     case 0 -> running2 = false;
                     default -> System.out.println("Please choose from 1-4");
@@ -1137,7 +1160,7 @@ public class AdminInterface {
                             System.out.println("Please enter a valid value");
                         }
                     } while (true);
-                    port.setLongtitude(portLongtitude);
+                    port.setLongitude(portLongtitude);
                     System.out.println("Updated successfully");
                 }
 
@@ -1383,7 +1406,6 @@ public class AdminInterface {
         } while (running3);
     }
     public static void choosePortToUpdateVehicle(List<String> portIDs) {
-
         do {
             //Port IDs
             for (Port port : portList) {
@@ -1410,7 +1432,6 @@ public class AdminInterface {
             }
         } while (true);
     }
-
     public static void containerOptions(Port port){
         decorativeLine();
         System.out.println();
@@ -1445,7 +1466,6 @@ public class AdminInterface {
             }
         } while (running4);
     }
-
     public static void choosePortToUpdateContainer(List<String> portIDs) {
 
         do {
@@ -1474,7 +1494,6 @@ public class AdminInterface {
             }
         } while (true);
     }
-
     public static void portOptionsToUpdateContainer(Port port, Container container)     {
         boolean running3 = true;
         int choice = -1;
@@ -1541,7 +1560,6 @@ public class AdminInterface {
             }
         } while (running3);
     }
-
     public static int portOptionsMenuToUpdateContainer(int choice) {
         //Menu
 
@@ -1557,6 +1575,34 @@ public class AdminInterface {
             System.out.println("Please choose a valid option: ");
         }
         return choice;
+    }
+    public static void chooseUserToUpdate(List<String> usedUsername) {
+
+        do {
+            //Port IDs
+            for (String username : usedUsername) {
+                System.out.println(username);
+
+            }
+
+            System.out.println("0. Go back");
+            System.out.print("Enter the username of the port manager above that you want to modify: ");
+            String option = scanner.nextLine();
+
+            if (option.equals("0")) {
+                break;
+            } else {
+                if (!usedUsername.contains(option)) {
+                    System.out.println("Port does not exist");
+                } else {
+                    for (String username : usedUsername) {
+                        if (option.equals(username)) {
+//                            portOptionsToUpdate(portIDs, port);
+                        }
+                    }
+                }
+            }
+        } while (true);
     }
 
     public static String loginValidation () {
