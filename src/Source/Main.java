@@ -2,6 +2,8 @@ package Source;
 
 public class Main {
     public static void main(String[] args) {
+
+
         AdminInterface.run();
         boolean running = true;
         do {

@@ -1012,12 +1012,16 @@ public class Port implements IPort, Serializable {
 
     @Override
     public double totalFuelUsedInADay(String date) {
+        //get local time
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        //str as local date in string form
         String str = today.format(dtf);
+        //special case: today's amount is not yet saved in history record
         if (str.equals(date)) {
             return this.usedFuel;
         }
+        //search in record
         else {
             for(String history : fuelHistory.keySet()){
                 if(history.equals(date)){
@@ -1032,15 +1036,18 @@ public class Port implements IPort, Serializable {
 
 
     public void addUsedFuel(double newFuel){
+        //get local time
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String str = today.format(dtf);
+        //in case it is still the same day
         if(str.equals(this.currentDate)){
             this.usedFuel += newFuel;
         }
+        //in case a new day has come
         else{
             fuelHistory.put(currentDate, usedFuel);
-            this.currentDate = currentDate;
+            this.currentDate = str;
             this.usedFuel = newFuel;
         }
     }
