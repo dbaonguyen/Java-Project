@@ -1734,6 +1734,9 @@ public class AdminInterface {
                                 case 1 -> {
                                     choosePortToUpdate(portIDs);
                                 }
+                                case 2 ->{
+                                    choosePortToUpdateVehicle(portIDs);
+                                }
                                 case 0 -> running5 = false;
                                 default -> System.out.println("Please choose from 1-4");
                             }
@@ -1928,6 +1931,191 @@ public class AdminInterface {
                     for (Port port : portList) {
                         if (portOption.equals(port.getPortID())) {
                             portOptionsToUpdate(portIDs, port);
+                        }
+                    }
+                }
+            }
+        } while (true);
+    }
+    public static void vehicleOptions(Port port){
+        decorativeLine();
+        System.out.println();
+        boolean running4 = true;
+
+        do {
+
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Enter the vehicle ID that you want to modify");
+            String vehicleChoice = scanner.nextLine();
+
+            if (vehicleChoice.equals("0")) {
+                break;
+            }
+
+
+            Vehicle selectedVehicle = null;
+            for (Vehicle vehicle : port.getVehicles()) {
+                if (vehicleChoice.equals(vehicle.getVehicleID())) {
+                    selectedVehicle = vehicle;
+                    break;
+                }
+            }
+
+            if (selectedVehicle != null) {
+                portOptionsToUpdateVehicle(port, selectedVehicle);
+            } else {
+                System.out.println("The vehicle does not exist");
+            }
+        } while (running4);
+    }
+    public static int portOptionsMenuToUpdateVehicle(int choice) {
+        //Menu
+
+        decorativeLine();
+        System.out.println();
+        System.out.println("1. Update Vehicle ID \t|\t\t2. Update Vehicle name \t\t|\t\t3. Update Vehicle capacity");
+        System.out.println("4. Update Vehicle fuel capacity \t|\t\t0. Go back");
+
+
+        try {
+            System.out.print("Your option: ");
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Please choose a valid option: ");
+        }
+        return choice;
+    }
+    public static void portOptionsToUpdateVehicle(Port port, Vehicle vehicle) {
+        boolean running3 = true;
+        int choice = -1;
+        do {
+            choice = portOptionsMenuToUpdateVehicle(choice);
+            switch (choice) {
+                //Update vehicleID
+                case 1 -> {
+                    String vehicleID;
+
+                    do {
+                        try {
+                            if (vehicle instanceof Ship) {
+                                System.out.println("Please enter the vehicle ID by the format 's-vehicleID': ");
+                                vehicleID = scanner.nextLine();
+
+                                if (!vehicleID.matches("s-\\d+")) {
+                                    System.out.println("Invalid ID. The ID must be in the format 's-<integer>'.");
+                                    continue; // Restart the loop to get a valid ID
+                                }
+                            } else if (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck) {
+                                System.out.println("Please enter the vehicle ID by the format 'tr-vehicleID': ");
+                                vehicleID = scanner.nextLine();
+
+                                if (!vehicleID.matches("tr-\\d+")) {
+                                    System.out.println("Invalid ID. The ID must be in the format 'tr-<integer>'.");
+                                    continue; // Restart the loop to get a valid ID
+                                }
+                            } else {
+
+                                break;
+                            }
+
+                            boolean idExists = false;
+                            for (Vehicle vehicleChoice : port.getVehicles()) {
+                                if (vehicleChoice != vehicle && vehicleChoice.getVehicleID().equals(vehicleID)) {
+                                    idExists = true;
+                                    System.out.println("The ID is already in use!");
+                                    break; // No need to check further, the ID already exists
+                                }
+                            }
+
+                            if (!idExists) {
+                                vehicle.setVehicleID(vehicleID);
+                                break; // Exit the loop since a valid, unique ID has been set
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Invalid value");
+                        }
+                    } while (true);
+
+                }
+
+                //Update vehicle name
+                case 2 -> {
+                    System.out.println("Please enter the new vehicle name:");
+                    String vehicleName = scanner.nextLine();
+                    vehicle.setName(vehicleName);
+                    // Update the vehicle in the port's list
+                    for (Vehicle v : port.getVehicles()) {
+                        if (v.getVehicleID().equals(vehicle.getVehicleID())) {
+                            v.setName(vehicleName);
+                            break;
+                        }
+                    }
+
+                }
+
+                //Update port latitude
+                case 3 -> {
+                    double capacity;
+                    do {
+                        try {
+                            System.out.println("Please enter your vehicle capacity:");
+                            capacity = Double.parseDouble(scanner.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                        }
+                    } while (true);
+                    port.setCapacity(capacity);
+
+                }
+
+                //Update port longitude
+                case 4 -> {
+                    double fuelCapacity;
+                    do {
+                        try {
+                            System.out.println("Please enter your vehicle capacity:");
+                            fuelCapacity = Double.parseDouble(scanner.nextLine());
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("Please enter a valid value");
+                        }
+                    } while (true);
+                    vehicle.setFuelCapacity(fuelCapacity);
+                }
+
+
+                //Exit
+                case 0 -> running3 = false;
+                default -> System.out.println("Please choose from 1-4");
+            }
+        } while (running3);
+    }
+    public static void choosePortToUpdateVehicle(List<String> portIDs) {
+
+        do {
+            //Port IDs
+            for (Port port : portList) {
+                System.out.println(port.getPortID() + ". " + port.getName());
+                portIDs.add(port.getPortID());
+            }
+
+            System.out.println("0. Go back");
+            System.out.print("Enter the ID of the port above that you want to modify: ");
+            String portOption = scanner.nextLine();
+
+            if (portOption.equals("0")) {
+                break;
+            } else {
+                if (!portIDs.contains(portOption)) {
+                    System.out.println("Port does not exist");
+                } else {
+                    for (Port port : portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            vehicleOptions(port);
                         }
                     }
                 }
