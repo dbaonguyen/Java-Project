@@ -199,10 +199,12 @@ public class Port implements IPort, Serializable {
             System.out.print("Do you want to create this container? (y/n): ");
             String confirmation = scanner.nextLine();
             if (confirmation.equals("y")) {
-                port.addContainer(new Container(containerID, containerWeight, AdminInterface.typeList.get(typeID)));
-                System.out.println("New container has been added");
+                Container newContainer = new Container(containerID, containerWeight, AdminInterface.typeList.get(typeID));
+                AdminInterface.containerList.add(newContainer);
+                port.addContainer(newContainer);
                 break;
             } else if (confirmation.equals("n")) {
+                AdminInterface.containerIDs.remove(containerID);
                 System.out.println("The process is cancelled");
                 break;
             } else {
@@ -257,7 +259,7 @@ public class Port implements IPort, Serializable {
                 System.out.println("2. Truck");
                 System.out.println("3. Reefer Truck");
                 System.out.println("4. Tanker Truck");
-                System.out.println("5. Go back");
+                System.out.println("0. Go back");
                 System.out.print("Your option: ");
                 choice = Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
@@ -316,10 +318,11 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this ship? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        new Ship(vehicleID, vehicleName, capacity, fuelCapacity, port);
+                        AdminInterface.shipList.add(new Ship(vehicleID, vehicleName, capacity, fuelCapacity, port));
                         System.out.println("New ship has been added");
                         break;
                     } else if (confirmation.equals("n")) {
+                        vehicleIDs.remove(vehicleID);
                         System.out.println("The process is cancelled");
                         break;
                     } else {
@@ -381,10 +384,11 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        new Truck(vehicleID, vehicleName, capacity, fuelCapacity, port);
+                        AdminInterface.truckList.add(new Truck(vehicleID, vehicleName, capacity, fuelCapacity, port));
                         System.out.println("New truck has been added");
                         break;
                     } else if (confirmation.equals("n")) {
+                        vehicleIDs.remove(vehicleID);
                         System.out.println("The process is cancelled");
                         break;
                     } else {
@@ -446,10 +450,11 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        new ReeferTruck(vehicleID, vehicleName, capacity, fuelCapacity, port);
+                        AdminInterface.reeferTruckList.add(new ReeferTruck(vehicleID, vehicleName, capacity, fuelCapacity, port));
                         System.out.println("New vehicle has been added");
                         break;
                     } else if (confirmation.equals("n")) {
+                        vehicleIDs.remove(vehicleID);
                         System.out.println("The process is cancelled");
                         break;
                     } else {
@@ -464,11 +469,11 @@ public class Port implements IPort, Serializable {
                 String vehicleID;
                 do {
                     try {
-                        System.out.println("Please enter the vehicle ID by the format 'tt-vehicleID': ");
+                        System.out.println("Please enter the vehicle ID by the format 'tr-vehicleID': ");
                         vehicleID = scanner.nextLine();
 
                         if (!vehicleID.matches("tr-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 'tt-<integer>'.");
+                            System.out.println("Invalid ID. The ID must be in the format 'tr-<integer>'.");
                         } else {
                             if (!vehicleIDs.contains(vehicleID)) {
                                 vehicleIDs.add(vehicleID);
@@ -511,10 +516,11 @@ public class Port implements IPort, Serializable {
                     System.out.print("Do you want to create this truck? (y/n): ");
                     String confirmation = scanner.nextLine();
                     if (confirmation.equals("y")) {
-                        new TankerTruck(vehicleID, vehicleName, capacity, fuelCapacity, port);
+                        AdminInterface.tankerTruckList.add(new TankerTruck(vehicleID, vehicleName, capacity, fuelCapacity, port));
                         System.out.println("New vehicle has been added");
                         break;
                     } else if (confirmation.equals("n")) {
+                        vehicleIDs.remove(vehicleID);
                         System.out.println("The process is cancelled");
                         break;
                     } else {
@@ -522,7 +528,7 @@ public class Port implements IPort, Serializable {
                     }
                 } while (true);
                 break;
-            } else if (choice == 5) {
+            } else if (choice == 0) {
                 break;
             } else {
                 System.out.println("Please enter from 1-5");
@@ -788,6 +794,7 @@ public class Port implements IPort, Serializable {
                 break;
             } else if (confirmation.equals("n")) {
                 System.out.println("The process is cancelled");
+                AdminInterface.portIDs.remove(portID);
                 break;
             } else {
                 System.out.println("Please enter y or n for confirmation!");
@@ -840,7 +847,7 @@ public class Port implements IPort, Serializable {
         } else{
             this.containers.add(container);
             this.currentWeight += container.getWeight();
-            System.out.println("Container is added to " + this.getName());
+            System.out.println("New container is added to " + this.getName());
         }
     }
 
