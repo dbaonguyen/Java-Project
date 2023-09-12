@@ -41,6 +41,7 @@ public class Transportation {
         // Print a line at the arrival time
         AdminInterface.notificationList.add(vehicle.getName() + " has arrived at " + destinationPort.getName() + " at " + dateFormat.format(arrivalDate));
         // Call the "has arrived" method
+
     }
     public static void setTransportShip(List<String> shipIDs, String shipID) {
         if (shipIDs.contains(shipID)) {

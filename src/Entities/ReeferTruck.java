@@ -40,8 +40,6 @@ public class ReeferTruck extends Vehicle implements Serializable {
             return super.canMoveToPort(port);
         }
     }
-
-    @Override
     public void moveToPort(Port port){
         if(!this.canMoveToPort(port)){
             System.out.println("The vehicle can not go to this port!");
