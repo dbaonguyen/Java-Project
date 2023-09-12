@@ -1009,7 +1009,7 @@ public class Port implements IPort, Serializable {
     }
 
     @Override
-    public double totalFuel(String date) {
+    public double totalFuelUsedInADay(String date) {
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String str = today.format(dtf);
@@ -1028,9 +1028,7 @@ public class Port implements IPort, Serializable {
         }
     }
 
-    public void displayPortInfo(Port port){
-        System.out.println(port);
-    }
+
     public void addUsedFuel(double newFuel){
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
