@@ -51,7 +51,7 @@ public class AdminInterface {
         usedPortID.add(port3.getPortID());
         usedPortID.add(port4.getPortID());
 
-        PortManager manager1 = new PortManager("1", "2", port1);
+        PortManager manager1 = new PortManager("5", "2", port1);
         PortManager manager2 = new PortManager("2", "2", port2);
         PortManager manager3 = new PortManager("3", "3", port3);
         PortManager manager4 = new PortManager("4", "4", port4);
@@ -1054,8 +1054,7 @@ public class AdminInterface {
         }
     }
     public static int updateMenu(int choice){
-        decorativeLine();
-        System.out.println();
+
         System.out.println("1. Update Port");
         System.out.println("2. Update Vehicle");
         System.out.println("3. Update Container");
@@ -1133,7 +1132,7 @@ public class AdminInterface {
 
                 //Update port latitude
                 case 3 -> {
-                    double portLatitude = 0;
+                    double portLatitude;
                     do {
                         try {
                             System.out.println("Please enter your port latitude:");
@@ -1150,7 +1149,7 @@ public class AdminInterface {
 
                 //Update port longitude
                 case 4 -> {
-                    double portLongtitude = 0;
+                    double portLongtitude;
                     do {
                         try {
                             System.out.println("Please enter your port longtitude:");
@@ -1577,27 +1576,145 @@ public class AdminInterface {
         return choice;
     }
     public static void chooseUserToUpdate(List<String> usedUsername) {
+        decorativeLine();
+        System.out.println();
+        boolean running4 = true;
 
         do {
-            //Port IDs
-            for (String username : usedUsername) {
-                System.out.println(username);
 
+            for (User user : userList) {
+                System.out.println(user.getUsername());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Enter the username of the port manager that you want to modify: ");
+            String userChoice = scanner.nextLine();
+
+            if (userChoice.equals("0")) {
+                break;
+            }
+
+
+            User selectedUser = null;
+            for (User user : userList) {
+                if (userChoice.equals(user.getUsername())) {
+                    selectedUser = user;
+                    break;
+                }
+            }
+
+            if (selectedUser != null) {
+                userOptionsToUpdate(usedUsername, selectedUser);
+            } else {
+                System.out.println("The container does not exist");
+            }
+        } while (running4);
+
+    }
+
+    public static void userOptionsToUpdate(List<String> usedUsername, User user){
+        boolean running3 = true;
+        int choice = -1;
+        do {
+            choice = userOptionsMenuToUpdate(choice);
+            switch (choice) {
+                //Update username
+                case 1 -> {
+                    do{
+                        System.out.println("Enter the new username: ");
+                        String newUsername = scanner.nextLine();
+
+                            if (!usedUsername.contains(newUsername)){
+                                usedUsername.remove(user.getUsername());
+                                user.setUsername(newUsername);
+                                break;
+                            } else{
+                                System.out.println("This user name is already existed!");
+                        }
+                    }while (true);
+                }
+
+                //Update password
+                case 2 -> {
+                    String confirmationPassword;
+                    System.out.println("Enter the new password: ");
+                    String newPassword = scanner.nextLine();
+
+                    do{
+                        System.out.println("Confirm password: ");
+                        confirmationPassword = scanner.nextLine();
+                        if (confirmationPassword.equals(newPassword)){
+                            user.setPassword(newPassword);
+                            break;
+                        } else{
+                            System.out.println("Please reconfirm your password:");
+                        }
+
+                    } while (true);
+                }
+
+                //Update port managed
+                case 3 -> {
+                    choosePortToAssign();
+                }
+
+
+                //Exit
+                case 0 -> running3 = false;
+                default -> System.out.println("Please choose from 1-12");
+            }
+        } while (running3);
+    }
+
+    public static int userOptionsMenuToUpdate(int choice) {
+        //Menu
+        decorativeLine();
+        System.out.println();
+        System.out.println("1. Update username \t|\t\t2. Update password \t\t|\t\t3. Update Port managed");
+        System.out.println("0. Go back");
+
+        try {
+            System.out.print("Your option: ");
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.println("Please choose a valid option: ");
+        }
+        return choice;
+    }
+
+    public static void choosePortToAssign(){
+        do {
+            // Port IDs
+            for (Port port : portList) {
+                System.out.println(port.getPortID() + ". " + port.getName());
             }
 
             System.out.println("0. Go back");
-            System.out.print("Enter the username of the port manager above that you want to modify: ");
-            String option = scanner.nextLine();
+            System.out.print("Enter the ID of the port above that you want to assign: ");
+            String portOption = scanner.nextLine();
 
-            if (option.equals("0")) {
+            if (portOption.equals("0")) {
                 break;
             } else {
-                if (!usedUsername.contains(option)) {
+                if (!portIDs.contains(portOption)) {
                     System.out.println("Port does not exist");
                 } else {
-                    for (String username : usedUsername) {
-                        if (option.equals(username)) {
-//                            portOptionsToUpdate(portIDs, port);
+                    for (Port port : portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            boolean portAssigned = false; // Track if the port has been assigned to any PortManager
+                            for (User user : userList) {
+                                if (user instanceof PortManager) {
+                                    PortManager portManager = (PortManager) user;
+                                    if (portManager.getPortManaged() == null) {
+                                        portManager.setPortManaged(port);
+                                        portAssigned = true;
+                                        break; // Assign the port to the first available PortManager and break
+                                    }
+                                }
+                            }
+
+                            if (!portAssigned) {
+                                System.out.println("All PortManagers are already managing a port.");
+                            }
                         }
                     }
                 }
