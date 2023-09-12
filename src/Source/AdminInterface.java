@@ -62,6 +62,7 @@ public class AdminInterface {
         userList.add(manager3);
         userList.add(manager4);
 
+        usedUsername.add(new Admin().getUsername());
         usedUsername.add(manager1.getUsername());
         usedUsername.add(manager2.getUsername());
         usedUsername.add(manager3.getUsername());

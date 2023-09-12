@@ -22,4 +22,11 @@ public class PortManager extends User implements Serializable {
     public void setPortManaged(Port portManaged) {
         this.portManaged = portManaged;
     }
+
+    @Override
+    public String toString() {
+        return "PortManager{" +
+                "portManaged=" + portManaged +
+                '}';
+    }
 }

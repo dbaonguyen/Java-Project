@@ -3,6 +3,7 @@ package Entities;
 import Interface.IPort;
 import Source.AdminInterface;
 import Users.Admin;
+import Users.PortManager;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class Port implements IPort, Serializable {
     private double currentWeight;
     private double capacity;
     private boolean landingAbility;
+    private PortManager portManager;
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
@@ -31,7 +33,6 @@ public class Port implements IPort, Serializable {
     private double usedFuel;
     private static Scanner scanner = new Scanner(System.in);
     private HashMap<String, Double> fuelHistory = new HashMap<String, Double>();
-    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
     public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
         this.name = name;
@@ -40,6 +41,16 @@ public class Port implements IPort, Serializable {
         this.capacity = capacity;
         this.landingAbility = landingAbility;
         this.currentWeight = currentWeight;
+    }
+    public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight, boolean landingAbility, PortManager portManager) {
+        this.portID = String.valueOf(portID);
+        this.name = name;
+        this.latitude = latitude;
+        this.Longitude = Longitude;
+        this.capacity = capacity;
+        this.landingAbility = landingAbility;
+        this.currentWeight = currentWeight;
+        this.portManager = portManager;
     }
 
     public String getPortID() {
@@ -80,6 +91,14 @@ public class Port implements IPort, Serializable {
 
     public void setCapacity(double capacity) {
         this.capacity = capacity;
+    }
+
+    public PortManager getPortManager() {
+        return portManager;
+    }
+
+    public void setPortManager(PortManager portManager) {
+        this.portManager = portManager;
     }
 
     public List<Container> getContainers() {
