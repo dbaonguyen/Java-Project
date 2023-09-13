@@ -604,12 +604,6 @@ public class updateMethods {
                     } while (true);
                 }
 
-                //Update port managed
-                case 3 -> {
-                    choosePortToAssign();
-                }
-
-
                 //Exit
                 case 0 -> running3 = false;
                 default -> System.out.println("Please choose from 1-12");
@@ -621,7 +615,7 @@ public class updateMethods {
         //Menu
         decorativeLine();
         System.out.println();
-        System.out.println("1. Update username \t|\t\t2. Update password \t\t|\t\t3. Update Port managed");
+        System.out.println("1. Update username \t|\t\t2. Update password");
         System.out.println("0. Go back");
 
         try {
@@ -633,47 +627,6 @@ public class updateMethods {
         return choice;
     }
 
-    public static void choosePortToAssign(){
-        do {
-            // Port IDs
-            for (Port port : AdminInterface.portList) {
-                System.out.println(port.getPortID() + ". " + port.getName());
-            }
 
-            System.out.println("0. Go back");
-            System.out.print("Enter the ID of the port above that you want to assign: ");
-            String portOption = scanner.nextLine();
 
-            if (portOption.equals("0")) {
-                break;
-            } else {
-                if (!AdminInterface.portIDs.contains(portOption)) {
-                    System.out.println("Port does not exist");
-                } else {
-                    for (Port port : AdminInterface.portList) {
-                        if (portOption.equals(port.getPortID())) {
-                            boolean portAssigned = false; // Track if the port has been assigned to any PortManager
-                            for (User user : AdminInterface.userList) {
-                                if (user instanceof PortManager) {
-                                    PortManager portManager = (PortManager) user;
-                                    if (portOption.equals(portManager.getPortManaged().getPortID())) {
-                                        // You can now access portManager's properties and methods
-                                        // For example, you can update the portManaged property here
-                                        portManager.setPortManaged(port);
-                                        portAssigned = true;
-                                        System.out.println("Port assigned to PortManager: " + user.getUsername());
-                                        break;
-
-                                    }
-                                }
-                            }
-                            if (!portAssigned) {
-                                System.out.println("All PortManagers are already managing a port.");
-                            }
-                        }
-                    }
-                }
-            }
-        } while (true);
-    }
 }

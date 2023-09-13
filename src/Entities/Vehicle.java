@@ -124,18 +124,14 @@ public class Vehicle implements IVehicle, Serializable {
         //add this vehicle to the new port
         this.port = trip.getArriveTo();
         trip.getArriveTo().addVehicle(this);
-        this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom());
+        this.currentFuel -= Math.round(this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom()));
     }
 
     @Override
     public void refuel() {
-        if(this.port == null){
-            System.out.println("The vehicle is travelling, can not refuel!");
-        }
-        else{
+
             this.port.addUsedFuel(this.fuelCapacity - this.currentFuel);
             this.currentFuel = this.fuelCapacity;
-        }
     }
 
     @Override

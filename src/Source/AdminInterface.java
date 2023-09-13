@@ -270,7 +270,7 @@ public class AdminInterface {
         System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
         System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Unload Container");
         System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Display Trips");
-        System.out.println("0. Go Back");
+        System.out.println("13. Refuel Vehicles\t|\t\t0. Go back");
 
         try {
             System.out.print("Your option: ");
@@ -415,8 +415,7 @@ public class AdminInterface {
                 }
                 case 5 -> allTripInGivenDay();
                 case 6 -> allTripFromDayAtoB();
-                case 7 -> {
-                }
+                case 7 -> choosePortToCalculateFuelUsedInADay();
                 case 8 -> {
                     boolean running2 = true;
                     do {
@@ -519,11 +518,91 @@ public class AdminInterface {
                 case 11 -> System.out.println(port.getContainers());
                 //Display trips
                 case 12 -> System.out.println(port.getTrips());
+                case 13 -> chooseVehicleToRefuel(port);
                 //Go back
                 case 0 -> running3 = false;
                 default -> System.out.println("Please choose from 1-13");
             }
         } while (running3);
+    }
+
+    public static void chooseDateToDisplayFuelUsed(Port port){
+        String date;
+        do {
+            System.out.println("Enter the date: (dd/MM/yyyy)");
+            date = scanner.nextLine();
+            if (date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")){
+                port.calculateFuelUsedInADay(date);
+
+            } else {
+                System.out.println("Please enter the right date format!");
+            }
+        } while (true);
+    }
+
+    public static void choosePortToCalculateFuelUsedInADay(){
+        do {
+            //Port IDs
+            for (Port port : AdminInterface.portList) {
+                System.out.println(port.getPortID() + ". " + port.getName());
+                portIDs.add(port.getPortID());
+            }
+
+            System.out.println("0. Go back");
+            System.out.print("Enter the ID of the port above that you want to modify: ");
+            String portOption = scanner.nextLine();
+
+            if (portOption.equals("0")) {
+                break;
+            } else {
+                if (!portIDs.contains(portOption)) {
+                    System.out.println("Port does not exist");
+                } else {
+                    for (Port port : AdminInterface.portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            chooseDateToDisplayFuelUsed(port);
+                        }
+                    }
+                }
+            }
+        } while (true);
+    }
+
+
+    public static void chooseVehicleToRefuel(Port port){
+        decorativeLine();
+        System.out.println();
+        boolean running4 = true;
+
+        do {
+
+            for (Vehicle vehicle : port.getVehicles()) {
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+            }
+            System.out.println("0. Go back");
+            System.out.println("Enter the vehicle ID that you want to modify");
+            String vehicleChoice = scanner.nextLine();
+
+            if (vehicleChoice.equals("0")) {
+                break;
+            }
+
+
+            Vehicle selectedVehicle = null;
+            for (Vehicle vehicle : port.getVehicles()) {
+                if (vehicleChoice.equals(vehicle.getVehicleID())) {
+                    selectedVehicle = vehicle;
+                    break;
+                }
+            }
+
+            if (selectedVehicle != null) {
+                selectedVehicle.refuel();
+                System.out.println("Refuel successful");
+            } else {
+                System.out.println("The vehicle does not exist");
+            }
+        } while (running4);
     }
     public static void choosePort() {
         do {

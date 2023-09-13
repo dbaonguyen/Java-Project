@@ -1044,6 +1044,17 @@ public class Port implements IPort, Serializable {
         return totalWeight;
     }
 
+    public void calculateFuelUsedInADay(String date){
+        for (Map.Entry<String, Double> entry : fuelHistory.entrySet()){
+            if (date.equals(entry.getKey())){
+                System.out.println("Total fuel used in " + date + " is: " + entry.getValue());
+                break;
+            } else{
+                System.out.println("There is no fuel used in this day");
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Port Information:" +
