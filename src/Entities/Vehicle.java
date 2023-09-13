@@ -126,6 +126,7 @@ public class Vehicle implements IVehicle, Serializable {
         trip.getArriveTo().addVehicle(this);
         this.currentFuel -= this.fuelConsumption * this.port.calculateDistance(trip.getDepartFrom());
     }
+
     @Override
     public void refuel() {
         if(this.port == null){

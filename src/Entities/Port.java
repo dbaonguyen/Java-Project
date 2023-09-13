@@ -25,7 +25,6 @@ public class Port implements IPort, Serializable {
     private double currentWeight;
     private double capacity;
     private boolean landingAbility;
-    private PortManager portManager;
     private List<Container> containers = new ArrayList<>();
     private List<Vehicle> vehicles = new ArrayList<>();
     private List<Trip> trips = new ArrayList<>();
@@ -41,16 +40,6 @@ public class Port implements IPort, Serializable {
         this.capacity = capacity;
         this.landingAbility = landingAbility;
         this.currentWeight = currentWeight;
-    }
-    public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight, boolean landingAbility, PortManager portManager) {
-        this.portID = String.valueOf(portID);
-        this.name = name;
-        this.latitude = latitude;
-        this.Longitude = Longitude;
-        this.capacity = capacity;
-        this.landingAbility = landingAbility;
-        this.currentWeight = currentWeight;
-        this.portManager = portManager;
     }
 
     public String getPortID() {
@@ -93,13 +82,6 @@ public class Port implements IPort, Serializable {
         this.capacity = capacity;
     }
 
-    public PortManager getPortManager() {
-        return portManager;
-    }
-
-    public void setPortManager(PortManager portManager) {
-        this.portManager = portManager;
-    }
 
     public List<Container> getContainers() {
         return containers;
@@ -1071,8 +1053,6 @@ public class Port implements IPort, Serializable {
                 "\nLongitude: " + Longitude +
                 "\nCurrent Weight: " + currentWeight +
                 "\nCapacity: " + capacity +
-                "\nLanding Ability: " + landingAbility +
-                "\nCurrent Date: " + currentDate +
-                "\nUsed Fuel: " + usedFuel;
+                "\nLanding Ability: " + landingAbility;
     }
 }

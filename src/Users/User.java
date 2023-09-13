@@ -20,6 +20,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User Information:\n" +
+                "Username: " + username + "\n" +
+                "Password: " + password;
+    }
+
     public String getUsername() {
         return username;
     }

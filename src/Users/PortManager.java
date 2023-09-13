@@ -25,8 +25,10 @@ public class PortManager extends User implements Serializable {
 
     @Override
     public String toString() {
-        return "PortManager{" +
-                "portManaged=" + portManaged +
-                '}';
+        return "User Information:\n" +
+                "Username: " + super.getUsername() + "\n" +
+                "Password: " + super.getPassword() + "\n" +
+                "Port managed: " + portManaged.getPortID();
     }
+
 }

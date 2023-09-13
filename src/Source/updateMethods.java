@@ -639,9 +639,11 @@ public class updateMethods {
             for (Port port : AdminInterface.portList) {
                 System.out.println(port.getPortID() + ". " + port.getName());
             }
+
             System.out.println("0. Go back");
             System.out.print("Enter the ID of the port above that you want to assign: ");
             String portOption = scanner.nextLine();
+
             if (portOption.equals("0")) {
                 break;
             } else {
@@ -654,10 +656,14 @@ public class updateMethods {
                             for (User user : AdminInterface.userList) {
                                 if (user instanceof PortManager) {
                                     PortManager portManager = (PortManager) user;
-                                    if (portManager.getPortManaged() == null) {
+                                    if (portOption.equals(portManager.getPortManaged().getPortID())) {
+                                        // You can now access portManager's properties and methods
+                                        // For example, you can update the portManaged property here
                                         portManager.setPortManaged(port);
                                         portAssigned = true;
-                                        break; // Assign the port to the first available PortManager and break
+                                        System.out.println("Port assigned to PortManager: " + user.getUsername());
+                                        break;
+
                                     }
                                 }
                             }

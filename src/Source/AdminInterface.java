@@ -354,10 +354,11 @@ public class AdminInterface {
             System.out.println("1. Display all ports");
             System.out.println("2. Display all containers");
             System.out.println("3. Display all vehicles");
-            System.out.println("4. Display all the trips in a given day");
-            System.out.println("5. Display all the trips from day A to day B");
-            System.out.println("6. Fuel consumption within a day");
-            System.out.println("7. Calculate how much weight of each type of all containers");
+            System.out.println("4. Display all port managers");
+            System.out.println("5. Display all the trips in a given day");
+            System.out.println("6. Display all the trips from day A to day B");
+            System.out.println("7. Fuel consumption within a day");
+            System.out.println("8. Calculate how much weight of each type of all containers");
             System.out.println("0. Go back");
             try {
                 System.out.print("Your option: ");
@@ -402,11 +403,21 @@ public class AdminInterface {
                         System.out.println(vehicle);
                     }
                 }
-                case 4 -> allTripInGivenDay();
-                case 5 -> allTripFromDayAtoB();
-                case 6 -> {
+                case 4 -> {
+                    for (User user : AdminInterface.userList){
+                        decorativeLine();
+                        System.out.println();
+                        if (user instanceof PortManager){
+                            PortManager portManager = (PortManager) user;
+                            System.out.println(portManager);
+                        }
+                    }
                 }
+                case 5 -> allTripInGivenDay();
+                case 6 -> allTripFromDayAtoB();
                 case 7 -> {
+                }
+                case 8 -> {
                     boolean running2 = true;
                     do {
                         for (int i = 1; i < typeList.size() + 1; i++) {
@@ -460,6 +471,8 @@ public class AdminInterface {
                         }
                     } while (running2);
                 }
+
+
                 case 0 -> running = false;
                 default -> System.out.println("Please choose from 1-4");
             }
