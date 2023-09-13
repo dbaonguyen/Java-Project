@@ -129,9 +129,8 @@ public class Vehicle implements IVehicle, Serializable {
 
     @Override
     public void refuel() {
-
             this.port.addUsedFuel(this.fuelCapacity - this.currentFuel);
-            this.currentFuel = this.fuelCapacity;
+            this.setCurrentFuel(this.fuelCapacity);
     }
 
     @Override

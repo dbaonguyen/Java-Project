@@ -270,7 +270,7 @@ public class AdminInterface {
         System.out.println("4. Add Vehicle \t\t\t|\t\t5. Remove Vehicle \t\t|\t\t6. Search Vehicle");
         System.out.println("7. Search Container\t\t|\t\t8. Load Container \t\t|\t\t9. Unload Container");
         System.out.println("10. Display Vehicles\t|\t\t11. Display Containers \t|\t\t12. Display Trips");
-        System.out.println("13. Refuel Vehicles\t|\t\t0. Go back");
+        System.out.println("13. Refuel Vehicles\t\t|\t\t0. Go back");
 
         try {
             System.out.print("Your option: ");
@@ -279,6 +279,13 @@ public class AdminInterface {
             System.out.println("Please choose a valid option: ");
         }
         return choice;
+    }
+    public static void removeTripsAfterSevenDays() {
+        for (Trip trip : tripList) {
+            if (System.currentTimeMillis() - trip.getDepartDate().getTime() == 604800000) {
+                tripList.remove(trip);
+            }
+        }
     }
     public static void allTripInGivenDay () {
         for (int i = 0; i < portList.size(); i++) {
@@ -479,8 +486,8 @@ public class AdminInterface {
     }
     public static void portOptions(String portOption, Port port) {
         boolean running3 = true;
-        int choice = 0;
         do {
+            int choice = -1;
             choice = portOptionsMenu(choice);
             switch (choice) {
                 //Calculate distance
@@ -575,9 +582,8 @@ public class AdminInterface {
         boolean running4 = true;
 
         do {
-
             for (Vehicle vehicle : port.getVehicles()) {
-                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName());
+                System.out.println(vehicle.getVehicleID() + ". " + vehicle.getName() + " (" + vehicle.getCurrentFuel() + "/" + vehicle.getFuelCapacity() + ")");
             }
             System.out.println("0. Go back");
             System.out.println("Enter the vehicle ID that you want to modify");
@@ -645,7 +651,7 @@ public class AdminInterface {
         boolean running3 = true;
         int choice = -1;
         do {
-            System.out.println("1. Ship \t\t\t| \t\t\t2. Truck");
+            System.out.println("1. Ship \t\t\t\t| \t\t\t2. Truck");
             System.out.println("3. Reefer Truck \t\t| \t\t4. Tanker Truck");
             System.out.println("--------------------0. Go back--------------------");
             try {

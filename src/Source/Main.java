@@ -2,8 +2,7 @@ package Source;
 
 public class Main {
     public static void main(String[] args) {
-
-
+        AdminInterface.removeTripsAfterSevenDays();
         AdminInterface.run();
         boolean running = true;
         do {

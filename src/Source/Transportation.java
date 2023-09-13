@@ -148,7 +148,7 @@ public class Transportation {
                 if (ship.getPort() == null) {
                     System.out.println(ship.getVehicleID() + " | status: is arriving...");
                 } else {
-                    System.out.println(ship.getVehicleID() +". "+ ship.getPort().getName() + " (" + ship.getStatus() + ") ");
+                    System.out.println(ship.getVehicleID() +". " + ship.getName() + " " + ship.getPort().getName() + " (" + ship.getStatus() + ")"  + " (" + ship.getCurrentFuel() + "/" + ship.getFuelCapacity() + ")");
                 }
                 shipIDs.add(ship.getVehicleID());
             }
