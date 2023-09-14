@@ -30,12 +30,10 @@ public interface IPort {
 
     public void displayTrip(Date date);
 
-    public void displayTrip(Date date1, Date date2);
-
     public void displayShips();
 
     public void displayContainers();
 
-    public double totalFuelUsedInADay(String date);
+
 
 }

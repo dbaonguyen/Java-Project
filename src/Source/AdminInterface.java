@@ -538,9 +538,10 @@ public class AdminInterface {
         do {
             System.out.println("Enter the date: (dd/MM/yyyy)");
             date = scanner.nextLine();
-            if (date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")){
-                port.calculateFuelUsedInADay(date);
-
+            if (date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
+                double fuelUsed = port.calculateFuelUsedInADay(date);
+                System.out.println("Fuel used on " + date + ": " + fuelUsed + " units");
+                break;
             } else {
                 System.out.println("Please enter the right date format!");
             }

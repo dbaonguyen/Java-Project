@@ -2,11 +2,8 @@ package Entities;
 
 import Interface.IPort;
 import Source.AdminInterface;
-import Users.Admin;
-import Users.PortManager;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -31,7 +28,7 @@ public class Port implements IPort, Serializable {
     public String currentDate;
     private double usedFuel;
     private static Scanner scanner = new Scanner(System.in);
-    private HashMap<String, Double> fuelHistory = new HashMap<String, Double>();
+    private HashMap<String, Double> fuelHistory = new HashMap<>();
     public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
         this.name = name;
@@ -173,7 +170,7 @@ public class Port implements IPort, Serializable {
             }
         } while (true);
 
-        int typeID = -1;
+        int typeID;
         do {
             for (int i = 0; i < AdminInterface.typeList.size(); i++) {
                 System.out.println(i + ". " + AdminInterface.typeList.get(i).getType());
@@ -286,7 +283,7 @@ public class Port implements IPort, Serializable {
                 System.out.println("Please enter your vehicle name:");
                 String vehicleName = scanner.nextLine();
 
-                double capacity = 0;
+                double capacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle capacity:");
@@ -298,7 +295,7 @@ public class Port implements IPort, Serializable {
                 } while (true);
 
 
-                double fuelCapacity = 0;
+                double fuelCapacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle fuel capacity:");
@@ -353,7 +350,7 @@ public class Port implements IPort, Serializable {
                 System.out.println("Please enter your vehicle name:");
                 String vehicleName = scanner.nextLine();
 
-                double capacity = 0;
+                double capacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle capacity:");
@@ -364,7 +361,7 @@ public class Port implements IPort, Serializable {
                     }
                 } while (true);
 
-                double fuelCapacity = 0;
+                double fuelCapacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle fuel capacity:");
@@ -419,7 +416,7 @@ public class Port implements IPort, Serializable {
                 System.out.println("Please enter your vehicle name:");
                 String vehicleName = scanner.nextLine();
 
-                double capacity = 0;
+                double capacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle capacity:");
@@ -430,7 +427,7 @@ public class Port implements IPort, Serializable {
                     }
                 } while (true);
 
-                double fuelCapacity = 0;
+                double fuelCapacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle fuel capacity:");
@@ -485,7 +482,7 @@ public class Port implements IPort, Serializable {
                 System.out.println("Please enter your vehicle name:");
                 String vehicleName = scanner.nextLine();
 
-                double capacity = 0;
+                double capacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle capacity:");
@@ -496,7 +493,7 @@ public class Port implements IPort, Serializable {
                     }
                 } while (true);
 
-                double fuelCapacity = 0;
+                double fuelCapacity;
                 do {
                     try {
                         System.out.println("Please enter your vehicle fuel capacity:");
@@ -733,7 +730,7 @@ public class Port implements IPort, Serializable {
         System.out.println("Please enter your port name:");
         String portName = scanner.nextLine();
 
-        double portLatitude = 0;
+        double portLatitude;
         do {
             try {
                 System.out.println("Please enter your port latitude:");
@@ -744,7 +741,7 @@ public class Port implements IPort, Serializable {
             }
         } while (true);
 
-        double portLongitude = 0;
+        double portLongitude;
         do {
             try {
                 System.out.println("Please enter your port Longitude:");
@@ -755,7 +752,7 @@ public class Port implements IPort, Serializable {
             }
         } while (true);
 
-        double portCapacity = 0;
+        double portCapacity;
         do {
             try {
                 System.out.println("Please enter your port capacity:");
@@ -850,8 +847,7 @@ public class Port implements IPort, Serializable {
 
     @Override
     public double calculateDistance(Port port) {
-        double distance = Math.sqrt(Math.pow((port.Longitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
-        return distance;
+        return Math.sqrt(Math.pow((port.Longitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
     }
 
     @Override
@@ -863,7 +859,7 @@ public class Port implements IPort, Serializable {
         } else{
             this.containers.add(container);
             this.currentWeight += container.getWeight();
-            System.out.println("New container is added to " + this.getName());
+//            System.out.println("New container is added to " + this.getName());
         }
     }
 
@@ -957,10 +953,6 @@ public class Port implements IPort, Serializable {
         }
     }
 
-    @Override
-    public void displayTrip(Date date1, Date date2) {
-
-    }
 
     @Override
     public void displayShips() {
@@ -992,48 +984,32 @@ public class Port implements IPort, Serializable {
         }
     }
 
-    @Override
-    public double totalFuelUsedInADay(String date) {
-        //get local time
+
+    public void addUsedFuel(double newFuel) {
+        // Get local time
         LocalDate today = LocalDate.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        //str as local date in string form
         String str = today.format(dtf);
-        //special case: today's amount is not yet saved in history record
-        if (str.equals(date)) {
-            return this.usedFuel;
-        }
-        //search in record
-        else {
-            for(String history : fuelHistory.keySet()){
-                if(history.equals(date)){
 
-                    return fuelHistory.get(history);
-                }
-            }
-            System.out.println("There is no data on this date!");
+        // In case it is still the same day
+        if (str.equals(this.currentDate)) {
+            fuelHistory.put(currentDate, this.usedFuel += newFuel);
+        } else {
+            // In case a new day has come
+            this.currentDate = str;
+            this.usedFuel = newFuel;
+            fuelHistory.put(currentDate, usedFuel);
+
+        }
+    }
+
+    public double calculateFuelUsedInADay(String date) {
+        if (fuelHistory.containsKey(date)) {
+            return fuelHistory.get(date);
+        } else {
             return 0;
         }
     }
-
-
-    public void addUsedFuel(double newFuel){
-        //get local time
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String str = today.format(dtf);
-        //in case it is still the same day
-        if(str.equals(this.currentDate)){
-            this.usedFuel += newFuel;
-        }
-        //in case a new day has come
-        else{
-            fuelHistory.put(currentDate, usedFuel);
-            this.currentDate = str;
-            this.usedFuel = newFuel;
-        }
-    }
-
     public double getWeightOfContainerType(Type type){
         double totalWeight = 0;
         for(Container container : this.containers){
@@ -1042,17 +1018,6 @@ public class Port implements IPort, Serializable {
             }
         }
         return totalWeight;
-    }
-
-    public void calculateFuelUsedInADay(String date){
-        for (Map.Entry<String, Double> entry : fuelHistory.entrySet()){
-            if (date.equals(entry.getKey())){
-                System.out.println("Total fuel used in " + date + " is: " + entry.getValue());
-                break;
-            } else{
-                System.out.println("There is no fuel used in this day");
-            }
-        }
     }
 
     @Override
