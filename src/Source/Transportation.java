@@ -68,7 +68,11 @@ public class Transportation {
                                 if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                     for (Port port : AdminInterface.portList) {
                                         if (portCanMoveToID.equals(port.getPortID())) {
-                                            transportShip(ship, port);
+                                            if (ship.canMoveToPort(port)){
+                                                transportShip(ship, port);
+                                            } else{
+                                                System.out.println("The vehicle doesn't have enough fuel!");
+                                            }
                                         }
                                     }
                                     break;
@@ -188,7 +192,11 @@ public class Transportation {
                                 if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                     for (Port port : AdminInterface.portList) {
                                         if (portCanMoveToID.equals(port.getPortID())) {
-                                            transportTruck(truck, port);
+                                            if (truck.canMoveToPort(port)){
+                                                transportTruck(truck, port);
+                                            } else{
+                                                System.out.println("This vehicle doesn't have enough fuel!");
+                                            }
                                         }
                                     }
                                     break;
@@ -310,7 +318,11 @@ public class Transportation {
                                 if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                     for (Port port : AdminInterface.portList) {
                                         if (portCanMoveToID.equals(port.getPortID())) {
-                                            transportReeferTruck(reeferTruck, port);
+                                            if (reeferTruck.canMoveToPort(port)){
+                                                transportReeferTruck(reeferTruck, port);
+                                            } else{
+                                                System.out.println("This vehicle doesn't have enough fuel!");
+                                            }
                                         }
                                     }
                                     break;
@@ -431,7 +443,11 @@ public class Transportation {
                                 if (portCanMoveToIDs.contains(portCanMoveToID)) {
                                     for (Port port : AdminInterface.portList) {
                                         if (portCanMoveToID.equals(port.getPortID())) {
-                                            transportTankerTruck(tankerTruck, port);
+                                            if (tankerTruck.canMoveToPort(port)){
+                                                transportTankerTruck(tankerTruck, port);
+                                            } else{
+                                                System.out.println("This vehicle doesn't have enough fuel!");
+                                            }
                                         }
                                     }
                                     break;
