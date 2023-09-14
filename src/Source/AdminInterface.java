@@ -313,6 +313,8 @@ public class AdminInterface {
                         long givenDateTime = givenDate.getTime();
                         for (Trip trip : tripList) {
                             if (trip.getDepartDate().getTime() > givenDateTime && trip.getDepartDate().getTime() < givenDateTime + 86399999) {
+                                decorativeLine();
+                                System.out.println();
                                 System.out.println(trip);
                             }
                         }

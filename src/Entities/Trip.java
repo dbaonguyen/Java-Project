@@ -73,14 +73,17 @@ public class Trip implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return "Trip{" +
-                "vehicle=" + vehicle.getVehicleID() +
-                ", departDate=" + dateFormat.format(departDate) +
-                ", arrivalDate=" + dateFormat.format(arrivalDate) +
-                ", departFrom=" + departFrom.getPortID() +
-                ", arriveTo=" + arriveTo.getPortID() +
-                ", status=" + status +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("Trip Information:\n");
+        stringBuilder.append("Vehicle ID: ").append(vehicle.getVehicleID()).append("\n");
+        stringBuilder.append("Departure Date and Time: ").append(dateFormat.format(departDate)).append("\n");
+        stringBuilder.append("Arrival Date and Time: ").append(dateFormat.format(arrivalDate)).append("\n");
+        stringBuilder.append("Departure Port ID: ").append(departFrom.getPortID()).append("\n");
+        stringBuilder.append("Arrival Port ID: ").append(arriveTo.getPortID()).append("\n");
+        stringBuilder.append("Status: ").append(status);
+
+        return stringBuilder.toString();
     }
 }
 

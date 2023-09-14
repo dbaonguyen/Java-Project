@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Container implements Serializable {
     private String containerID;
     private double weight;
-    private Type containerType;
+    private final Type containerType;
     public Container(String containerID, double weight, Type containerType) {
         this.containerID = containerID;
         this.weight = weight;
@@ -30,10 +30,6 @@ public class Container implements Serializable {
 
     public Type getType(){
         return this.containerType;
-    }
-
-    public double getTruckConsumption(){
-        return this.containerType.getTruckConsume();
     }
 
     public double getShipConsumption(){
