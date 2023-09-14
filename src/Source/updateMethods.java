@@ -1,14 +1,13 @@
 package Source;
 
 import Entities.*;
-import Users.PortManager;
 import Users.User;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class updateMethods {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     public static void decorativeLine() {
         for (int i = 0;i < 50;i++){
             System.out.print("*");
@@ -107,23 +106,23 @@ public class updateMethods {
 
                 //Update port longitude
                 case 4 -> {
-                    double portLongtitude;
+                    double portLongitude;
                     do {
                         try {
-                            System.out.println("Please enter your port longtitude:");
-                            portLongtitude = Double.parseDouble(scanner.nextLine());
+                            System.out.println("Please enter your port longitude:");
+                            portLongitude = Double.parseDouble(scanner.nextLine());
                             break;
                         } catch (Exception e) {
                             System.out.println("Please enter a valid value");
                         }
                     } while (true);
-                    port.setLongitude(portLongtitude);
+                    port.setLongitude(portLongitude);
                     System.out.println("Updated successfully");
                 }
 
                 //Update port capacity
                 case 5 -> {
-                    double portCapacity = 0;
+                    double portCapacity;
                     do {
                         try {
                             System.out.println("Please enter your port capacity:");
@@ -204,7 +203,6 @@ public class updateMethods {
     public static void vehicleOptions(Port port){
         decorativeLine();
         System.out.println();
-        boolean running4 = true;
 
         do {
 
@@ -233,7 +231,7 @@ public class updateMethods {
             } else {
                 System.out.println("The vehicle does not exist");
             }
-        } while (running4);
+        } while (true);
     }
     public static int portOptionsMenuToUpdateVehicle(int choice) {
         //Menu
@@ -392,7 +390,7 @@ public class updateMethods {
     public static void containerOptions(Port port){
         decorativeLine();
         System.out.println();
-        boolean running4 = true;
+
 
         do {
 
@@ -421,7 +419,7 @@ public class updateMethods {
             } else {
                 System.out.println("The container does not exist");
             }
-        } while (running4);
+        } while (true);
     }
     public static void choosePortToUpdateContainer(List<String> portIDs) {
 
@@ -536,7 +534,6 @@ public class updateMethods {
     public static void chooseUserToUpdate(List<String> usedUsername) {
         decorativeLine();
         System.out.println();
-        boolean running4 = true;
         do {
             for (User user : AdminInterface.userList) {
                 System.out.println(user.getUsername());
@@ -560,7 +557,7 @@ public class updateMethods {
             } else {
                 System.out.println("The container does not exist");
             }
-        } while (running4);
+        } while (true);
     }
 
     public static void userOptionsToUpdate(List<String> usedUsername, User user){

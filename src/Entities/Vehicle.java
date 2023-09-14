@@ -4,7 +4,6 @@ import Interface.IVehicle;
 import Source.AdminInterface;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,10 +47,7 @@ public class Vehicle implements IVehicle, Serializable {
     public boolean canMoveToPort(Port port) {
         //calculate fuel needs
         double fuelNeeded = this.fuelConsumption * this.port.calculateDistance(port);
-        if(fuelNeeded > this.fuelCapacity){
-            return false;
-        }
-        return true;
+        return !(fuelNeeded > this.fuelCapacity);
     }
 
     @Override
@@ -90,15 +86,12 @@ public class Vehicle implements IVehicle, Serializable {
 
     }
 
-    @Override
-    public void moveToPort(Port port, String departureDate, String arrivalDate) {
 
-    }
 
     @Override
     public Trip moveToPort1(Port port, Date departureDate, Date arrivalDate) {
         //check value of canMoveToPort()
-        if(this.canMoveToPort(port) == false){
+        if(!this.canMoveToPort(port)){
             System.out.println("The vehicle can not go to this port!");
             return null;
         }
@@ -166,7 +159,7 @@ public class Vehicle implements IVehicle, Serializable {
         this.name = name;
     }
 
-    public double getCurrentWeight(){ return this.currentWeight;};
+    public double getCurrentWeight(){ return this.currentWeight;}
 
     public void setCurrentWeight(double newWeight){
         this.currentWeight = newWeight;
@@ -205,14 +198,6 @@ public class Vehicle implements IVehicle, Serializable {
 
     public ArrayList<Container> getContainers(){
         return containers;
-    }
-
-    public double getFuelConsumption(){
-        return fuelConsumption;
-    }
-
-    public void setFuelConsumption(double newConsumption){
-        this.fuelConsumption = newConsumption;
     }
 
     public String getStatus() {

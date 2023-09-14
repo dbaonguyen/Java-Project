@@ -30,7 +30,7 @@ public class Container implements Serializable {
 
     public Type getType(){
         return this.containerType;
-    };
+    }
 
     public double getTruckConsumption(){
         return this.containerType.getTruckConsume();

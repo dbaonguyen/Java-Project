@@ -2,10 +2,6 @@ package Entities;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Trip implements Serializable {

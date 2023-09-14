@@ -1,8 +1,10 @@
 package Entities;
+import java.io.Serial;
 import java.io.Serializable;
-import java.util.*;
+
 
 public class Truck extends Vehicle implements Serializable {
+    @Serial
     private static final long serialVersionUID = -483225685009908350L;
 
     public Truck(String vehicleID, String name, double capacity, double fuelCapacity, Port port, boolean status) {
@@ -10,27 +12,6 @@ public class Truck extends Vehicle implements Serializable {
 
     }
 
-    //load method for trucks
-    public void truckLoadContainer(Container container){
-        if(container.getType().getType().equals("Dry storage") || container.getType().getType().equals("Open top") || container.getType().getType().equals("Open side")){
-            super.loadContainer(container);
-            //only if loading is possible, the fuel consumption will be updated
-            if(super.loadContainer(container)){
-                this.setFuelConsumption(getFuelConsumption() + container.getTruckConsumption());
-            }
-        }
-        else{
-            System.out.println("This container type can not be loaded onto this vehicle!");
-        }
-    }
-    //unload method for trucks
-    public void truckUnloadContainer(Container container){
-        super.loadContainer(container);
-        //only if unloading is possible, the fuel consumption will be updated
-        if(super.loadContainer(container)){
-            this.setFuelConsumption(getFuelConsumption() - container.getTruckConsumption());
-        }
-    }
 
     @Override
     public boolean canMoveToPort(Port port){

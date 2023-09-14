@@ -2,11 +2,12 @@ package Users;
 
 import Entities.Port;
 
+import java.io.Serial;
 import java.io.Serializable;
-import java.util.Map;
-import java.util.HashMap;
+
 
 public class PortManager extends User implements Serializable {
+    @Serial
     private static final long serialVersionUID = -7683490463929513482L;
     private Port portManaged;
 

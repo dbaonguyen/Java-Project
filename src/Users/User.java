@@ -4,16 +4,12 @@ import Entities.Port;
 import Source.AdminInterface;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Scanner;
 
 public class User implements Serializable {
     private String username;
     private String password;
-    private static Scanner scanner = new Scanner(System.in);
-
-    public User() {
-    }
+    private static final Scanner scanner = new Scanner(System.in);
 
     public User(String username, String password) {
         this.username = username;

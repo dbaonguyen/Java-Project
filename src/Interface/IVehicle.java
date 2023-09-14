@@ -13,7 +13,6 @@ public interface IVehicle {
     public boolean unloadContainer(Container container);
     public void moveToPort(Port port);
 
-    void moveToPort(Port port, String departureDate, String arrivalDate);
 
     Trip moveToPort1(Port port, Date departureDate, Date arrivalDate);
 

@@ -522,7 +522,7 @@ public class AdminInterface {
                     port.displayTrucks();
                 }
                 //Display containers
-                case 11 -> System.out.println(port.getContainers());
+                case 11 -> port.displayContainers();
                 //Display trips
                 case 12 -> System.out.println(port.getTrips());
                 case 13 -> chooseVehicleToRefuel(port);

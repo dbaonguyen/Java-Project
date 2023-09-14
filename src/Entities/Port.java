@@ -3,6 +3,7 @@ package Entities;
 import Interface.IPort;
 import Source.AdminInterface;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +15,7 @@ public class Port implements IPort, Serializable {
             System.out.print("*");
         }
     }
+    @Serial
     private static final long serialVersionUID = 1030224541977093439L;
     private String portID;
     private String name;
@@ -27,7 +29,7 @@ public class Port implements IPort, Serializable {
     private List<Trip> trips = new ArrayList<>();
     public String currentDate;
     private double usedFuel;
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private HashMap<String, Double> fuelHistory = new HashMap<>();
     public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
@@ -240,6 +242,8 @@ public class Port implements IPort, Serializable {
             }
         } while (running4);
     }
+
+
     public static void addVehicle(List<String> vehicleIDs, Port port) {
         decorativeLine();
         System.out.println();
@@ -942,16 +946,6 @@ public class Port implements IPort, Serializable {
     public void addTrip(Trip trip) {
         trips.add(trip);
     }
-    public void removeTrip(Trip trip) {
-        trips.remove(trip);
-    }
-
-    @Override
-    public void displayTrip(Date date) {
-        for (Trip trip : trips){
-            System.out.println(trip);
-        }
-    }
 
 
     @Override
@@ -978,9 +972,10 @@ public class Port implements IPort, Serializable {
     @Override
     public void displayContainers() {
         for (Container container : containers){
-            System.out.println(container);
             decorativeLine();
             System.out.println();
+            System.out.println(container);
+
         }
     }
 
