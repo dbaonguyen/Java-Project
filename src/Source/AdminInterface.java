@@ -357,7 +357,6 @@ public class AdminInterface {
         boolean running = true;
         do {
             int choice = -1;
-            System.out.println();
             System.out.println("1. Display all ports");
             System.out.println("2. Display all containers");
             System.out.println("3. Display all vehicles");
@@ -449,26 +448,26 @@ public class AdminInterface {
                                 for (Port port : portList) {
                                     total += port.getWeightOfContainerType(typeList.get(1));
                                 }
-                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                                System.out.println("The total weight of this type of container is: " + total + " kg");
                             }
                             case 3 -> {
                                 for (Port port : portList) {
                                     total += port.getWeightOfContainerType(typeList.get(2));
                                 }
-                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                                System.out.println("The total weight of this type of container is: " + total + " kg");
                             }
                             case 4 -> {
                                 for (Port port : portList) {
                                     total += port.getWeightOfContainerType(typeList.get(3));
                                 }
-                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                                System.out.println("The total weight of this type of container is: " + total + " kg");
                             }
 
                             case 5 -> {
                                 for (Port port : portList) {
                                     total += port.getWeightOfContainerType(typeList.get(4));
                                 }
-                                System.out.println("The total weight of this type of container is:" + total + " kg");
+                                System.out.println("The total weight of this type of container is: " + total + " kg");
                             }
                             case 0 -> running2 = false;
 
