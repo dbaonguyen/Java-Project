@@ -70,8 +70,6 @@ public class Transportation {
                                         if (portCanMoveToID.equals(port.getPortID())) {
                                             if (ship.canMoveToPort(port)){
                                                 transportShip(ship, port);
-                                            } else{
-                                                System.out.println("The vehicle doesn't have enough fuel!");
                                             }
                                         }
                                     }
@@ -100,37 +98,52 @@ public class Transportation {
                 System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
                 String arrivalDateStr = scanner.nextLine();
 
+
                 if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
                     Date departureDate = dateFormat.parse(departureDateStr);
                     Date arrivalDate = dateFormat.parse(arrivalDateStr);
 
                     if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
-                        Trip newTrip = new Trip(ship, ship.getPort(), departureDate, arrivalDate, port, false);
-                        AdminInterface.tripList.add(newTrip);
-                        long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
-                        long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+                        do {
+                            System.out.print("Do you want to confirm this transportation?(y/n): ");
+                            String option = scanner.nextLine();
+                            if (option.equals("y")) {
+                                System.out.println("The transportation procedure is completed!");
+                                AdminInterface.decorativeLine();
+                                Trip newTrip = new Trip(ship, ship.getPort(), departureDate, arrivalDate, port, false);
+                                AdminInterface.tripList.add(newTrip);
+                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
 
-                        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-                        //make a new trip without adding to any port
-                        CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
-                        // Schedule departure action
-                        Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
-                        ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
-                            AdminInterface.tripList.remove(newTrip);
-                            Trip trip = departureTask.run();
-                            tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
-                        }, departureDelayMillis, TimeUnit.MILLISECONDS);
-                        ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
-                            try {
-                                // Wait for the departure task to complete and retrieve the Trip object
-                                Trip trip = tripFuture.get();
-                                // Now you have the Trip object, you can use it in the arrival task
-                                Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
-                                arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
-                            } catch (InterruptedException | ExecutionException e) {
-                                // Handle exceptions if needed
+                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                                //make a new trip without adding to any port
+                                CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
+                                // Schedule departure action
+                                Transportation departureTask = new Transportation(ship, port, departureDate, arrivalDate);
+                                ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
+                                    AdminInterface.tripList.remove(newTrip);
+                                    Trip trip = departureTask.run();
+                                    tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
+                                }, departureDelayMillis, TimeUnit.MILLISECONDS);
+                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
+                                    try {
+                                        // Wait for the departure task to complete and retrieve the Trip object
+                                        Trip trip = tripFuture.get();
+                                        // Now you have the Trip object, you can use it in the arrival task
+                                        Transportation arrivalTask = new Transportation(ship, port, departureDate, arrivalDate);
+                                        arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        // Handle exceptions if needed
+                                    }
+                                }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+                                break;
+                            } else if (option.equals("n")) {
+                                System.out.println("The procedure is cancelled");
+                                AdminInterface.decorativeLine();
+                                System.out.println();
+                                break;
                             }
-                        }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+                        } while (true);
                         break;
                     } else {
                         System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
@@ -143,7 +156,7 @@ public class Transportation {
             }
         } while (true);
         ship.setStatus(false);
-        System.out.println("The transportation procedure is completed!");
+        System.out.println();
     }
     public static void transportationShip() {
         do {
@@ -194,8 +207,6 @@ public class Transportation {
                                         if (portCanMoveToID.equals(port.getPortID())) {
                                             if (truck.canMoveToPort(port)){
                                                 transportTruck(truck, port);
-                                            } else{
-                                                System.out.println("This vehicle doesn't have enough fuel!");
                                             }
                                         }
                                     }
@@ -224,38 +235,52 @@ public class Transportation {
                 System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
                 String arrivalDateStr = scanner.nextLine();
 
+
                 if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
                     Date departureDate = dateFormat.parse(departureDateStr);
                     Date arrivalDate = dateFormat.parse(arrivalDateStr);
 
                     if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
-                        Trip newTrip = new Trip(truck, truck.getPort(), departureDate, arrivalDate, port, false);
-                        AdminInterface.tripList.add(newTrip);
-                        long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
-                        long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+                        do {
+                            System.out.print("Do you want to confirm this transportation?(y/n): ");
+                            String option = scanner.nextLine();
+                            if (option.equals("y")) {
+                                System.out.println("The transportation procedure is completed!");
+                                AdminInterface.decorativeLine();
+                                Trip newTrip = new Trip(truck, truck.getPort(), departureDate, arrivalDate, port, false);
+                                AdminInterface.tripList.add(newTrip);
+                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
 
-                        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-                        //make a new trip without adding to any port
-                        CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
-                        // Schedule departure action
-                        Transportation departureTask = new Transportation(truck, port, departureDate, arrivalDate);
-                        ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
-                            AdminInterface.tripList.remove(newTrip);
-                            Trip trip = departureTask.run();
-                            tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
-                        }, departureDelayMillis, TimeUnit.MILLISECONDS);
-                        ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
-                            try {
-                                // Wait for the departure task to complete and retrieve the Trip object
-                                Trip trip = tripFuture.get();
-                                // Now you have the Trip object, you can use it in the arrival task
-                                Transportation arrivalTask = new Transportation(truck, port, departureDate, arrivalDate);
-                                arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
-                            } catch (InterruptedException | ExecutionException e) {
-                                // Handle exceptions if needed
+                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                                //make a new trip without adding to any port
+                                CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
+                                // Schedule departure action
+                                Transportation departureTask = new Transportation(truck, port, departureDate, arrivalDate);
+                                ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
+                                    AdminInterface.tripList.remove(newTrip);
+                                    Trip trip = departureTask.run();
+                                    tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
+                                }, departureDelayMillis, TimeUnit.MILLISECONDS);
+                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
+                                    try {
+                                        // Wait for the departure task to complete and retrieve the Trip object
+                                        Trip trip = tripFuture.get();
+                                        // Now you have the Trip object, you can use it in the arrival task
+                                        Transportation arrivalTask = new Transportation(truck, port, departureDate, arrivalDate);
+                                        arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        // Handle exceptions if needed
+                                    }
+                                }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+                                break;
+                            } else if (option.equals("n")) {
+                                System.out.println("The procedure is cancelled");
+                                AdminInterface.decorativeLine();
+                                System.out.println();
+                                break;
                             }
-                        }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
-
+                        } while (true);
                         break;
                     } else {
                         System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
@@ -268,8 +293,7 @@ public class Transportation {
             }
         } while (true);
         truck.setStatus(false);
-        System.out.println("The transportation procedure is completed!");
-
+        System.out.println();
     }
     public static void transportationTruck() {
         do {
@@ -278,7 +302,7 @@ public class Transportation {
                 if (truck.getPort() == null) {
                     System.out.println(truck.getVehicleID() +". " + truck.getPort() + " | status: is arriving...");
                 } else {
-                    System.out.println(truck.getVehicleID() +". "+ truck.getPort().getName()  + " (" + truck.getStatus() + ") ");
+                    System.out.println(truck.getVehicleID() +". " + truck.getName() + " " + truck.getPort().getName() + " (" + truck.getStatus() + ")"  + " (" + truck.getCurrentFuel() + "/" + truck.getFuelCapacity() + ")");
                 }
                 truckIDs.add(truck.getVehicleID());
             }
@@ -320,8 +344,6 @@ public class Transportation {
                                         if (portCanMoveToID.equals(port.getPortID())) {
                                             if (reeferTruck.canMoveToPort(port)){
                                                 transportReeferTruck(reeferTruck, port);
-                                            } else{
-                                                System.out.println("This vehicle doesn't have enough fuel!");
                                             }
                                         }
                                     }
@@ -345,7 +367,7 @@ public class Transportation {
                 if (reeferTruck.getPort() == null) {
                     System.out.println(reeferTruck.getVehicleID() + ". " + reeferTruck.getPort() + " | status: is arriving...");
                 } else {
-                    System.out.println(reeferTruck.getVehicleID() + ". " + reeferTruck.getPort().getName()  + " (" + reeferTruck.getStatus() + ") ");
+                    System.out.println(reeferTruck.getVehicleID() +". " + reeferTruck.getName() + " " + reeferTruck.getPort().getName() + " (" + reeferTruck.getStatus() + ")"  + " (" + reeferTruck.getCurrentFuel() + "/" + reeferTruck.getFuelCapacity() + ")");
                 }
                 reeferTruckIDs.add(reeferTruck.getVehicleID());
             }
@@ -372,38 +394,52 @@ public class Transportation {
                 System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
                 String arrivalDateStr = scanner.nextLine();
 
+
                 if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
                     Date departureDate = dateFormat.parse(departureDateStr);
                     Date arrivalDate = dateFormat.parse(arrivalDateStr);
 
                     if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
-                        Trip newTrip = new Trip(reeferTruck, reeferTruck.getPort(), departureDate, arrivalDate, port, false);
-                        AdminInterface.tripList.add(newTrip);
-                        long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
-                        long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+                        do {
+                            System.out.print("Do you want to confirm this transportation?(y/n): ");
+                            String option = scanner.nextLine();
+                            if (option.equals("y")) {
+                                System.out.println("The transportation procedure is completed!");
+                                AdminInterface.decorativeLine();
+                                Trip newTrip = new Trip(reeferTruck, reeferTruck.getPort(), departureDate, arrivalDate, port, false);
+                                AdminInterface.tripList.add(newTrip);
+                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
 
-                        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-                        //make a new trip without adding to any port
-                        CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
-                        // Schedule departure action
-                        Transportation departureTask = new Transportation(reeferTruck, port, departureDate, arrivalDate);
-                        ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
-                            AdminInterface.tripList.remove(newTrip);
-                            Trip trip = departureTask.run();
-                            tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
-                        }, departureDelayMillis, TimeUnit.MILLISECONDS);
-                        ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
-                            try {
-                                // Wait for the departure task to complete and retrieve the Trip object
-                                Trip trip = tripFuture.get();
-                                // Now you have the Trip object, you can use it in the arrival task
-                                Transportation arrivalTask = new Transportation(reeferTruck, port, departureDate, arrivalDate);
-                                arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
-                            } catch (InterruptedException | ExecutionException e) {
-                                // Handle exceptions if needed
+                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                                //make a new trip without adding to any port
+                                CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
+                                // Schedule departure action
+                                Transportation departureTask = new Transportation(reeferTruck, port, departureDate, arrivalDate);
+                                ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
+                                    AdminInterface.tripList.remove(newTrip);
+                                    Trip trip = departureTask.run();
+                                    tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
+                                }, departureDelayMillis, TimeUnit.MILLISECONDS);
+                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
+                                    try {
+                                        // Wait for the departure task to complete and retrieve the Trip object
+                                        Trip trip = tripFuture.get();
+                                        // Now you have the Trip object, you can use it in the arrival task
+                                        Transportation arrivalTask = new Transportation(reeferTruck, port, departureDate, arrivalDate);
+                                        arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        // Handle exceptions if needed
+                                    }
+                                }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+                                break;
+                            } else if (option.equals("n")) {
+                                System.out.println("The procedure is cancelled");
+                                AdminInterface.decorativeLine();
+                                System.out.println();
+                                break;
                             }
-                        }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
-
+                        } while (true);
                         break;
                     } else {
                         System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
@@ -416,7 +452,7 @@ public class Transportation {
             }
         } while (true);
         reeferTruck.setStatus(false);
-        System.out.println("The transportation procedure is completed!");
+        System.out.println();
     }
     public static void setTransportTankerTruck(List<String> tankerTruckIDs, String tankerTruckID) {
         if (tankerTruckIDs.contains(tankerTruckID)) {
@@ -445,8 +481,6 @@ public class Transportation {
                                         if (portCanMoveToID.equals(port.getPortID())) {
                                             if (tankerTruck.canMoveToPort(port)){
                                                 transportTankerTruck(tankerTruck, port);
-                                            } else{
-                                                System.out.println("This vehicle doesn't have enough fuel!");
                                             }
                                         }
                                     }
@@ -475,38 +509,53 @@ public class Transportation {
                 System.out.println("Please enter the arrival date (dd/MM/yyyy HH:mm:ss)");
                 String arrivalDateStr = scanner.nextLine();
 
+
                 if (isValidDate(departureDateStr) && isValidDate(arrivalDateStr)) {
                     Date departureDate = dateFormat.parse(departureDateStr);
                     Date arrivalDate = dateFormat.parse(arrivalDateStr);
 
                     if (departureDate.compareTo(currentTime) >= 0 && arrivalDate.compareTo(departureDate) > 0) {
-                        Trip newTrip = new Trip(tankerTruck, tankerTruck.getPort(), departureDate, arrivalDate, port, false);
-                        AdminInterface.tripList.add(newTrip);
-                        long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
-                        long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
+                        do {
+                            System.out.print("Do you want to confirm this transportation?(y/n): ");
+                            String option = scanner.nextLine();
+                            if (option.equals("y")) {
+                                System.out.println("The transportation procedure is completed!");
+                                AdminInterface.decorativeLine();
+                                System.out.println("The transportation procedure is completed!");
+                                Trip newTrip = new Trip(tankerTruck, tankerTruck.getPort(), departureDate, arrivalDate, port, false);
+                                AdminInterface.tripList.add(newTrip);
+                                long departureDelayMillis = departureDate.getTime() - System.currentTimeMillis();
+                                long arrivalDelayMillis = arrivalDate.getTime() - System.currentTimeMillis();
 
-                        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-                        //make a new trip without adding to any port
-                        CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
-                        // Schedule departure action
-                        Transportation departureTask = new Transportation(tankerTruck, port, departureDate, arrivalDate);
-                        ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
-                            AdminInterface.tripList.remove(newTrip);
-                            Trip trip = departureTask.run();
-                            tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
-                        }, departureDelayMillis, TimeUnit.MILLISECONDS);
-                        ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
-                            try {
-                                // Wait for the departure task to complete and retrieve the Trip object
-                                Trip trip = tripFuture.get();
-                                // Now you have the Trip object, you can use it in the arrival task
-                                Transportation arrivalTask = new Transportation(tankerTruck, port, departureDate, arrivalDate);
-                                arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
-                            } catch (InterruptedException | ExecutionException e) {
-                                // Handle exceptions if needed
+                                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                                //make a new trip without adding to any port
+                                CompletableFuture<Trip> tripFuture = new CompletableFuture<>();
+                                // Schedule departure action
+                                Transportation departureTask = new Transportation(tankerTruck, port, departureDate, arrivalDate);
+                                ScheduledFuture<?> departureFuture = scheduler.schedule(() -> {
+                                    AdminInterface.tripList.remove(newTrip);
+                                    Trip trip = departureTask.run();
+                                    tripFuture.complete(trip); // Store the Trip object in the CompletableFuture
+                                }, departureDelayMillis, TimeUnit.MILLISECONDS);
+                                ScheduledFuture<?> arrivalFuture = scheduler.schedule(() -> {
+                                    try {
+                                        // Wait for the departure task to complete and retrieve the Trip object
+                                        Trip trip = tripFuture.get();
+                                        // Now you have the Trip object, you can use it in the arrival task
+                                        Transportation arrivalTask = new Transportation(tankerTruck, port, departureDate, arrivalDate);
+                                        arrivalTask.run2(trip); // Pass the Trip object as a parameter to run2
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        // Handle exceptions if needed
+                                    }
+                                }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
+                                break;
+                            } else if (option.equals("n")) {
+                                System.out.println("The procedure is cancelled");
+                                AdminInterface.decorativeLine();
+                                System.out.println();
+                                break;
                             }
-                        }, arrivalDelayMillis, TimeUnit.MILLISECONDS);
-
+                        } while (true);
                         break;
                     } else {
                         System.out.println("Invalid dates. Departure date must be >= current time, and arrival date must be > departure date.");
@@ -519,7 +568,7 @@ public class Transportation {
             }
         } while (true);
         tankerTruck.setStatus(false);
-        System.out.println("The transportation procedure is completed!");
+        System.out.println();
     }
     public static void transportationTankerTruck() {
         do {
@@ -528,7 +577,7 @@ public class Transportation {
                 if (tankerTruck.getPort() == null) {
                     System.out.println(tankerTruck.getVehicleID() +". " + tankerTruck.getPort() + " | status: is arriving...");
                 } else {
-                    System.out.println(tankerTruck.getVehicleID() +". "+ tankerTruck.getPort().getName()  + " (" + tankerTruck.getStatus() + ") ");
+                    System.out.println(tankerTruck.getVehicleID() +". " + tankerTruck.getName() + " " + tankerTruck.getPort().getName() + " (" + tankerTruck.getStatus() + ")"  + " (" + tankerTruck.getCurrentFuel() + "/" + tankerTruck.getFuelCapacity() + ")");
                 }
                 tankerTruckIDs.add(tankerTruck.getVehicleID());
             }

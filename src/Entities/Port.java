@@ -93,6 +93,7 @@ public class Port implements IPort, Serializable {
         return landingAbility;
     }
 
+
     public void setLandingAbility(boolean landingAbility) {
         this.landingAbility = landingAbility;
     }

@@ -31,9 +31,9 @@ public class updateMethods {
         //Menu
         decorativeLine();
         System.out.println();
-        System.out.println("1. Update Port ID \t|\t\t2. Update Port name \t\t|\t\t3. Update Port latitude");
-        System.out.println("4. Update Port longitude \t\t\t|\t\t5. Update Port capacity \t\t|\t\t6. Update Port landing ability");
-        System.out.println("0. Go back\t\t|\t\t");
+        System.out.println("1. Update Port ID \t\t|\t\t 2. Update Port name \t\t|\t\t 3. Update Port latitude");
+        System.out.println("4. Update Port longitude \t\t|\t\t5. Update Port capacity \t\t|\t\t 6. Update Port landing ability");
+        System.out.println("0. Go back");
 
         try {
             System.out.print("Your option: ");
@@ -45,8 +45,8 @@ public class updateMethods {
     }
     public static void portOptionsToUpdate(List<String> portIDs, Port port) {
         boolean running3 = true;
-        int choice = 0;
         do {
+            int choice = -1;
             choice = portOptionsMenuToUpdate(choice);
             switch (choice) {
                 //Update portID
@@ -238,8 +238,8 @@ public class updateMethods {
 
         decorativeLine();
         System.out.println();
-        System.out.println("1. Update Vehicle ID \t|\t\t2. Update Vehicle name \t\t|\t\t3. Update Vehicle capacity");
-        System.out.println("4. Update Vehicle fuel capacity \t|\t\t0. Go back");
+        System.out.println("1. Update Vehicle ID \t\t|\t\t 2. Update Vehicle name \t\t|\t\t 3. Update Vehicle capacity");
+        System.out.println("4. Update Vehicle fuel capacity \t|\t 0. Go back");
 
 
         try {
@@ -252,8 +252,8 @@ public class updateMethods {
     }
     public static void portOptionsToUpdateVehicle(Port port, Vehicle vehicle) {
         boolean running3 = true;
-        int choice = -1;
         do {
+            int choice = -1;
             choice = portOptionsMenuToUpdateVehicle(choice);
             switch (choice) {
                 //Update vehicleID
@@ -451,8 +451,8 @@ public class updateMethods {
     }
     public static void portOptionsToUpdateContainer(Port port, Container container)     {
         boolean running3 = true;
-        int choice = -1;
         do {
+            int choice = -1;
             choice = portOptionsMenuToUpdateContainer(choice);
             switch (choice) {
                 //Update ContainerID
@@ -520,7 +520,7 @@ public class updateMethods {
 
         decorativeLine();
         System.out.println();
-        System.out.println("1. Update Container ID \t|\t\t2. Update Container weight \t\t|\t\t0. Go back");
+        System.out.println("1. Update Container ID \t\t|\t\t 2. Update Container weight \t\t|\t\t 0. Go back");
 
 
         try {
@@ -562,8 +562,8 @@ public class updateMethods {
 
     public static void userOptionsToUpdate(List<String> usedUsername, User user){
         boolean running3 = true;
-        int choice = -1;
         do {
+            int choice = -1;
             choice = userOptionsMenuToUpdate(choice);
             switch (choice) {
                 //Update username
@@ -612,7 +612,7 @@ public class updateMethods {
         //Menu
         decorativeLine();
         System.out.println();
-        System.out.println("1. Update username \t|\t\t2. Update password");
+        System.out.println("1. Update username \t|\t 2. Update password");
         System.out.println("0. Go back");
 
         try {

@@ -45,9 +45,16 @@ public class Vehicle implements IVehicle, Serializable {
     }
     @Override
     public boolean canMoveToPort(Port port) {
-        //calculate fuel needs
         double fuelNeeded = this.fuelConsumption * this.port.calculateDistance(port);
-        return !(fuelNeeded > this.fuelCapacity);
+        //calculate fuel needs
+        if ((this instanceof Truck || this instanceof ReeferTruck || this instanceof TankerTruck) && !port.isLandingAbility()) {
+            System.out.println("This vehicle cannot move to this port due to the port's landing ability!");
+            return false;
+        } else if (fuelNeeded > this.currentFuel) {
+            System.out.println("The vehicle doesn't have enough fuel!");
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -83,29 +90,21 @@ public class Vehicle implements IVehicle, Serializable {
 
     @Override
     public void moveToPort(Port port) {
-
     }
 
 
 
     @Override
     public Trip moveToPort1(Port port, Date departureDate, Date arrivalDate) {
-        //check value of canMoveToPort()
-        if(!this.canMoveToPort(port)){
-            System.out.println("The vehicle can not go to this port!");
-            return null;
-        }
-        else {
-            //change port to null
-            Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
-            //remove vehicle from old port
-            this.port.removeVehicle(this);
-            //make a new trip variable(status = false)
-            this.port.addTrip(trip);
-            AdminInterface.tripList.add(trip);
-            this.setPort(null);
-            return trip;
-        }
+        //change port to null
+        Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
+        //remove vehicle from old port
+        this.port.removeVehicle(this);
+        //make a new trip variable(status = false)
+        this.port.addTrip(trip);
+        AdminInterface.tripList.add(trip);
+        this.setPort(null);
+        return trip;
     }
 
 
