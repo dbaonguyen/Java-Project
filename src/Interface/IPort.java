@@ -13,8 +13,7 @@ public interface IPort {
 
     void removeContainer(Container container);
 
-    void searchContainer(String id);
-
+    void searchContainer();
 
      void addVehicle(Vehicle vehicle);
      void removeVehicle(Vehicle vehicle);
@@ -26,6 +25,8 @@ public interface IPort {
      void displayShips();
 
      void displayContainers();
+
+     void displayTrips();
 
 
 

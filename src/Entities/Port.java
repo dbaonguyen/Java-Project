@@ -20,7 +20,7 @@ public class Port implements IPort, Serializable {
     private String portID;
     private String name;
     private double latitude;
-    private double Longitude;
+    private double longitude;
     private double currentWeight;
     private double capacity;
     private boolean landingAbility;
@@ -31,11 +31,11 @@ public class Port implements IPort, Serializable {
     private double usedFuel;
     private static final Scanner scanner = new Scanner(System.in);
     private HashMap<String, Double> fuelHistory = new HashMap<>();
-    public Port(String portID, String name, double latitude, double Longitude, double capacity, double currentWeight,boolean landingAbility) {
+    public Port(String portID, String name, double latitude, double longitude, double capacity, double currentWeight,boolean landingAbility) {
         this.portID = String.valueOf(portID);
         this.name = name;
         this.latitude = latitude;
-        this.Longitude = Longitude;
+        this.longitude = longitude;
         this.capacity = capacity;
         this.landingAbility = landingAbility;
         this.currentWeight = currentWeight;
@@ -66,11 +66,11 @@ public class Port implements IPort, Serializable {
     }
 
     public double getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
-    public void setLongitude(double Longitude) {
-        this.Longitude = Longitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public double getCapacity() {
@@ -105,33 +105,30 @@ public class Port implements IPort, Serializable {
     public void setCurrentWeight(double currentWeight) {
         this.currentWeight = currentWeight;
     }
-    public static void calculateDistance(Port port, String portOption) {
-        List<String> portIDs2 = new ArrayList<>();
+    public void calculateDistanceInterface() {
         do {
-            decorativeLine();
-            System.out.println();
-            for (Port portFrom : AdminInterface.portList) {
-                if (portFrom != port){
-                    System.out.println(portFrom.getPortID() + ". " + portFrom.getName());
-                    portIDs2.add(portFrom.getPortID());
+            //Port IDs
+            for (Port port : AdminInterface.portList) {
+                if (port != this){
+                    System.out.println(port.getPortID() + ". " + port.getName());
                 }
             }
+
             System.out.println("0. Go back");
-            System.out.print("Enter the ID of the port above that you want to calculate distance between: ");
-            String portOption2 = scanner.nextLine();
+            System.out.print("Enter the ID of the port above that you want to calculate distance to: ");
+            String portOption = scanner.nextLine();
 
-            //Method
-            decorativeLine();
-            System.out.println();
-
-            if (portOption2.equals("0")) {
+            if (portOption.equals("0")) {
                 break;
             } else {
-                if (portIDs2.contains(portOption2)) {
-                    System.out.printf("The distance between 2 ports is: %.2f km\n", AdminInterface.portList.get(AdminInterface.portIDs.indexOf(portOption)).calculateDistance(AdminInterface.portList.get(portIDs2.indexOf(portOption2))));
-                    break;
+                if (!AdminInterface.portIDs.contains(portOption)) {
+                    System.out.println("Port does not exist");
                 } else {
-                    System.out.println("Please choose a valid option");
+                    for (Port port : AdminInterface.portList) {
+                        if (portOption.equals(port.getPortID())) {
+                            System.out.printf("The distance from this port to port %s is %.2fkm\n" , portOption, this.calculateDistance(port));
+                        }
+                    }
                 }
             }
         } while (true);
@@ -275,6 +272,7 @@ public class Port implements IPort, Serializable {
                         } else {
                             if (!vehicleIDs.contains(vehicleID)) {
                                 vehicleIDs.add(vehicleID);
+
                                 break;
                             } else {
                                 System.out.println("The ID is already existed!");
@@ -319,7 +317,6 @@ public class Port implements IPort, Serializable {
                         System.out.println("New ship has been added");
                         break;
                     } else if (confirmation.equals("n")) {
-                        vehicleIDs.remove(vehicleID);
                         System.out.println("The process is cancelled");
                         break;
                     } else {
@@ -852,7 +849,7 @@ public class Port implements IPort, Serializable {
 
     @Override
     public double calculateDistance(Port port) {
-        return Math.sqrt(Math.pow((port.Longitude - this.latitude),2) + Math.pow((port.latitude - this.latitude),2));
+        return Math.sqrt(Math.pow((port.getLongitude() - this.getLongitude()),2) + Math.pow((port.getLatitude() - this.getLatitude()),2));
     }
 
     @Override
@@ -875,9 +872,11 @@ public class Port implements IPort, Serializable {
         this.currentWeight -= container.getWeight();
     }
 
-    @Override
-    public void searchContainer(String id) {
+
+    public void searchContainer() {
         boolean found = false;
+        System.out.println("Enter the ID you want to search");
+        String id = scanner.nextLine();
         for (Container container : containers) {
             if (container.getContainerID().equals(id)){
                 found = true;
@@ -885,8 +884,7 @@ public class Port implements IPort, Serializable {
             }
         }
         if (!found) {
-            System.out.
-                    println("container not found");
+            System.out.println("container not found");
         }
     }
     @Override
@@ -979,7 +977,14 @@ public class Port implements IPort, Serializable {
 
         }
     }
-
+    @Override
+    public void displayTrips(){
+        for (Trip trip : trips){
+            decorativeLine();
+            System.out.println();
+            System.out.println(trip);
+        }
+    }
 
     public void addUsedFuel(double newFuel) {
         // Get local time
@@ -1022,7 +1027,7 @@ public class Port implements IPort, Serializable {
                 "\nPort ID: " + portID +
                 "\nName: " + name +
                 "\nLatitude: " + latitude +
-                "\nLongitude: " + Longitude +
+                "\nLongitude: " + longitude +
                 "\nCurrent Weight: " + currentWeight +
                 "\nCapacity: " + capacity +
                 "\nLanding Ability: " + landingAbility;
