@@ -1,6 +1,6 @@
 package Interface;
 
-import Entities.CanMoveToPort;
+
 import Entities.Container;
 import Entities.Port;
 import Entities.Trip;
@@ -8,14 +8,14 @@ import Entities.Trip;
 import java.util.Date;
 
 public interface IVehicle {
-    public boolean canMoveToPort(Port port);
-    public boolean loadContainer(Container container);
-    public boolean unloadContainer(Container container);
-    public void moveToPort(Port port);
+     boolean canMoveToPort(Port port);
+     boolean loadContainer(Container container);
+     boolean unloadContainer(Container container);
+     void moveToPort(Port port);
 
 
     Trip moveToPort1(Port port, Date departureDate, Date arrivalDate);
 
-    public void hasArrived(Trip trip);
-    public void refuel();
+     void hasArrived(Trip trip);
+     void refuel();
 }
