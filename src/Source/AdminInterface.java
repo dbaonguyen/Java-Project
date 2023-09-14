@@ -1,7 +1,6 @@
 package Source;
 
 import Entities.*;
-import Source.Transportation;
 import Users.Admin;
 import Users.PortManager;
 import Users.User;
@@ -28,7 +27,7 @@ public class AdminInterface {
     public static List<String> vehicleIDs = new ArrayList<>();
     public static List<String> portIDs = new ArrayList<>();
     private static final String DEFAULT_DIRECTORY = "Data";
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     public static void run() {
         Port port1 = new Port("p-1", "Harbor City Port", 40.7128, -74.0060, 100000, 0, true);
         Port port2 = new Port("p-2", "Pacific Harbor Port", 34.0522, -118.2437, 80000, 0, true);
@@ -288,8 +287,8 @@ public class AdminInterface {
         }
     }
     public static void allTripInGivenDay () {
-        for (int i = 0; i < portList.size(); i++) {
-            tripList.addAll(portList.get(i).getTrips());
+        for (Port port : portList) {
+            tripList.addAll(port.getTrips());
         }
         do {
             try {
@@ -304,9 +303,9 @@ public class AdminInterface {
                     if (Transportation.isValidDay(givenDateStr)) {
                         Date givenDate = dateFormat.parse(givenDateStr);
                         long givenDateTime = givenDate.getTime();
-                        for (int i = 0; i < tripList.size(); i++) {
-                            if (tripList.get(i).getDepartDate().getTime() > givenDateTime && tripList.get(i).getDepartDate().getTime() < givenDateTime + 86399999) {
-                                System.out.println(tripList.get(i));
+                        for (Trip trip : tripList) {
+                            if (trip.getDepartDate().getTime() > givenDateTime && trip.getDepartDate().getTime() < givenDateTime + 86399999) {
+                                System.out.println(trip);
                             }
                         }
                     } else {
@@ -319,8 +318,8 @@ public class AdminInterface {
         } while (true);
     }
     public static void allTripFromDayAtoB() {
-        for (int i = 0; i < portList.size(); i++) {
-            tripList.addAll(portList.get(i).getTrips());
+        for (Port port : portList) {
+            tripList.addAll(port.getTrips());
         }
         do {
             try {
@@ -339,9 +338,9 @@ public class AdminInterface {
                         Date dayB = dateFormat.parse(dayBStr);
                         long dayATime = dayA.getTime();
                         long dayBTime = dayB.getTime();
-                        for (int i = 0; i < tripList.size(); i++) {
-                            if (tripList.get(i).getDepartDate().getTime() > dayATime && tripList.get(i).getDepartDate().getTime() < dayBTime) {
-                                System.out.println(tripList.get(i));
+                        for (Trip trip : tripList) {
+                            if (trip.getDepartDate().getTime() > dayATime && trip.getDepartDate().getTime() < dayBTime) {
+                                System.out.println(trip);
                             }
                         }
                     } else {
@@ -413,8 +412,7 @@ public class AdminInterface {
                     for (User user : AdminInterface.userList){
                         decorativeLine();
                         System.out.println();
-                        if (user instanceof PortManager){
-                            PortManager portManager = (PortManager) user;
+                        if (user instanceof PortManager portManager){
                             System.out.println(portManager);
                         }
                     }
@@ -494,15 +492,11 @@ public class AdminInterface {
                 //Add container
                 case 2 -> Port.addContainer(port);
                 //Remove container
-                case 3 -> {
-                    Port.removeContainer(port);
-                }
+                case 3 -> Port.removeContainer(port);
                 //Add vehicles
                 case 4 -> Port.addVehicle(vehicleIDs, port);
                 //Remove Vehicle
-                case 5 -> {
-                    Port.removeVehicle(port);
-                }
+                case 5 -> Port.removeVehicle(port);
                 //Search vehicle
                 case 6 -> Port.searchVehicle(port);
                 //Search container
@@ -579,7 +573,7 @@ public class AdminInterface {
     public static void chooseVehicleToRefuel(Port port){
         decorativeLine();
         System.out.println();
-        boolean running4 = true;
+
 
         do {
             for (Vehicle vehicle : port.getVehicles()) {
@@ -608,7 +602,7 @@ public class AdminInterface {
             } else {
                 System.out.println("The vehicle does not exist");
             }
-        } while (running4);
+        } while (true);
     }
     public static void choosePort() {
         do {
