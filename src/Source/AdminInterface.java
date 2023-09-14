@@ -251,6 +251,14 @@ public class AdminInterface {
     }
     public static int login() {
         int choice = -1;
+        System.out.println("COSC2081 GROUP ASSIGNMENT");
+        System.out.println("CONTAINER PORT MANAGEMENT SYSTEM");
+        System.out.println("Instructor: Mr. Minh Vu & Dr. Phong Ngo");
+        System.out.println("Group 15: ");
+        System.out.println("s3978319 Nguyen Danh Bao");
+        System.out.println("s3979411 Nguyen Huu Khoi");
+        System.out.println("s3978690 Tran Duc Duy");
+        System.out.println("s3978165 Tran Tuan Trung");
         System.out.println("1. Login");
         System.out.println("2. Exit");
         try {
