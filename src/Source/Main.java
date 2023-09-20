@@ -6,7 +6,7 @@ import Users.User;
 public class Main {
     public static void main(String[] args) {
         AdminInterface.removeTripsAfterSevenDays();
-//        AdminInterface.run();
+        AdminInterface.dataListPopulate();
         boolean running = true;
         do {
             int choice = AdminInterface.login();
