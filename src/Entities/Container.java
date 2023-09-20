@@ -1,8 +1,11 @@
 package Entities;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Container implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 631628305602416781L;
     private String containerID;
     private double weight;
     private final Type containerType;
