@@ -36,6 +36,10 @@ public class Container implements Serializable {
         return this.containerType.getShipConsume();
     }
 
+    public double getTruckConsumption(){
+        return this.containerType.getTruckConsume();
+    }
+
     @Override
     public String toString() {
         return "Container Information:" +

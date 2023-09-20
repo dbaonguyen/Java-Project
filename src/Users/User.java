@@ -1,5 +1,6 @@
 package Users;
 
+import Entities.Container;
 import Entities.Port;
 import Source.AdminInterface;
 
@@ -47,7 +48,6 @@ public class User implements Serializable {
                 System.out.println("Please enter a new user name: ");
                 userName = scanner.nextLine();
                 if (!AdminInterface.usedUsername.contains(userName)) {
-                    AdminInterface.usedUsername.add(userName);
                     break;
                 } else {
                     System.out.println("This user name is already existed!");
@@ -68,11 +68,15 @@ public class User implements Serializable {
             }
         } while(true);
         boolean run = true;
+        boolean portLoopBreak = false;
         do {
+            if (portLoopBreak){
+                break;
+            }
             for (Port port : AdminInterface.portList) {
                 System.out.println(port.getPortID() + ". " + port.getName());
             }
-            System.out.println("0. Go back");
+
             System.out.print("Enter the ID of the port above that you want to assign the port manager to: ");
             String portOption = scanner.nextLine();
             if (portOption.equals("0")) {
@@ -84,14 +88,29 @@ public class User implements Serializable {
                     for (Port port : AdminInterface.portList) {
                         if (portOption.equals(port.getPortID())) {
                             if (!AdminInterface.usedPortID.contains(portOption)) {
-                                PortManager newPortManager = new PortManager(userName, password, port);
-                                AdminInterface.userList.add(newPortManager);
-                                AdminInterface.usedUsername.add(userName);
-                                AdminInterface.usedPortID.add(portOption);
-                                System.out.println("A new port manager has been created");
-                                run = false;
+
+
+                                System.out.print("Do you want to create this port manager account? (y/n): ");
+                                String confirmation = scanner.nextLine();
+                                if (confirmation.equals("y")) {
+                                    PortManager newPortManager = new PortManager(userName, password, port);
+                                    AdminInterface.userList.add(newPortManager);
+                                    AdminInterface.usedUsername.add(userName);
+                                    AdminInterface.usedPortID.add(portOption);
+                                    System.out.println("A new port manager has been created");
+                                    run = false;
+                                    break;
+                                } else if (confirmation.equals("n")) {
+                                    AdminInterface.usedUsername.remove(userName);
+                                    System.out.println("The process is cancelled");
+                                    portLoopBreak = true;
+                                    break;
+                                } else {
+                                    System.out.println("Please enter y or n for confirmation!");
+                                }
                             } else {
                                 System.out.println("This port has been managed by another manager. Please enter another port.");
+
                             }
                         }
                     }

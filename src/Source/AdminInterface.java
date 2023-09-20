@@ -394,6 +394,7 @@ public class AdminInterface {
         } while (running2);
     }
     public static void removeTripsAfterSevenDays() {
+
         for (Trip trip : tripList) {
             if (System.currentTimeMillis() - trip.getDepartDate().getTime() == 604800000) {
                 tripList.remove(trip);

@@ -16,7 +16,7 @@ public class Port implements IPort, Serializable {
         }
     }
     @Serial
-    private static final long serialVersionUID = 1030224541977093439L;
+    private static final long serialVersionUID = 1499846053079950798L;
     private String portID;
     private String name;
     private double latitude;
