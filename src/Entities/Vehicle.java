@@ -65,7 +65,11 @@ public class Vehicle implements IVehicle, Serializable {
             this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
             this.setCurrentWeight(this.currentWeight + container.getWeight());
             //change for truck
-            this.fuelConsumption += container.getShipConsumption();
+            if (this instanceof Ship){
+                this.fuelConsumption += container.getShipConsumption();
+            } else{
+                this.fuelConsumption += container.getTruckConsumption();
+            }
             return true;
         }
         else{
@@ -81,9 +85,9 @@ public class Vehicle implements IVehicle, Serializable {
             this.containers.remove(container);
             //change for truck
             if (this instanceof Ship){
-                this.fuelConsumption += container.getShipConsumption();
+                this.fuelConsumption -= container.getShipConsumption();
             } else{
-                this.fuelConsumption += container.getTruckConsumption();
+                this.fuelConsumption -= container.getTruckConsumption();
             }
             return true;
         }
