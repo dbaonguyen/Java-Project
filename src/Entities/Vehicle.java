@@ -3,12 +3,14 @@ package Entities;
 import Interface.IVehicle;
 import Source.AdminInterface;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Vehicle implements IVehicle, Serializable {
+    @Serial
     private static final long serialVersionUID = -3166575490558755177L;
 
     private String vehicleID;
