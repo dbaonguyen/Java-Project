@@ -13,19 +13,19 @@ public class AdminInterface {
     //data load
     public static List<User> userList = readListFromFile("userList.ser");
     public static List<Port> portList = readListFromFile("portList.ser");
+    public static List<Type> typeList = readListFromFile("typeList.ser");
+    public static List<String> usedUsername = readListFromFile("usedUsername.ser");
+    public static List<String> usedPortID = readListFromFile("usedPortID.ser");
+    public static List<String> notificationList = readListFromFile("notificationList.ser");
+    public static List<String> containerIDs = readListFromFile("containerIDs.ser");
+    public static List<String> vehicleIDs = readListFromFile("vehicleIDs.ser");
+    public static List<String> portIDs = readListFromFile("portIDs.ser");
     public static List<Container> containerList = new ArrayList<>();
     public static List<Ship> shipList = new ArrayList<>();
     public static List<Truck> truckList = new ArrayList<>();
     public static List<ReeferTruck> reeferTruckList = new ArrayList<>();
     public static List<TankerTruck> tankerTruckList = new ArrayList<>();
-    public static List<Type> typeList = readListFromFile("typeList.ser");
-    public static List<String> usedUsername = readListFromFile("usedUsername.ser");
-    public static List<String> usedPortID = readListFromFile("usedPortID.ser");
     public static List<Trip> tripList = new ArrayList<>();
-    public static List<String> notificationList = readListFromFile("notificationList.ser");
-    public static List<String> containerIDs = readListFromFile("containerIDs.ser");
-    public static List<String> vehicleIDs = readListFromFile("vehicleIDs.ser");
-    public static List<String> portIDs = readListFromFile("portIDs.ser");
 //    public static List<User> userList = new ArrayList<>();
 //    public static List<Port> portList = new ArrayList<>();
 //    public static List<Container> containerList = new ArrayList<>();
@@ -45,198 +45,198 @@ public class AdminInterface {
     private static final String DEFAULT_DIRECTORY = "Data";
     private static final Scanner scanner = new Scanner(System.in);
     public static void run() {
-//        Port port1 = new Port("p-1", "Harbor City Port", 40.7128, -74.0060, 100000, 0, true);
-//        Port port2 = new Port("p-2", "Pacific Harbor Port", 34.0522, -118.2437, 80000, 0, true);
-//        Port port3 = new Port("p-3", "London Bay Port", 51.5074, -0.1278, 120000, 0, true);
-//        Port port4 = new Port("p-4", "Paris Dock Port", 48.8566, 2.3522, 90000, 0, false);
-//        Port port5 = new Port("p-5", "Golden Gate Port", 37.7749, -122.4194, 75000, 0, true);
-//        portList.add(port1);
-//        portList.add(port2);
-//        portList.add(port3);
-//        portList.add(port4);
-//        portList.add(port5);
-//        usedPortID.add(port1.getPortID());
-//        usedPortID.add(port2.getPortID());
-//        usedPortID.add(port3.getPortID());
-//        usedPortID.add(port4.getPortID());
-//
-//        PortManager manager1 = new PortManager("5", "2", port1);
-//        PortManager manager2 = new PortManager("2", "2", port2);
-//        PortManager manager3 = new PortManager("3", "3", port3);
-//        PortManager manager4 = new PortManager("4", "4", port4);
-//
-//        userList.add(new Admin());
-//        userList.add(manager1);
-//        userList.add(manager2);
-//        userList.add(manager3);
-//        userList.add(manager4);
-//
-//        usedUsername.add(new Admin().getUsername());
-//        usedUsername.add(manager1.getUsername());
-//        usedUsername.add(manager2.getUsername());
-//        usedUsername.add(manager3.getUsername());
-//        usedUsername.add(manager4.getUsername());
-//
-//        Type dryStorage = new Type("Dry storage", 4.6, 3.5);
-//        Type openTop = new Type("Open top", 3.2, 2.8);
-//        Type openSide = new Type("Open side", 3.2, 2.7);
-//        Type refrigerated = new Type("Refrigerated", 5.4, 4.5);
-//        Type liquid = new Type("Liquid", 5.3, 4.8);
-//        typeList.add(dryStorage);
-//        typeList.add(openTop);
-//        typeList.add(openSide);
-//        typeList.add(refrigerated);
-//        typeList.add(liquid);
-//        Container c1 = new Container("c-1", 5000, dryStorage);
-//        Container c2 = new Container("c-2", 6000, openTop);
-//        Container c3 = new Container("c-3", 5500, openSide);
-//        Container c4 = new Container("c-4", 7000, refrigerated);
-//        Container c5 = new Container("c-5", 8000, liquid);
-//        Container c6 = new Container("c-6", 4800, dryStorage);
-//        Container c7 = new Container("c-7", 5200, openTop);
-//        Container c8 = new Container("c-8", 6200, openSide);
-//        Container c9 = new Container("c-9", 7500, refrigerated);
-//        Container c10 = new Container("c-10", 9000, liquid);
-//        Container c11 = new Container("c-11", 5100, dryStorage);
-//        Container c12 = new Container("c-12", 5900, openTop);
-//        Container c13 = new Container("c-13", 5300, openSide);
-//        Container c14 = new Container("c-14", 7200, refrigerated);
-//        Container c15 = new Container("c-15", 8500, liquid);
-//        Container c16 = new Container("c-16", 4700, dryStorage);
-//        Container c17 = new Container("c-17", 6400, openTop);
-//        Container c18 = new Container("c-18", 5600, openSide);
-//        Container c19 = new Container("c-19", 7300, refrigerated);
-//        Container c20 = new Container("c-20", 8800, liquid);
-//        Container c21 = new Container("c-21", 4900, dryStorage);
-//        Container c22 = new Container("c-22", 6100, openTop);
-//        Container c23 = new Container("c-23", 5400, openSide);
-//        Container c24 = new Container("c-24", 7100, refrigerated);
-//        Container c25 = new Container("c-25", 8400, liquid);
-//        Container c26 = new Container("c-26", 5200, dryStorage);
-//        Container c27 = new Container("c-27", 6300, openTop);
-//        Container c28 = new Container("c-28", 5800, openSide);
-//        Container c29 = new Container("c-29", 7400, refrigerated);
-//        Container c30 = new Container("c-30", 8900, liquid);
-//        containerList.add(c1);
-//        containerList.add(c2);
-//        containerList.add(c3);
-//        containerList.add(c4);
-//        containerList.add(c5);
-//        containerList.add(c6);
-//        containerList.add(c7);
-//        containerList.add(c8);
-//        containerList.add(c9);
-//        containerList.add(c10);
-//        containerList.add(c11);
-//        containerList.add(c12);
-//        containerList.add(c13);
-//        containerList.add(c14);
-//        containerList.add(c15);
-//        containerList.add(c16);
-//        containerList.add(c17);
-//        containerList.add(c18);
-//        containerList.add(c19);
-//        containerList.add(c20);
-//        containerList.add(c21);
-//        containerList.add(c22);
-//        containerList.add(c23);
-//        containerList.add(c24);
-//        containerList.add(c25);
-//        containerList.add(c26);
-//        containerList.add(c27);
-//        containerList.add(c28);
-//        containerList.add(c29);
-//        containerList.add(c30);
-//
-//        port1.addContainer(c1);
-//        port3.addContainer(c2);
-//        port2.addContainer(c3);
-//        port5.addContainer(c4);
-//        port4.addContainer(c5);
-//
-//        port2.addContainer(c6);
-//        port1.addContainer(c7);
-//        port3.addContainer(c8);
-//        port5.addContainer(c9);
-//        port4.addContainer(c10);
-//
-//        port3.addContainer(c11);
-//        port1.addContainer(c12);
-//        port2.addContainer(c13);
-//        port4.addContainer(c14);
-//        port5.addContainer(c15);
-//
-//        port4.addContainer(c16);
-//        port5.addContainer(c17);
-//        port3.addContainer(c18);
-//        port2.addContainer(c19);
-//        port1.addContainer(c20);
-//
-//        port5.addContainer(c21);
-//        port4.addContainer(c22);
-//        port3.addContainer(c23);
-//        port2.addContainer(c24);
-//        port1.addContainer(c25);
-//
-//        port1.addContainer(c26);
-//        port3.addContainer(c27);
-//        port2.addContainer(c28);
-//        port4.addContainer(c29);
-//        port5.addContainer(c30);
-//
-//        // Create Trucks
-//        Truck truck1 = new Truck("tr-1", "Truck 1", 10000, 200, port1,true);
-//        Truck truck2 = new Truck("tr-2", "Truck 2", 12000, 220, port2,true);
-//        Truck truck3 = new Truck("tr-3", "Truck 3", 11000, 210, port3,true);
-//        Truck truck4 = new Truck("tr-4", "Truck 4", 10500, 205, port3,true);
-//        Truck truck5 = new Truck("tr-5", "Truck 5", 9500, 190, port5,true);
-//        truckList.add(truck1);
-//        truckList.add(truck2);
-//        truckList.add(truck3);
-//        truckList.add(truck4);
-//        truckList.add(truck5);
-//        // Create Ships
-//        Ship ship1 = new Ship("s-1", "Ship 1", 50000, 10000, port1, true);
-//        Ship ship2 = new Ship("s-2", "Ship 2", 55000, 12000, port4, true);
-//        Ship ship3 = new Ship("s-3", "Ship 3", 52000, 11000, port5, true);
-//        Ship ship4 = new Ship("s-4", "Ship 4", 53000, 11200, port4, true);
-//        Ship ship5 = new Ship("s-5", "Ship 5", 51000, 10800, port4, true);
-//        shipList.add(ship1);
-//        shipList.add(ship2);
-//        shipList.add(ship3);
-//        shipList.add(ship4);
-//        shipList.add(ship5);
-//        // Create ReeferTrucks
-//        ReeferTruck reeferTruck1 = new ReeferTruck("tr-6", "ReeferTruck 1", 14000, 250, port2,true);
-//        ReeferTruck reeferTruck2 = new ReeferTruck("tr-7", "ReeferTruck 2", 15000, 270, port1,true);
-//        ReeferTruck reeferTruck3 = new ReeferTruck("tr-8", "ReeferTruck 3", 14500, 260, port5,true);
-//        ReeferTruck reeferTruck4 = new ReeferTruck("tr-9", "ReeferTruck 4", 14300, 255, port1,true);
-//        ReeferTruck reeferTruck5 = new ReeferTruck("tr-10", "ReeferTruck 5", 14700, 265, port3,true);
-//        reeferTruckList.add(reeferTruck1);
-//        reeferTruckList.add(reeferTruck2);
-//        reeferTruckList.add(reeferTruck3);
-//        reeferTruckList.add(reeferTruck4);
-//        reeferTruckList.add(reeferTruck5);
-//        // Create TankerTrucks
-//        TankerTruck tankerTruck1 = new TankerTruck("tr-11", "TankerTruck 1", 16000, 300, port3,true);
-//        TankerTruck tankerTruck2 = new TankerTruck("tr-12", "TankerTruck 2", 17000, 320, port2,true);
-//        TankerTruck tankerTruck3 = new TankerTruck("tr-13", "TankerTruck 3", 16500, 310, port2,true);
-//        TankerTruck tankerTruck4 = new TankerTruck("tr-14", "TankerTruck 4", 16300, 305, port1,true);
-//        TankerTruck tankerTruck5 = new TankerTruck("tr-15", "TankerTruck 5", 16700, 315, port5,true);
-//        tankerTruckList.add(tankerTruck1);
-//        tankerTruckList.add(tankerTruck2);
-//        tankerTruckList.add(tankerTruck3);
-//        tankerTruckList.add(tankerTruck4);
-//        tankerTruckList.add(tankerTruck5);
-//        for (Port port : portList) {
-//            portIDs.add(port.getPortID());
-//            for (Container container : port.getContainers()) {
-//                containerIDs.add(container.getContainerID());
-//            }
-//            for (Vehicle vehicle : port.getVehicles()) {
-//                vehicleIDs.add(vehicle.getVehicleID());
-//            }
-//        }
+        Port port1 = new Port("p-1", "Harbor City Port", 40.7128, -74.0060, 100000, 0, true);
+        Port port2 = new Port("p-2", "Pacific Harbor Port", 34.0522, -118.2437, 80000, 0, true);
+        Port port3 = new Port("p-3", "London Bay Port", 51.5074, -0.1278, 120000, 0, true);
+        Port port4 = new Port("p-4", "Paris Dock Port", 48.8566, 2.3522, 90000, 0, false);
+        Port port5 = new Port("p-5", "Golden Gate Port", 37.7749, -122.4194, 75000, 0, true);
+        portList.add(port1);
+        portList.add(port2);
+        portList.add(port3);
+        portList.add(port4);
+        portList.add(port5);
+        usedPortID.add(port1.getPortID());
+        usedPortID.add(port2.getPortID());
+        usedPortID.add(port3.getPortID());
+        usedPortID.add(port4.getPortID());
+
+        PortManager manager1 = new PortManager("5", "2", port1);
+        PortManager manager2 = new PortManager("2", "2", port2);
+        PortManager manager3 = new PortManager("3", "3", port3);
+        PortManager manager4 = new PortManager("4", "4", port4);
+
+        userList.add(new Admin());
+        userList.add(manager1);
+        userList.add(manager2);
+        userList.add(manager3);
+        userList.add(manager4);
+
+        usedUsername.add(new Admin().getUsername());
+        usedUsername.add(manager1.getUsername());
+        usedUsername.add(manager2.getUsername());
+        usedUsername.add(manager3.getUsername());
+        usedUsername.add(manager4.getUsername());
+
+        Type dryStorage = new Type("Dry storage", 4.6, 3.5);
+        Type openTop = new Type("Open top", 3.2, 2.8);
+        Type openSide = new Type("Open side", 3.2, 2.7);
+        Type refrigerated = new Type("Refrigerated", 5.4, 4.5);
+        Type liquid = new Type("Liquid", 5.3, 4.8);
+        typeList.add(dryStorage);
+        typeList.add(openTop);
+        typeList.add(openSide);
+        typeList.add(refrigerated);
+        typeList.add(liquid);
+        Container c1 = new Container("c-1", 5000, dryStorage);
+        Container c2 = new Container("c-2", 6000, openTop);
+        Container c3 = new Container("c-3", 5500, openSide);
+        Container c4 = new Container("c-4", 7000, refrigerated);
+        Container c5 = new Container("c-5", 8000, liquid);
+        Container c6 = new Container("c-6", 4800, dryStorage);
+        Container c7 = new Container("c-7", 5200, openTop);
+        Container c8 = new Container("c-8", 6200, openSide);
+        Container c9 = new Container("c-9", 7500, refrigerated);
+        Container c10 = new Container("c-10", 9000, liquid);
+        Container c11 = new Container("c-11", 5100, dryStorage);
+        Container c12 = new Container("c-12", 5900, openTop);
+        Container c13 = new Container("c-13", 5300, openSide);
+        Container c14 = new Container("c-14", 7200, refrigerated);
+        Container c15 = new Container("c-15", 8500, liquid);
+        Container c16 = new Container("c-16", 4700, dryStorage);
+        Container c17 = new Container("c-17", 6400, openTop);
+        Container c18 = new Container("c-18", 5600, openSide);
+        Container c19 = new Container("c-19", 7300, refrigerated);
+        Container c20 = new Container("c-20", 8800, liquid);
+        Container c21 = new Container("c-21", 4900, dryStorage);
+        Container c22 = new Container("c-22", 6100, openTop);
+        Container c23 = new Container("c-23", 5400, openSide);
+        Container c24 = new Container("c-24", 7100, refrigerated);
+        Container c25 = new Container("c-25", 8400, liquid);
+        Container c26 = new Container("c-26", 5200, dryStorage);
+        Container c27 = new Container("c-27", 6300, openTop);
+        Container c28 = new Container("c-28", 5800, openSide);
+        Container c29 = new Container("c-29", 7400, refrigerated);
+        Container c30 = new Container("c-30", 8900, liquid);
+        containerList.add(c1);
+        containerList.add(c2);
+        containerList.add(c3);
+        containerList.add(c4);
+        containerList.add(c5);
+        containerList.add(c6);
+        containerList.add(c7);
+        containerList.add(c8);
+        containerList.add(c9);
+        containerList.add(c10);
+        containerList.add(c11);
+        containerList.add(c12);
+        containerList.add(c13);
+        containerList.add(c14);
+        containerList.add(c15);
+        containerList.add(c16);
+        containerList.add(c17);
+        containerList.add(c18);
+        containerList.add(c19);
+        containerList.add(c20);
+        containerList.add(c21);
+        containerList.add(c22);
+        containerList.add(c23);
+        containerList.add(c24);
+        containerList.add(c25);
+        containerList.add(c26);
+        containerList.add(c27);
+        containerList.add(c28);
+        containerList.add(c29);
+        containerList.add(c30);
+
+        port1.addContainer(c1);
+        port3.addContainer(c2);
+        port2.addContainer(c3);
+        port5.addContainer(c4);
+        port4.addContainer(c5);
+
+        port2.addContainer(c6);
+        port1.addContainer(c7);
+        port3.addContainer(c8);
+        port5.addContainer(c9);
+        port4.addContainer(c10);
+
+        port3.addContainer(c11);
+        port1.addContainer(c12);
+        port2.addContainer(c13);
+        port4.addContainer(c14);
+        port5.addContainer(c15);
+
+        port4.addContainer(c16);
+        port5.addContainer(c17);
+        port3.addContainer(c18);
+        port2.addContainer(c19);
+        port1.addContainer(c20);
+
+        port5.addContainer(c21);
+        port4.addContainer(c22);
+        port3.addContainer(c23);
+        port2.addContainer(c24);
+        port1.addContainer(c25);
+
+        port1.addContainer(c26);
+        port3.addContainer(c27);
+        port2.addContainer(c28);
+        port4.addContainer(c29);
+        port5.addContainer(c30);
+
+        // Create Trucks
+        Truck truck1 = new Truck("tr-1", "Truck 1", 10000, 200, port1,true);
+        Truck truck2 = new Truck("tr-2", "Truck 2", 12000, 220, port2,true);
+        Truck truck3 = new Truck("tr-3", "Truck 3", 11000, 210, port3,true);
+        Truck truck4 = new Truck("tr-4", "Truck 4", 10500, 205, port3,true);
+        Truck truck5 = new Truck("tr-5", "Truck 5", 9500, 190, port5,true);
+        truckList.add(truck1);
+        truckList.add(truck2);
+        truckList.add(truck3);
+        truckList.add(truck4);
+        truckList.add(truck5);
+        // Create Ships
+        Ship ship1 = new Ship("s-1", "Ship 1", 50000, 10000, port1, true);
+        Ship ship2 = new Ship("s-2", "Ship 2", 55000, 12000, port4, true);
+        Ship ship3 = new Ship("s-3", "Ship 3", 52000, 11000, port5, true);
+        Ship ship4 = new Ship("s-4", "Ship 4", 53000, 11200, port4, true);
+        Ship ship5 = new Ship("s-5", "Ship 5", 51000, 10800, port4, true);
+        shipList.add(ship1);
+        shipList.add(ship2);
+        shipList.add(ship3);
+        shipList.add(ship4);
+        shipList.add(ship5);
+        // Create ReeferTrucks
+        ReeferTruck reeferTruck1 = new ReeferTruck("tr-6", "ReeferTruck 1", 14000, 250, port2,true);
+        ReeferTruck reeferTruck2 = new ReeferTruck("tr-7", "ReeferTruck 2", 15000, 270, port1,true);
+        ReeferTruck reeferTruck3 = new ReeferTruck("tr-8", "ReeferTruck 3", 14500, 260, port5,true);
+        ReeferTruck reeferTruck4 = new ReeferTruck("tr-9", "ReeferTruck 4", 14300, 255, port1,true);
+        ReeferTruck reeferTruck5 = new ReeferTruck("tr-10", "ReeferTruck 5", 14700, 265, port3,true);
+        reeferTruckList.add(reeferTruck1);
+        reeferTruckList.add(reeferTruck2);
+        reeferTruckList.add(reeferTruck3);
+        reeferTruckList.add(reeferTruck4);
+        reeferTruckList.add(reeferTruck5);
+        // Create TankerTrucks
+        TankerTruck tankerTruck1 = new TankerTruck("tr-11", "TankerTruck 1", 16000, 300, port3,true);
+        TankerTruck tankerTruck2 = new TankerTruck("tr-12", "TankerTruck 2", 17000, 320, port2,true);
+        TankerTruck tankerTruck3 = new TankerTruck("tr-13", "TankerTruck 3", 16500, 310, port2,true);
+        TankerTruck tankerTruck4 = new TankerTruck("tr-14", "TankerTruck 4", 16300, 305, port1,true);
+        TankerTruck tankerTruck5 = new TankerTruck("tr-15", "TankerTruck 5", 16700, 315, port5,true);
+        tankerTruckList.add(tankerTruck1);
+        tankerTruckList.add(tankerTruck2);
+        tankerTruckList.add(tankerTruck3);
+        tankerTruckList.add(tankerTruck4);
+        tankerTruckList.add(tankerTruck5);
+        for (Port port : portList) {
+            portIDs.add(port.getPortID());
+            for (Container container : port.getContainers()) {
+                containerIDs.add(container.getContainerID());
+            }
+            for (Vehicle vehicle : port.getVehicles()) {
+                vehicleIDs.add(vehicle.getVehicleID());
+            }
+        }
 //        public static List<Port> portList = new ArrayList<>();
 //        public static List<Container> containerList = new ArrayList<>();
 //        public static List<Ship> shipList = new ArrayList<>();
@@ -253,15 +253,9 @@ public class AdminInterface {
 //        public static List<String> portIDs = new ArrayList<>();
 //        writeListToFile(userList, "userList.ser");
 //        writeListToFile(portList, "portList.ser");
-//        writeListToFile(containerList, "containerList.ser");
-//        writeListToFile(shipList, "shipList.ser");
-//        writeListToFile(truckList, "truckList.ser");
-//        writeListToFile(reeferTruckList, "reeferTruckList.ser");
-//        writeListToFile(tankerTruckList, "tankerTruckList.ser");
 //        writeListToFile(typeList, "typeList.ser");
 //        writeListToFile(usedUsername, "usedUsername.ser");
 //        writeListToFile(usedPortID, "usedPortID.ser");
-//        writeListToFile(tripList, "tripList.ser");
 //        writeListToFile(notificationList, "notificationList.ser");
 //        writeListToFile(containerIDs, "containerIDs.ser");
 //        writeListToFile(vehicleIDs, "vehicleIDs.ser");
