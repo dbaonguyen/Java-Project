@@ -42,8 +42,6 @@ public class User implements Serializable {
     public static void addUser(){
         String userName;
         do {
-            AdminInterface.decorativeLine();
-            System.out.println();
             try {
                 System.out.println("Please enter a new user name: ");
                 userName = scanner.nextLine();
@@ -77,6 +75,7 @@ public class User implements Serializable {
                 System.out.println(port.getPortID() + ". " + port.getName());
             }
 
+            System.out.println("0. Go Back");
             System.out.print("Enter the ID of the port above that you want to assign the port manager to: ");
             String portOption = scanner.nextLine();
             if (portOption.equals("0")) {

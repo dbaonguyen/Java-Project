@@ -3,12 +3,16 @@ package Entities;
 import Interface.IVehicle;
 import Source.AdminInterface;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Vehicle implements IVehicle, Serializable {
+    @Serial
+    private static final long serialVersionUID = -3166575490558755177L;
+
     private String vehicleID;
     private String name;
     private double currentWeight;
@@ -60,10 +64,29 @@ public class Vehicle implements IVehicle, Serializable {
     @Override
     public boolean loadContainer(Container container) {
         if (container.getWeight() <= this.capacity - this.currentWeight && this.port != null) {
-            containers.add(container);
-            this.port.removeContainer(container);
-            this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
-            this.setCurrentWeight(this.currentWeight + container.getWeight());
+            if ((container.getType().getType().equals("Dry storage") || container.getType().getType().equals("Open top") || container.getType().getType().equals("Open side")) && (this instanceof Truck)){
+                containers.add(container);
+                this.port.removeContainer(container);
+                this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
+                this.setCurrentWeight(this.currentWeight + container.getWeight());
+            } else if (container.getType().getType().equals("Refrigerated") && this instanceof ReeferTruck){
+                containers.add(container);
+                this.port.removeContainer(container);
+                this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
+                this.setCurrentWeight(this.currentWeight + container.getWeight());
+            } else if (container.getType().getType().equals("Liquid") && this instanceof TankerTruck) {
+                containers.add(container);
+                this.port.removeContainer(container);
+                this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
+                this.setCurrentWeight(this.currentWeight + container.getWeight());
+            } else if (this instanceof Ship) {
+                containers.add(container);
+                this.port.removeContainer(container);
+                this.port.setCurrentWeight(this.port.getCurrentWeight() - container.getWeight());
+                this.setCurrentWeight(this.currentWeight + container.getWeight());
+            } else {
+                return false;
+            }
             //change for truck
             if (this instanceof Ship){
                 this.fuelConsumption += container.getShipConsumption();
@@ -95,6 +118,10 @@ public class Vehicle implements IVehicle, Serializable {
             return false;
         }
     }
+
+
+
+
 
     @Override
     public Trip moveToPort(Port port, Date departureDate, Date arrivalDate) {

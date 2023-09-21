@@ -14,12 +14,15 @@ public class Truck extends Vehicle implements Serializable {
 
 
     @Override
-    public boolean canMoveToPort(Port port) {
+    public boolean canMoveToPort(Port port){
         //check port condition
         if (!this.getPort().isLandingAbility()) {
             return false;
-        } else {
+        }
+        else{
             return super.canMoveToPort(port);
         }
     }
+
+
 }
