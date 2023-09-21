@@ -795,8 +795,7 @@ public class AdminInterface {
                 if (currentLoginUser instanceof Admin) {
                     return new Admin();
                 } else {
-                    PortManager manager = (PortManager) currentLoginUser;
-                    return manager;
+                    return currentLoginUser;
                 }
             }
         }

@@ -20,9 +20,6 @@ public class PortManager extends User implements Serializable {
         return portManaged;
     }
 
-    public void setPortManaged(Port portManaged) {
-        this.portManaged = portManaged;
-    }
 
     @Override
     public String toString() {

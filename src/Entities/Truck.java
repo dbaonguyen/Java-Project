@@ -22,15 +22,5 @@ public class Truck extends Vehicle implements Serializable {
         else{
             return super.canMoveToPort(port);
         }
-    }
 
-    @Override
-    public void moveToPort(Port port){
-        if(!this.canMoveToPort(port)){
-            System.out.println("The vehicle can not go to this port!");
-        }
-        else{
-            super.moveToPort(port);
-        }
-    }
 }

@@ -16,7 +16,7 @@ public class Transportation {
     private Port destinationPort;
     private Date departureDate;
     private Date arrivalDate;
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     public Transportation(Vehicle vehicle, Port destinationPort, Date departureDate, Date arrivalDate) {
         this.vehicle = vehicle;
         this.destinationPort = destinationPort;
@@ -29,7 +29,7 @@ public class Transportation {
         // Print a line at the departure time
         AdminInterface.notificationList.add(vehicle.getName() + " is departing from " + vehicle.getPort().getName() + " at " + dateFormat.format(departureDate));
         // Departure action
-        Trip trip = vehicle.moveToPort1(destinationPort, departureDate, arrivalDate);
+        Trip trip = vehicle.moveToPort(destinationPort, departureDate, arrivalDate);
         return trip;
     }
 
