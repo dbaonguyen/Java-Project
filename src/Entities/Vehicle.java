@@ -96,14 +96,12 @@ public class Vehicle implements IVehicle, Serializable {
         }
     }
 
-    @Override
-    public void moveToPort(Port port) {
-    }
+
 
 
 
     @Override
-    public Trip moveToPort1(Port port, Date departureDate, Date arrivalDate) {
+    public Trip moveToPort(Port port, Date departureDate, Date arrivalDate) {
         //change port to null
         Trip trip = new Trip(this, this.port, departureDate, arrivalDate, port, false);
         //remove vehicle from old port

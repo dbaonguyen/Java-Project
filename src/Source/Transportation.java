@@ -29,7 +29,7 @@ public class Transportation {
         // Print a line at the departure time
         AdminInterface.notificationList.add(vehicle.getName() + " is departing from " + vehicle.getPort().getName() + " at " + dateFormat.format(departureDate));
         // Departure action
-        Trip trip = vehicle.moveToPort1(destinationPort, departureDate, arrivalDate);
+        Trip trip = vehicle.moveToPort(destinationPort, departureDate, arrivalDate);
         return trip;
     }
 
