@@ -645,7 +645,7 @@ public class Port implements IPort, Serializable {
                                                 running4 = false;
                                                 break;
                                             } else {
-                                                System.out.println("This vehicle can not load this container now!");
+                                                System.out.println("This vehicle can not load this container!");
                                             }
                                         }
                                     }
