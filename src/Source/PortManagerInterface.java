@@ -216,37 +216,23 @@ public class PortManagerInterface {
         } while (running2);
     }
     public static void displayAllVehicles(Port portManaged){
-        for (Vehicle vehicle : AdminInterface.shipList) {
-            if (portManaged.getVehicles().contains(vehicle)){
-                decorativeLine();
-                System.out.println(vehicle);
-            }
+        for (Ship ship: shipInPort) {
+            System.out.println(ship);
         }
-        for (Vehicle vehicle : AdminInterface.truckList) {
-            if (portManaged.getVehicles().contains(vehicle)){
-                decorativeLine();
-                System.out.println(vehicle);
-            }
+        for (Truck truck: truckInPort) {
+            System.out.println(truck);
         }
-        for (Vehicle vehicle : AdminInterface.reeferTruckList) {
-            if (portManaged.getVehicles().contains(vehicle)){
-                decorativeLine();
-                System.out.println(vehicle);
-            }
+        for (TankerTruck tankerTruck: tankerTruckInPort) {
+            System.out.println(tankerTruck);
         }
-        for (Vehicle vehicle : AdminInterface.tankerTruckList) {
-            if (portManaged.getVehicles().contains(vehicle)){
-                decorativeLine();
-                System.out.println(vehicle);
-            }
+        for (ReeferTruck reeferTruck: reeferTruckInPort) {
+            System.out.println(reeferTruck);
         }
     }
     public static void displayAllContainers(Port portManaged){
-        for (Container container : AdminInterface.containerList) {
-            if (portManaged.getContainers().contains(container)){
+        for (Container container : portManaged.getContainers()) {
                 decorativeLine();
                 System.out.println(container);
-            }
         }
     }
     public static void chooseDateToDisplayFuelUsed(Port port){
@@ -314,21 +300,21 @@ public class PortManagerInterface {
                 shipInPort.add(ship);
             }
         }
-//        for (Ship ship: AdminInterface.shipList) {
-//            if (ship.getPort().getPortID().equals(portManaged.getPortID())) {
-//                shipInPort.add(ship);
-//            }
-//        }
-//        for (Ship ship: AdminInterface.shipList) {
-//            if (ship.getPort().getPortID().equals(portManaged.getPortID())) {
-//                shipInPort.add(ship);
-//            }
-//        }
-//        for (Ship ship: AdminInterface.shipList) {
-//            if (ship.getPort().getPortID().equals(portManaged.getPortID())) {
-//                shipInPort.add(ship);
-//            }
-//        }
+        for (Truck truck: AdminInterface.truckList) {
+            if (truck.getPort().getPortID().equals(portManaged.getPortID())) {
+                truckInPort.add(truck);
+            }
+        }
+        for (ReeferTruck reeferTruck: AdminInterface.reeferTruckList) {
+            if (reeferTruck.getPort().getPortID().equals(portManaged.getPortID())) {
+                reeferTruckInPort.add(reeferTruck);
+            }
+        }
+        for (TankerTruck tankerTruck: AdminInterface.tankerTruckList) {
+            if (tankerTruck.getPort().getPortID().equals(portManaged.getPortID())) {
+                tankerTruckInPort.add(tankerTruck);
+            }
+        }
     }
     public static void transportationMenu(Port portManaged) {
         boolean running3 = true;
@@ -356,40 +342,50 @@ public class PortManagerInterface {
     }
     public static void loginMainMenu(User user) {
         PortManager manager = (PortManager) user;
-        if (shipInPort.isEmpty() && tankerTruckInPort.isEmpty() && truckInPort.isEmpty() && reeferTruckInPort.isEmpty()) {
-            dataListPopulate(manager.getPortManaged());
-        }
-        System.out.println("Welcome " + manager.getPortManaged().getName() + " manager");
-        //Admin
-        boolean running = true;
-        do {
-            int choice = -1;
-            //Menu
-            decorativeLine();
-            System.out.println("1. Port management");
-            System.out.println("2. Transportation");
-            System.out.println("3. Statistics");
-            System.out.println("4. Notification");
-            System.out.println("0. Go back");
-            try {
-                System.out.print("Your option: ");
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (Exception e) {
-                System.out.println("Please choose a valid option: ");
-            }
-            decorativeLine();
-            switch (choice) {
-                case 1 -> portOptions(manager.getPortManaged());
-                case 2 -> transportationMenu(manager.getPortManaged());
-                case 3 -> statisticsMenu(manager.getPortManaged());
-                case 4 -> displayNotification();
-                case 0 -> {
-                    dataListReset();
-                    running = false;
+        decorativeLine();
+        Port portManaged;
+        for (Port port: AdminInterface.portList) {
+            if (port.getPortID().equals(manager.getPortManaged().getPortID())) {
+                portManaged = port;
+                if (shipInPort.isEmpty() && tankerTruckInPort.isEmpty() && truckInPort.isEmpty() && reeferTruckInPort.isEmpty()) {
+                    dataListPopulate(manager.getPortManaged());
                 }
-                default -> System.out.println("Please choose from 1-4");
+                System.out.println("Welcome " + manager.getPortManaged().getName() + " manager");
+                //Admin
+                boolean running = true;
+                do {
+                    int choice = -1;
+                    //Menu
+                    decorativeLine();
+                    System.out.println("1. Port management");
+                    System.out.println("2. Transportation");
+                    System.out.println("3. Statistics");
+                    System.out.println("4. Notification");
+                    System.out.println("0. Go back");
+                    try {
+                        System.out.print("Your option: ");
+                        choice = Integer.parseInt(scanner.nextLine());
+                    } catch (Exception e) {
+                        System.out.println("Please choose a valid option: ");
+                    }
+                    decorativeLine();
+                    switch (choice) {
+                        case 1 -> portOptions(portManaged);
+                        case 2 -> transportationMenu(portManaged);
+                        case 3 -> statisticsMenu(portManaged);
+                        case 4 -> displayNotification();
+                        case 0 -> {
+                            dataListReset();
+                            running = false;
+                        }
+                        default -> System.out.println("Please choose from 1-4");
+                    }
+                } while (running);
+
             }
-        } while (running);
+        }
+
+
 
 
     }
