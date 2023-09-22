@@ -241,7 +241,6 @@ public class Port implements IPort, Serializable {
         } while (running4);
     }
 
-
     public static void addVehicle(List<String> vehicleIDs, Port port) {
         decorativeLine();
         System.out.println();
@@ -847,7 +846,6 @@ public class Port implements IPort, Serializable {
         } while (running5);
     }
 
-    @Override
     public double calculateDistance(Port port) {
         return Math.sqrt(Math.pow((port.getLongitude() - this.getLongitude()),2) + Math.pow((port.getLatitude() - this.getLatitude()),2));
     }
@@ -901,7 +899,6 @@ public class Port implements IPort, Serializable {
         this.vehicles.remove(vehicle);
     }
 
-    @Override
     public void searchVehicleById(String id) {
         List<String> vehicleID = new ArrayList<>();
         for (Vehicle vehicle : vehicles){
@@ -919,7 +916,6 @@ public class Port implements IPort, Serializable {
         }
     }
 
-    @Override
     public void searchVehicleByName(String name) {
         List<String> vehicleName = new ArrayList<>();
         for (Vehicle vehicle : vehicles){
@@ -947,7 +943,7 @@ public class Port implements IPort, Serializable {
     }
 
 
-    @Override
+
     public void displayShips() {
         for (Vehicle vehicle : vehicles){
             if (vehicle instanceof Ship){
@@ -957,6 +953,7 @@ public class Port implements IPort, Serializable {
             }
         }
     }
+
 
     public void displayTrucks() {
         for (Vehicle vehicle : vehicles){
