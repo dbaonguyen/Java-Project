@@ -7,11 +7,6 @@ public class Type implements Serializable {
     private final double truckConsume;
     private final double shipConsume;
 //create variables
-    public Type(){
-        typeName = "default";
-        truckConsume = 0;
-        shipConsume = 0;
-    }
 
     public Type(String typeName, double truckConsume, double shipConsume){
         this.typeName = typeName;

@@ -17,7 +17,7 @@ public class PortManagerInterface {
     public static List<ReeferTruck> reeferTruckInPort = new ArrayList<>();
     public static List<TankerTruck> tankerTruckInPort = new ArrayList<>();
     public static void decorativeLine() {
-        for (int i = 0;i < 50;i++){
+        for (int i = 0;i < 100;i++){
             System.out.print("*");
         }
         System.out.println();

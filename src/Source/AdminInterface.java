@@ -60,10 +60,10 @@ public class AdminInterface {
         usedPortID.add(port3.getPortID());
         usedPortID.add(port4.getPortID());
 
-        PortManager manager1 = new PortManager("5", "2", port1);
-        PortManager manager2 = new PortManager("2", "2", port2);
-        PortManager manager3 = new PortManager("3", "3", port3);
-        PortManager manager4 = new PortManager("4", "4", port4);
+        PortManager manager1 = new PortManager("manager1", "manager1", port1);
+        PortManager manager2 = new PortManager("manager2", "manager2", port2);
+        PortManager manager3 = new PortManager("manager3", "manager3", port3);
+        PortManager manager4 = new PortManager("manager4", "manager4", port4);
 
         userList.add(new Admin());
         userList.add(manager1);
