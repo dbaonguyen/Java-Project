@@ -196,11 +196,11 @@ public class AdminInterface {
         truckList.add(truck4);
         truckList.add(truck5);
         // Create Ships
-        Ship ship1 = new Ship("s-1", "Ship 1", 50000, 10000, port1, true);
-        Ship ship2 = new Ship("s-2", "Ship 2", 55000, 12000, port4, true);
-        Ship ship3 = new Ship("s-3", "Ship 3", 52000, 11000, port5, true);
-        Ship ship4 = new Ship("s-4", "Ship 4", 53000, 11200, port4, true);
-        Ship ship5 = new Ship("s-5", "Ship 5", 51000, 10800, port4, true);
+        Ship ship1 = new Ship("sh-1", "Ship 1", 50000, 10000, port1, true);
+        Ship ship2 = new Ship("sh-2", "Ship 2", 55000, 12000, port4, true);
+        Ship ship3 = new Ship("sh-3", "Ship 3", 52000, 11000, port5, true);
+        Ship ship4 = new Ship("sh-4", "Ship 4", 53000, 11200, port4, true);
+        Ship ship5 = new Ship("sh-5", "Ship 5", 51000, 10800, port4, true);
         shipList.add(ship1);
         shipList.add(ship2);
         shipList.add(ship3);
@@ -251,15 +251,15 @@ public class AdminInterface {
 //        public static List<String> containerIDs = new ArrayList<>();
 //        public static List<String> vehicleIDs = new ArrayList<>();
 //        public static List<String> portIDs = new ArrayList<>();
-//        writeListToFile(userList, "userList.ser");
-//        writeListToFile(portList, "portList.ser");
-//        writeListToFile(typeList, "typeList.ser");
-//        writeListToFile(usedUsername, "usedUsername.ser");
-//        writeListToFile(usedPortID, "usedPortID.ser");
-//        writeListToFile(notificationList, "notificationList.ser");
-//        writeListToFile(containerIDs, "containerIDs.ser");
-//        writeListToFile(vehicleIDs, "vehicleIDs.ser");
-//        writeListToFile(portIDs, "portIDs.ser");
+        writeListToFile(userList, "userList.ser");
+        writeListToFile(portList, "portList.ser");
+        writeListToFile(typeList, "typeList.ser");
+        writeListToFile(usedUsername, "usedUsername.ser");
+        writeListToFile(usedPortID, "usedPortID.ser");
+        writeListToFile(notificationList, "notificationList.ser");
+        writeListToFile(containerIDs, "containerIDs.ser");
+        writeListToFile(vehicleIDs, "vehicleIDs.ser");
+        writeListToFile(portIDs, "portIDs.ser");
 
     }
     public static void dataListPopulate () {

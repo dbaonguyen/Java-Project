@@ -264,11 +264,11 @@ public class Port implements IPort, Serializable {
                 String vehicleID;
                 do {
                     try {
-                        System.out.println("Please enter the vehicle ID by the format 's-vehicleID': ");
+                        System.out.println("Please enter the vehicle ID by the format 'sh-vehicleID': ");
                         vehicleID = scanner.nextLine();
 
-                        if (!vehicleID.matches("s-\\d+")) {
-                            System.out.println("Invalid ID. The ID must be in the format 's-<integer>'.");
+                        if (!vehicleID.matches("sh-\\d+")) {
+                            System.out.println("Invalid ID. The ID must be in the format 'sh-<integer>'.");
                         } else {
                             if (!vehicleIDs.contains(vehicleID)) {
                                 vehicleIDs.add(vehicleID);
