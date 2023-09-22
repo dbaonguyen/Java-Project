@@ -1011,7 +1011,7 @@ public class Port implements IPort, Serializable {
     public double getWeightOfContainerType(Type type){
         double totalWeight = 0;
         for(Container container : this.containers){
-            if(container.getType() == type){
+            if(container.getType().getType().equals(type.getType())){
                 totalWeight += container.getWeight();
             }
         }
