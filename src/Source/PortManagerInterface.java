@@ -332,9 +332,9 @@ public class PortManagerInterface {
 
             switch (choice) {
                 case 1 -> Transportation.transportationShipPort(portManaged);
-//                case 2 -> Transportation.transportationTruckPort(portManaged);
-//                case 3 -> Transportation.transportationReeferTruckPort(portManaged);
-//                case 4 -> Transportation.transportationTankerTruckPort(portManaged);
+                case 2 -> Transportation.transportationTruckPort(portManaged);
+                case 3 -> Transportation.transportationReeferTruckPort(portManaged);
+                case 4 -> Transportation.transportationTankerTruckPort(portManaged);
                 case 0 -> running3 = false;
                 default -> System.out.println("Please choose from 0-4");
             }
