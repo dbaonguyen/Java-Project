@@ -15,7 +15,7 @@ public class Main {
             while (choice == 1) {
                 User indicator = AdminInterface.loginValidation();
                 if (indicator == null) {
-                    System.out.println("In22/09/2023 14:05:50valid credentials, please enter again!");
+                    System.out.println("Invalid credentials, please enter again!");
                     choice = AdminInterface.login();
                 } else if (indicator instanceof Admin) {
                     AdminInterface.loginMainMenu();
