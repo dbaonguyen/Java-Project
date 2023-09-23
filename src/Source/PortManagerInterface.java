@@ -1,10 +1,8 @@
 package Source;
 
 import Entities.*;
-import Users.Admin;
 import Users.PortManager;
 import Users.User;
-import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -124,7 +122,7 @@ public class PortManagerInterface {
             }
             switch (choice) {
                 case 1 -> displayAllContainers(portManaged);
-                case 2 -> displayAllVehicles(portManaged);
+                case 2 -> displayAllVehicles();
                 case 3 -> allTrip(portManaged);
                 case 4 -> allTripInGivenDay(portManaged);
                 case 5 -> allTripFromDayAtoB(portManaged);
@@ -215,7 +213,7 @@ public class PortManagerInterface {
             }
         } while (running2);
     }
-    public static void displayAllVehicles(Port portManaged){
+    public static void displayAllVehicles(){
         for (Ship ship: shipInPort) {
             System.out.println(ship);
         }

@@ -132,8 +132,12 @@ public class updateMethods {
                             System.out.println("Please enter a valid value");
                         }
                     } while (true);
-                    port.setCapacity(portCapacity);
-                    System.out.println("Updated successfully");
+                    if (portCapacity < port.getContainers().size()){
+                        System.out.println("The current capacity is containing a greater number of containers! ");
+                    } else {
+                        port.setCapacity(portCapacity);
+                        System.out.println("Updated successfully");
+                    }
                 }
 
                 //Update port landing ability
@@ -271,7 +275,7 @@ public class updateMethods {
                                     continue; // Restart the loop to get a valid ID
                                 }
                             } else if (vehicle instanceof Truck || vehicle instanceof ReeferTruck || vehicle instanceof TankerTruck) {
-                                System.out.println("Please enter the vehicle ID by the format 'tr-vehicleID': ");
+                                System.out.println("Please enter the vehicle ID by the format 'tr-<integer>': ");
                                 vehicleID = scanner.nextLine();
 
                                 if (!vehicleID.matches("tr-\\d+")) {
@@ -325,7 +329,7 @@ public class updateMethods {
                     int capacity;
                     do {
                         try {
-                            System.out.println("Please enter your vehicle capacity:");
+                            System.out.println("Please enter the new vehicle capacity:");
                             capacity = Integer.parseInt(scanner.nextLine());
                             break;
                         } catch (Exception e) {
@@ -342,7 +346,7 @@ public class updateMethods {
                     double fuelCapacity;
                     do {
                         try {
-                            System.out.println("Please enter your vehicle capacity:");
+                            System.out.println("Please enter the vehicle new fuel capacity:");
                             fuelCapacity = Double.parseDouble(scanner.nextLine());
                             break;
                         } catch (Exception e) {
@@ -461,7 +465,7 @@ public class updateMethods {
 
                     do {
                         try {
-                            System.out.println("Please enter the vehicle ID by the format 'c-containerID': ");
+                            System.out.println("Please enter the container ID by the format 'c-containerID': ");
                             containerID = scanner.nextLine();
 
                             if (!containerID.matches("c-\\d+")) {
@@ -495,7 +499,7 @@ public class updateMethods {
                     int containerWeight;
                     do {
                         try {
-                            System.out.println("Please enter your vehicle capacity:");
+                            System.out.println("Please enter the new container weight:");
                             containerWeight = Integer.parseInt(scanner.nextLine());
                             break;
                         } catch (Exception e) {
