@@ -185,11 +185,11 @@ public class AdminInterface {
         port5.addContainer(c30);
 
         // Create Trucks
-        Truck truck1 = new Truck("tr-1", "Truck 1", 10000, 200, port1,true);
-        Truck truck2 = new Truck("tr-2", "Truck 2", 12000, 220, port2,true);
-        Truck truck3 = new Truck("tr-3", "Truck 3", 11000, 210, port3,true);
-        Truck truck4 = new Truck("tr-4", "Truck 4", 10500, 205, port3,true);
-        Truck truck5 = new Truck("tr-5", "Truck 5", 9500, 190, port5,true);
+        Truck truck1 = new Truck("tr-1", "Truck 1", 10000, 2000, port1,true);
+        Truck truck2 = new Truck("tr-2", "Truck 2", 12000, 2200, port2,true);
+        Truck truck3 = new Truck("tr-3", "Truck 3", 11000, 2100, port3,true);
+        Truck truck4 = new Truck("tr-4", "Truck 4", 10500, 2050, port3,true);
+        Truck truck5 = new Truck("tr-5", "Truck 5", 9500, 1900, port5,true);
         truckList.add(truck1);
         truckList.add(truck2);
         truckList.add(truck3);
@@ -207,22 +207,22 @@ public class AdminInterface {
         shipList.add(ship4);
         shipList.add(ship5);
         // Create ReeferTrucks
-        ReeferTruck reeferTruck1 = new ReeferTruck("tr-6", "ReeferTruck 1", 14000, 250, port2,true);
-        ReeferTruck reeferTruck2 = new ReeferTruck("tr-7", "ReeferTruck 2", 15000, 270, port1,true);
-        ReeferTruck reeferTruck3 = new ReeferTruck("tr-8", "ReeferTruck 3", 14500, 260, port5,true);
-        ReeferTruck reeferTruck4 = new ReeferTruck("tr-9", "ReeferTruck 4", 14300, 255, port1,true);
-        ReeferTruck reeferTruck5 = new ReeferTruck("tr-10", "ReeferTruck 5", 14700, 265, port3,true);
+        ReeferTruck reeferTruck1 = new ReeferTruck("tr-6", "ReeferTruck 1", 14000, 2500, port2,true);
+        ReeferTruck reeferTruck2 = new ReeferTruck("tr-7", "ReeferTruck 2", 15000, 2700, port1,true);
+        ReeferTruck reeferTruck3 = new ReeferTruck("tr-8", "ReeferTruck 3", 14500, 2600, port5,true);
+        ReeferTruck reeferTruck4 = new ReeferTruck("tr-9", "ReeferTruck 4", 14300, 2550, port1,true);
+        ReeferTruck reeferTruck5 = new ReeferTruck("tr-10", "ReeferTruck 5", 14700, 2650, port3,true);
         reeferTruckList.add(reeferTruck1);
         reeferTruckList.add(reeferTruck2);
         reeferTruckList.add(reeferTruck3);
         reeferTruckList.add(reeferTruck4);
         reeferTruckList.add(reeferTruck5);
         // Create TankerTrucks
-        TankerTruck tankerTruck1 = new TankerTruck("tr-11", "TankerTruck 1", 16000, 300, port3,true);
-        TankerTruck tankerTruck2 = new TankerTruck("tr-12", "TankerTruck 2", 17000, 320, port2,true);
-        TankerTruck tankerTruck3 = new TankerTruck("tr-13", "TankerTruck 3", 16500, 310, port2,true);
-        TankerTruck tankerTruck4 = new TankerTruck("tr-14", "TankerTruck 4", 16300, 305, port1,true);
-        TankerTruck tankerTruck5 = new TankerTruck("tr-15", "TankerTruck 5", 16700, 315, port5,true);
+        TankerTruck tankerTruck1 = new TankerTruck("tr-11", "TankerTruck 1", 16000, 3000, port3,true);
+        TankerTruck tankerTruck2 = new TankerTruck("tr-12", "TankerTruck 2", 17000, 3200, port2,true);
+        TankerTruck tankerTruck3 = new TankerTruck("tr-13", "TankerTruck 3", 16500, 3100, port2,true);
+        TankerTruck tankerTruck4 = new TankerTruck("tr-14", "TankerTruck 4", 16300, 3050, port1,true);
+        TankerTruck tankerTruck5 = new TankerTruck("tr-15", "TankerTruck 5", 16700, 3150, port5,true);
         tankerTruckList.add(tankerTruck1);
         tankerTruckList.add(tankerTruck2);
         tankerTruckList.add(tankerTruck3);
