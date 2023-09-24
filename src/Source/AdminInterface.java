@@ -405,13 +405,20 @@ public class AdminInterface {
         } while (running2);
     }
     public static void removeTripsAfterSevenDays() {
+        Iterator<Trip> iterator = tripList.iterator();
+        long currentTimeMillis = System.currentTimeMillis();
+        long sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
-        for (Trip trip : tripList) {
-            if (System.currentTimeMillis() - trip.getDepartDate().getTime() == 604800000) {
-                tripList.remove(trip);
+        while (iterator.hasNext()) {
+            Trip trip = iterator.next();
+            long timeDifference = currentTimeMillis - trip.getArrivalDate().getTime();
+
+            if (timeDifference >= sevenDaysInMillis) {
+                iterator.remove(); // Use the iterator to safely remove the element
             }
         }
     }
+
     public static void allTripInGivenDay () {
         for (Port port : portList) {
             tripList.addAll(port.getTrips());
