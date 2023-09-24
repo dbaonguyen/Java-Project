@@ -5,7 +5,11 @@ import Users.User;
 
 public class Main {
     public static void main(String[] args) {
-        AdminInterface.removeTripsAfterSevenDays();
+//        method to remove the trips that exceed the 7 days time stamp
+//        this function is not called in order to avoid the trips being cleared at assessing time
+//        AdminInterface.removeTripsAfterSevenDays();
+
+//        function to initialize data
 //        AdminInterface.run();
         AdminInterface.dataListPopulate();
 
